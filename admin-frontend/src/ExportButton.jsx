@@ -32,7 +32,7 @@ function ExportButton() {
     setMessage(`Processing export request for ${email}...`); // Update main button message
     setIsError(false);
 
-    const backendUrl = 'http://localhost:5001/export'; // Backend export endpoint
+    const backendUrl = `${process.env.REACT_APP_API_BASE_URL}/export`; // Backend export endpoint
 
     try {
       const response = await fetch(backendUrl, {
