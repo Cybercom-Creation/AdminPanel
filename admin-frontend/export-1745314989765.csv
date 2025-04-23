@@ -1,0 +1,234 @@
+UserID,Name,Email,Phone,Base64Photo,LogID,TriggerEvent,WarningStartTime,WarningEndTime,IntervalSeconds
+,,,,,,,,,
+,,,,,,,,,
+3,,,,,,tab_switch,2025-04-15T07:03:34.000Z,2025-04-15T07:03:44.000Z,0
+3,,,,,,tab_switch,2025-04-15T07:03:56.000Z,2025-04-15T07:03:59.000Z,0
+3,,,,,,tab_switch,2025-04-15T07:04:01.000Z,2025-04-15T07:04:05.000Z,0
+3,,,,,,tab_switch,2025-04-15T07:05:16.000Z,2025-04-15T07:05:33.000Z,0
+3,,,,,,screenshare_stop,2025-04-15T07:05:42.000Z,2025-04-15T07:05:49.000Z,0
+4,,,,,,tab_switch,2025-04-15T07:09:01.000Z,2025-04-15T07:09:08.000Z,0
+4,,,,,,screenshare_stop,2025-04-15T07:09:13.000Z,2025-04-15T07:09:15.000Z,0
+4,,,,,,tab_switch,2025-04-15T07:09:45.000Z,2025-04-15T07:11:37.000Z,0
+5,,,,,,tab_switch,2025-04-15T07:29:17.000Z,2025-04-15T07:29:27.000Z,0
+5,,,,,,screenshare_stop,2025-04-15T07:29:39.000Z,2025-04-15T07:29:45.000Z,0
+6,,,,,,screenshare_stop,2025-04-15T07:40:33.000Z,2025-04-15T07:40:35.000Z,0
+6,,,,,,screenshare_stop,2025-04-15T07:40:45.000Z,2025-04-15T07:40:46.000Z,0
+6,,,,,,tab_switch,2025-04-15T07:41:22.000Z,2025-04-15T07:42:38.000Z,0
+6,,,,,,screenshare_stop,2025-04-15T07:42:42.000Z,2025-04-15T07:42:44.000Z,0
+7,,,,,,tab_switch,2025-04-15T07:52:43.000Z,2025-04-15T07:52:45.000Z,0
+7,,,,,,tab_switch,2025-04-15T07:52:47.000Z,2025-04-15T07:52:50.000Z,0
+7,,,,,,tab_switch,2025-04-15T07:52:51.000Z,2025-04-15T07:52:53.000Z,0
+8,,,,,,tab_switch,2025-04-15T07:53:37.000Z,2025-04-15T07:53:39.000Z,0
+8,,,,,,tab_switch,2025-04-15T07:53:41.000Z,2025-04-15T07:53:43.000Z,0
+8,,,,,,screenshare_stop,2025-04-15T07:53:45.000Z,2025-04-15T07:53:46.000Z,0
+9,,,,,,screenshare_stop,2025-04-15T23:06:27.000Z,2025-04-15T23:06:28.000Z,0
+10,,,,,,screenshare_stop,2025-04-15T23:07:49.000Z,2025-04-15T23:07:50.000Z,0
+10,,,,,,screenshare_stop,2025-04-15T23:07:57.000Z,2025-04-15T23:07:58.000Z,0
+10,,,,,,screenshare_stop,2025-04-15T23:08:02.000Z,2025-04-15T23:08:03.000Z,0
+,,,,,,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+15,,,,[Image Data Present],,tab_switch,Wed Apr 16 2025 12:49:03 GMT+0530 (India Standard Time),Wed Apr 16 2025 12:49:19 GMT+0530 (India Standard Time),16
+15,,,,[Image Data Present],,tab_switch,Wed Apr 16 2025 12:49:27 GMT+0530 (India Standard Time),Wed Apr 16 2025 12:49:32 GMT+0530 (India Standard Time),5
+16,,,,[Image Data Present],,tab_switch,Wed Apr 16 2025 12:50:58 GMT+0530 (India Standard Time),Wed Apr 16 2025 12:51:12 GMT+0530 (India Standard Time),14
+16,,,,[Image Data Present],,screenshare_stop,Wed Apr 16 2025 12:51:13 GMT+0530 (India Standard Time),Wed Apr 16 2025 12:51:15 GMT+0530 (India Standard Time),2
+16,,,,[Image Data Present],,tab_switch,Wed Apr 16 2025 12:51:27 GMT+0530 (India Standard Time),Wed Apr 16 2025 12:52:48 GMT+0530 (India Standard Time),80
+,,,,[Image Data Present],,,,,
+18,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 06:33:47 GMT+0530 (India Standard Time),Thu Apr 17 2025 06:33:56 GMT+0530 (India Standard Time),8
+19,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 08:41:07 GMT+0530 (India Standard Time),Thu Apr 17 2025 08:42:27 GMT+0530 (India Standard Time),80
+,,,,[Image Data Present],,,,,
+21,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 09:16:25 GMT+0530 (India Standard Time),Thu Apr 17 2025 09:16:49 GMT+0530 (India Standard Time),24
+,,,,[Image Data Present],,,,,
+23,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 09:33:24 GMT+0530 (India Standard Time),Thu Apr 17 2025 09:33:45 GMT+0530 (India Standard Time),21
+,,,,[Image Data Present],,,,,
+25,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 09:54:25 GMT+0530 (India Standard Time),Thu Apr 17 2025 09:54:47 GMT+0530 (India Standard Time),22
+25,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 09:55:58 GMT+0530 (India Standard Time),Thu Apr 17 2025 09:56:19 GMT+0530 (India Standard Time),21
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+29,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 12:06:42 GMT+0530 (India Standard Time),Thu Apr 17 2025 12:09:10 GMT+0530 (India Standard Time),148
+,,,,[Image Data Present],,,,,
+31,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 12:44:39 GMT+0530 (India Standard Time),Thu Apr 17 2025 12:44:43 GMT+0530 (India Standard Time),5
+32,,,,[Image Data Present],,tab_switch,Thu Apr 17 2025 13:47:54 GMT+0530 (India Standard Time),Thu Apr 17 2025 13:47:59 GMT+0530 (India Standard Time),5
+,,,,[Image Data Present],,,,,
+34,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 05:05:38 GMT+0530 (India Standard Time),Fri Apr 18 2025 05:05:46 GMT+0530 (India Standard Time),8
+34,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 05:06:13 GMT+0530 (India Standard Time),Fri Apr 18 2025 05:06:25 GMT+0530 (India Standard Time),12
+35,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 05:08:54 GMT+0530 (India Standard Time),Fri Apr 18 2025 05:10:29 GMT+0530 (India Standard Time),95
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+40,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 06:03:01 GMT+0530 (India Standard Time),Fri Apr 18 2025 06:04:42 GMT+0530 (India Standard Time),102
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+44,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 06:26:22 GMT+0530 (India Standard Time),Fri Apr 18 2025 06:44:34 GMT+0530 (India Standard Time),1092
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+62,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 10:08:54 GMT+0530 (India Standard Time),Fri Apr 18 2025 10:09:28 GMT+0530 (India Standard Time),34
+62,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 10:10:23 GMT+0530 (India Standard Time),Fri Apr 18 2025 10:10:29 GMT+0530 (India Standard Time),6
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+65,,,,[Image Data Present],,tab_switch,Fri Apr 18 2025 10:25:11 GMT+0530 (India Standard Time),Fri Apr 18 2025 10:25:15 GMT+0530 (India Standard Time),4
+,,,,[Image Data Present],,,,,
+67,,,,[Image Data Present],,no_face,Fri Apr 18 2025 11:08:52 GMT+0530 (India Standard Time),Fri Apr 18 2025 11:08:52 GMT+0530 (India Standard Time),1
+67,,,,[Image Data Present],,no_face,Fri Apr 18 2025 11:08:56 GMT+0530 (India Standard Time),Fri Apr 18 2025 11:08:57 GMT+0530 (India Standard Time),0
+67,,,,[Image Data Present],,no_face,Fri Apr 18 2025 11:08:58 GMT+0530 (India Standard Time),Fri Apr 18 2025 11:09:00 GMT+0530 (India Standard Time),2
+67,,,,[Image Data Present],,no_face,Fri Apr 18 2025 11:09:02 GMT+0530 (India Standard Time),Fri Apr 18 2025 11:09:03 GMT+0530 (India Standard Time),1
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+75,,,,[Image Data Present],,tab_switch_ack,Fri Apr 18 2025 14:22:35 GMT+0530 (India Standard Time),Fri Apr 18 2025 14:22:53 GMT+0530 (India Standard Time),18
+,,,,[Image Data Present],,,,,
+,,,,[Image Data Present],,,,,
+78,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:14:22 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:14:23 GMT+0530 (India Standard Time),1
+78,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 06:14:38 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:14:39 GMT+0530 (India Standard Time),1
+78,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 06:14:42 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:14:50 GMT+0530 (India Standard Time),9
+78,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 06:14:54 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:15:04 GMT+0530 (India Standard Time),11
+78,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:15:06 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:15:07 GMT+0530 (India Standard Time),1
+79,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:33:54 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:33:55 GMT+0530 (India Standard Time),1
+79,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:34:03 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:34:07 GMT+0530 (India Standard Time),4
+79,,,,[Image Data Present],,tab_switch_ack,Mon Apr 21 2025 06:34:33 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:35:03 GMT+0530 (India Standard Time),30
+80,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:43:31 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:43:32 GMT+0530 (India Standard Time),1
+80,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:43:42 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:43:42 GMT+0530 (India Standard Time),1
+80,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:43:44 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:43:48 GMT+0530 (India Standard Time),4
+80,,,,[Image Data Present],,tab_switch_ack,Mon Apr 21 2025 06:44:34 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:44:57 GMT+0530 (India Standard Time),23
+81,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:45:24 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:45:25 GMT+0530 (India Standard Time),1
+81,,,,[Image Data Present],,tab_switch_ack,Mon Apr 21 2025 06:45:55 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:46:01 GMT+0530 (India Standard Time),7
+82,,,,[Image Data Present],,no_face,Mon Apr 21 2025 06:57:18 GMT+0530 (India Standard Time),Mon Apr 21 2025 06:57:19 GMT+0530 (India Standard Time),1
+83,,,,[Image Data Present],,no_face,Mon Apr 21 2025 08:06:42 GMT+0530 (India Standard Time),Mon Apr 21 2025 08:06:43 GMT+0530 (India Standard Time),1
+83,,,,[Image Data Present],,no_face,Mon Apr 21 2025 08:06:45 GMT+0530 (India Standard Time),Mon Apr 21 2025 08:06:46 GMT+0530 (India Standard Time),1
+84,,,,[Image Data Present],,no_face,Mon Apr 21 2025 08:11:27 GMT+0530 (India Standard Time),Mon Apr 21 2025 08:11:28 GMT+0530 (India Standard Time),1
+84,,,,[Image Data Present],,no_face,Mon Apr 21 2025 08:11:30 GMT+0530 (India Standard Time),Mon Apr 21 2025 08:11:30 GMT+0530 (India Standard Time),0
+85,,,,[Image Data Present],,no_face,Mon Apr 21 2025 10:26:27 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:26:28 GMT+0530 (India Standard Time),1
+85,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 10:26:37 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:26:37 GMT+0530 (India Standard Time),0
+85,,,,[Image Data Present],,no_face,Mon Apr 21 2025 10:26:48 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:26:49 GMT+0530 (India Standard Time),2
+85,,,,[Image Data Present],,no_face,Mon Apr 21 2025 10:27:08 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:27:09 GMT+0530 (India Standard Time),1
+85,,,,[Image Data Present],,no_face,Mon Apr 21 2025 10:27:12 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:27:12 GMT+0530 (India Standard Time),1
+85,,,,[Image Data Present],,tab_switch,Mon Apr 21 2025 10:27:34 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:27:34 GMT+0530 (India Standard Time),0
+85,,,,[Image Data Present],,tab_switch_ack,Mon Apr 21 2025 10:27:34 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:28:18 GMT+0530 (India Standard Time),44
+85,,,,[Image Data Present],,tab_switch,Mon Apr 21 2025 10:28:20 GMT+0530 (India Standard Time),Mon Apr 21 2025 10:28:20 GMT+0530 (India Standard Time),0
+86,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:18:34 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:18:35 GMT+0530 (India Standard Time),1
+86,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:18:49 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:18:50 GMT+0530 (India Standard Time),1
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:26:37 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:26:38 GMT+0530 (India Standard Time),1
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:26:40 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:26:44 GMT+0530 (India Standard Time),4
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:28:08 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:28:09 GMT+0530 (India Standard Time),1
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:29:36 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:29:36 GMT+0530 (India Standard Time),0
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:29:55 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:29:55 GMT+0530 (India Standard Time),0
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:30:51 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:30:52 GMT+0530 (India Standard Time),1
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:31:14 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:31:14 GMT+0530 (India Standard Time),0
+87,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:31:23 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:31:48 GMT+0530 (India Standard Time),25
+88,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:38:44 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:38:45 GMT+0530 (India Standard Time),1
+88,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:39:07 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:39:08 GMT+0530 (India Standard Time),0
+88,,,,[Image Data Present],,tab_switch_ack,Mon Apr 21 2025 12:39:17 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:40:15 GMT+0530 (India Standard Time),58
+89,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:45:58 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:45:59 GMT+0530 (India Standard Time),1
+89,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 12:46:01 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:46:01 GMT+0530 (India Standard Time),0
+89,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:46:07 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:46:08 GMT+0530 (India Standard Time),1
+89,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:46:09 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:46:09 GMT+0530 (India Standard Time),0
+89,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:46:16 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:46:18 GMT+0530 (India Standard Time),2
+89,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:46:20 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:46:22 GMT+0530 (India Standard Time),2
+89,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:46:22 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:46:23 GMT+0530 (India Standard Time),1
+89,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:46:46 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:46:46 GMT+0530 (India Standard Time),1
+89,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 12:47:00 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:47:00 GMT+0530 (India Standard Time),0
+89,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 12:47:02 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:47:03 GMT+0530 (India Standard Time),0
+90,,,,[Image Data Present],,no_face,Mon Apr 21 2025 12:56:50 GMT+0530 (India Standard Time),Mon Apr 21 2025 12:56:50 GMT+0530 (India Standard Time),1
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:05:01 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:05:01 GMT+0530 (India Standard Time),1
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:05:07 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:05:14 GMT+0530 (India Standard Time),7
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:05:15 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:05:27 GMT+0530 (India Standard Time),12
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:05:27 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:05:28 GMT+0530 (India Standard Time),1
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:05:34 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:05:38 GMT+0530 (India Standard Time),4
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:05:39 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:05:47 GMT+0530 (India Standard Time),8
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:06:12 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:06:13 GMT+0530 (India Standard Time),1
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:07:08 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:07:21 GMT+0530 (India Standard Time),13
+91,,,,[Image Data Present],,face_recognition_fail,Mon Apr 21 2025 13:07:51 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:07:51 GMT+0530 (India Standard Time),0
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:08:12 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:08:14 GMT+0530 (India Standard Time),2
+91,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 13:08:29 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:08:30 GMT+0530 (India Standard Time),1
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:09:11 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:09:14 GMT+0530 (India Standard Time),4
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:09:37 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:09:38 GMT+0530 (India Standard Time),1
+91,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:09:48 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:09:49 GMT+0530 (India Standard Time),1
+92,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:11:50 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:11:50 GMT+0530 (India Standard Time),0
+92,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 13:11:59 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:12:00 GMT+0530 (India Standard Time),1
+92,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:13:01 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:13:04 GMT+0530 (India Standard Time),3
+92,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:13:10 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:13:12 GMT+0530 (India Standard Time),2
+92,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:13:17 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:13:18 GMT+0530 (India Standard Time),1
+92,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:13:19 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:13:21 GMT+0530 (India Standard Time),2
+92,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:13:40 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:13:41 GMT+0530 (India Standard Time),1
+92,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:13:50 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:13:51 GMT+0530 (India Standard Time),1
+93,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:19:07 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:19:07 GMT+0530 (India Standard Time),0
+93,,,,[Image Data Present],,tab_switch_ack,Mon Apr 21 2025 13:19:18 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:19:37 GMT+0530 (India Standard Time),19
+93,,,,[Image Data Present],,tab_switch_ack,Mon Apr 21 2025 13:20:35 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:21:05 GMT+0530 (India Standard Time),30
+93,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:22:41 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:22:44 GMT+0530 (India Standard Time),3
+93,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:22:49 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:22:54 GMT+0530 (India Standard Time),5
+93,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:22:55 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:22:56 GMT+0530 (India Standard Time),1
+93,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:23:05 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:23:06 GMT+0530 (India Standard Time),1
+93,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:23:26 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:23:27 GMT+0530 (India Standard Time),1
+94,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:35:21 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:35:22 GMT+0530 (India Standard Time),1
+94,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 13:37:33 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:37:33 GMT+0530 (India Standard Time),1
+94,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 13:37:36 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:37:37 GMT+0530 (India Standard Time),1
+94,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:38:06 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:38:07 GMT+0530 (India Standard Time),1
+95,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:42:53 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:42:54 GMT+0530 (India Standard Time),1
+95,,,,[Image Data Present],,multiple_face,Mon Apr 21 2025 13:42:56 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:42:56 GMT+0530 (India Standard Time),0
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:47:31 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:47:32 GMT+0530 (India Standard Time),1
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:47:57 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:47:58 GMT+0530 (India Standard Time),1
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:48:04 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:48:05 GMT+0530 (India Standard Time),1
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:48:40 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:48:41 GMT+0530 (India Standard Time),1
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:48:42 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:48:46 GMT+0530 (India Standard Time),4
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:48:55 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:48:57 GMT+0530 (India Standard Time),2
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:49:06 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:49:09 GMT+0530 (India Standard Time),3
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:49:26 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:49:27 GMT+0530 (India Standard Time),1
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:49:32 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:49:33 GMT+0530 (India Standard Time),1
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:49:36 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:49:38 GMT+0530 (India Standard Time),2
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:49:41 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:49:42 GMT+0530 (India Standard Time),1
+96,,,,[Image Data Present],,no_face,Mon Apr 21 2025 13:49:50 GMT+0530 (India Standard Time),Mon Apr 21 2025 13:49:52 GMT+0530 (India Standard Time),2
+97,,,,[Image Data Present],,no_face,Tue Apr 22 2025 04:20:24 GMT+0530 (India Standard Time),Tue Apr 22 2025 04:20:25 GMT+0530 (India Standard Time),1
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:53:40 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:53:41 GMT+0530 (India Standard Time),1
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:53:49 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:53:50 GMT+0530 (India Standard Time),1
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:53:51 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:53:55 GMT+0530 (India Standard Time),4
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:53:55 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:53:58 GMT+0530 (India Standard Time),3
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:53:58 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:54:00 GMT+0530 (India Standard Time),1
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:54:01 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:54:07 GMT+0530 (India Standard Time),6
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:54:08 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:54:14 GMT+0530 (India Standard Time),6
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:54:14 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:54:15 GMT+0530 (India Standard Time),1
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:54:16 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:54:20 GMT+0530 (India Standard Time),4
+98,,,,[Image Data Present],,no_face,Tue Apr 22 2025 05:54:21 GMT+0530 (India Standard Time),Tue Apr 22 2025 05:54:23 GMT+0530 (India Standard Time),2
+99,,,,[Image Data Present],,no_face,Tue Apr 22 2025 06:59:13 GMT+0530 (India Standard Time),Tue Apr 22 2025 06:59:14 GMT+0530 (India Standard Time),1
+99,,,,[Image Data Present],,tab_switch_ack,Tue Apr 22 2025 06:59:18 GMT+0530 (India Standard Time),Tue Apr 22 2025 06:59:24 GMT+0530 (India Standard Time),6
+99,,,,[Image Data Present],,no_face,Tue Apr 22 2025 06:59:29 GMT+0530 (India Standard Time),Tue Apr 22 2025 06:59:30 GMT+0530 (India Standard Time),2
+99,,,,[Image Data Present],,no_face,Tue Apr 22 2025 06:59:31 GMT+0530 (India Standard Time),Tue Apr 22 2025 06:59:34 GMT+0530 (India Standard Time),3
+99,,,,[Image Data Present],,no_face,Tue Apr 22 2025 06:59:35 GMT+0530 (India Standard Time),Tue Apr 22 2025 06:59:35 GMT+0530 (India Standard Time),1
+100,,,,[Image Data Present],,no_face,Tue Apr 22 2025 07:03:52 GMT+0530 (India Standard Time),Tue Apr 22 2025 07:03:53 GMT+0530 (India Standard Time),1
+101,,,,[Image Data Present],,no_face,Tue Apr 22 2025 07:45:49 GMT+0530 (India Standard Time),Tue Apr 22 2025 07:45:50 GMT+0530 (India Standard Time),1
+101,,,,[Image Data Present],,multiple_face,Tue Apr 22 2025 07:46:25 GMT+0530 (India Standard Time),Tue Apr 22 2025 07:46:25 GMT+0530 (India Standard Time),1
+102,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:23:18 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:23:19 GMT+0530 (India Standard Time),1
+102,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:23:40 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:23:42 GMT+0530 (India Standard Time),2
+103,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:26:36 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:26:37 GMT+0530 (India Standard Time),1
+103,,,,[Image Data Present],,multiple_face,Tue Apr 22 2025 08:27:04 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:27:04 GMT+0530 (India Standard Time),0
+103,,,,[Image Data Present],,multiple_face,Tue Apr 22 2025 08:28:27 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:28:28 GMT+0530 (India Standard Time),1
+104,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:32:05 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:32:06 GMT+0530 (India Standard Time),1
+104,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:32:09 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:32:10 GMT+0530 (India Standard Time),1
+104,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:32:11 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:32:11 GMT+0530 (India Standard Time),1
+104,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:32:12 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:32:12 GMT+0530 (India Standard Time),0
+104,,,,[Image Data Present],,multiple_face,Tue Apr 22 2025 08:32:33 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:32:33 GMT+0530 (India Standard Time),0
+104,,,,[Image Data Present],,tab_switch_ack,Tue Apr 22 2025 08:32:49 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:33:10 GMT+0530 (India Standard Time),21
+105,,,,[Image Data Present],,no_face,Tue Apr 22 2025 08:36:34 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:36:35 GMT+0530 (India Standard Time),1
+105,,,,[Image Data Present],,multiple_face,Tue Apr 22 2025 08:37:39 GMT+0530 (India Standard Time),Tue Apr 22 2025 08:37:41 GMT+0530 (India Standard Time),2
