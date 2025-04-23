@@ -5,7 +5,7 @@ import React from 'react';
 import ExportButton from './ExportButton';
 import DownloadButton from './DownloadButton'; // Import the new component
 
-import './App.css';
+import '../public/App.css';
 
 function App() {
   return (
