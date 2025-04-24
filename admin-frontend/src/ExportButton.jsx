@@ -32,7 +32,7 @@ function ExportButton() {
     setMessage(`Processing export request for ${email}...`); // Update main button message
     setIsError(false);
 
-    const backendUrl = `${process.env.REACT_APP_API_BASE_URL}/export`; // Backend export endpoint
+    const backendUrl = `https://adminpanel-p8sw.onrender.com/export`; // Backend export endpoint
 
     try {
       const response = await fetch(backendUrl, {

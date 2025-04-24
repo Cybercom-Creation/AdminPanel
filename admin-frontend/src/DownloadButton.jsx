@@ -12,7 +12,7 @@ function DownloadButton() {
     setMessage('Generating files for download...');
     setIsError(false);
 
-    const backendUrl = `${process.env.REACT_APP_API_BASE_URL}/download`; // Backend download endpoint
+    const backendUrl = `https://adminpanel-p8sw.onrender.com/download`; // Backend download endpoint
 
     try {
       const response = await fetch(backendUrl); // Simple GET request
