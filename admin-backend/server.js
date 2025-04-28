@@ -54,7 +54,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    photo_base64: { // Store as string if it's already base64 encoded
+    photoBase64: { // Store as string if it's already base64 encoded
         type: String
     },
     photoDriveLink: { type: String },
@@ -226,6 +226,158 @@ async function generateUserCsvData() {
 app.get('/', (req, res) => {
     res.send('Admin Panel Backend (MongoDB) is running!');
 });
+
+// --- NEW Endpoint to get users for the Admin Panel Table ---
+app.get('/api/admin/users', async (req, res) => {
+    console.log("GET /api/admin/users request received.");
+    
+    try {
+        // 1. Fetch all users - select necessary fields
+        // Include testDuration and screenshotFolderUrl if they are stored on the User model
+        const users = await User.find({})
+            .select('_id name email phone photoBase64 testDuration photoDriveLink')
+            .lean(); // Use lean for better performance
+
+        if (!users || users.length === 0) {
+            console.log("No users found in the database.");
+            // Send empty array for frontend to handle gracefully
+            return res.status(200).json([]);
+        }
+
+        // 2. Get all user IDs for the next query
+        const userIds = users.map(user => user._id);
+
+        // 3. Aggregate violation counts and details from ProctoringLog for these users
+        const violationStats = await ProctoringLog.aggregate([
+            {
+                $match: { userId: { $in: userIds } } // Filter logs for the fetched users
+            },
+            {
+                $sort: { createdAt: 1 } // Sort logs by time before grouping if needed for details order
+            },
+            {
+                $group: {
+                    _id: '$userId', // Group by user ID
+                    violationsList: { // Collect all trigger events for the user
+                        $push: '$triggerEvent'
+                    },
+                    violationDetailsList: { // Collect details for the expandable panel
+                        $push: {
+                            type: '$triggerEvent',
+                            timestamp: '$createdAt', // Use log creation time
+                            //details: '$details' // Include the details field from the log schema
+                            // Add other log details you want to show
+                        }
+                    },
+                    // Example: Calculate duration from logs if not stored on User
+                    // firstLogTime: { $min: '$createdAt' },
+                    // lastLogTime: { $max: '$createdAt' }
+                }
+            },
+            {
+                // Calculate violation counts from the collected list
+                $addFields: {
+                    violationCounts: {
+                        $reduce: {
+                            input: '$violationsList',
+                            initialValue: {},
+                            in: {
+                                $let: {
+                                    vars: { currentType: '$$this' ,
+                                        currentCount: {
+                                            $ifNull: [
+                                                // Use $getField to access a field using a variable name
+                                                { $getField: { field: '$$this', input: '$$value' } },
+                                                0 // Default to 0 if the field doesn't exist yet
+                                            ]
+                                        }
+
+                                    },
+                                    in: {
+                                        $mergeObjects: [
+                                            '$$value',
+
+                                            {
+                                                $arrayToObject: [[
+                                                    {
+                                                        k: '$$currentType', // The key is the violation type string
+                                                        v: { $add: ['$$currentCount', 1] } // The value is the incremented count
+                                                    }
+                                                ]]
+                                            }
+
+                                            // { // Dynamically create/update key for the violation type
+                                            //   [ '$$currentType' ] : { $add: [ { $ifNull: [ `$$value.$$currentType`, 0 ] }, 1 ] }
+                                            // }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+             {
+                // Project final fields for clarity and remove intermediate lists
+                $project: {
+                    _id: 1, // Keep the userId (_id)
+                    violations: '$violationCounts', // Rename violationCounts to violations
+                    violationDetails: '$violationDetailsList', // Rename violationDetailsList
+                    // duration: { $divide: [ { $subtract: ['$lastLogTime', '$firstLogTime'] }, 1000 ] } // Calculate duration in seconds if needed
+                }
+            }
+        ]);
+
+
+        // 4. Create a map for easy lookup of violation stats by userId
+        const statsMap = new Map();
+        violationStats.forEach(stat => {
+            statsMap.set(stat._id.toString(), {
+                violations: stat.violations || {}, // The calculated counts object { typeA: 2, typeB: 1 }
+                violationDetails: stat.violationDetails || [], // Array of details [{ type: ..., timestamp: ...}]
+                totalViolations: Object.values(stat.violations || {}).reduce((sum, count) => sum + count, 0),
+                // calculatedDuration: stat.duration // Use calculated duration if applicable
+            });
+        });
+
+        // 5. Combine user data with their violation stats
+        const usersWithData = users.map(user => {
+            const userIdStr = user._id.toString();
+            const userStats = statsMap.get(userIdStr) || { violations: {}, violationDetails: [], totalViolations: 0 }; // Default if no logs found
+
+            // Determine the picture URLs - use photoDriveLink if available, otherwise default
+            const defaultAvatar = '/default-avatar.png'; // Ensure this exists in admin-frontend/public/
+            let imageUrl = defaultAvatar;
+
+            imageUrl = user.photoBase64; 
+
+            // Determine test duration - prioritize User.testDuration, then calculated, then 0
+            const testDuration = user.testDuration || /* userStats.calculatedDuration || */ 0;
+
+            return {
+                // Fields expected by the frontend (UserRow.jsx)
+                id: userIdStr,
+                name: user.name || 'Unknown User',
+                smallPicUrl: imageUrl,
+                largePicUrl: imageUrl,
+                testDuration: testDuration,
+                violations: userStats.violations, // e.g., { faceMismatch: 2, phoneDetected: 1 }
+                violationDetails: userStats.violationDetails, // e.g., [{ type: '...', timestamp: '...', details: '...' }]
+                screenshotFolderUrl: user.photoDriveLink || null, // Use value from User model or null
+                totalViolations: userStats.totalViolations // Calculated total for sorting
+            };
+        });
+
+        console.log(`Sending ${usersWithData.length} user records to the frontend.`);
+        console.log(`Sending ${users.photoBase64} user records to the frontend.`);
+        res.status(200).json(usersWithData);
+
+    } catch (error) {
+        console.error('Error fetching users for admin panel:', error);
+        res.status(500).json({ message: 'Failed to fetch user data.', error: error.message });
+    }
+});
+
 
 // --- MODIFIED Export Route (now POST) ---
 app.post('/export', async (req, res) => {

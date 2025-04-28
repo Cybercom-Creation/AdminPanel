@@ -1,0 +1,130 @@
+/* src/components/UserRow.css */
+
+.user-row td, .details-row td {
+    padding: 8px 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #444; /* Match your theme */
+  }
+  
+  .user-avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block; /* Prevents extra space below image */
+  }
+  
+  .user-pic-cell {
+      position: relative; /* Needed for tooltip positioning */
+  }
+  
+  /* Simple CSS Tooltip */
+  .tooltip-container {
+      position: relative;
+      display: inline-block; /* Or block, depending on layout */
+  }
+  
+  .tooltip-content {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      z-index: 10;
+      bottom: 110%; /* Position above the small image */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333; /* Dark background */
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 5px;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+      width: 160px; /* Adjust as needed */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      pointer-events: none; /* Prevent tooltip from blocking hover on image */
+  }
+  
+  .tooltip-container:hover .tooltip-content {
+      visibility: visible;
+      opacity: 1;
+  }
+  
+  .user-avatar-large {
+      width: 150px; /* Size of the image inside the tooltip */
+      height: auto;
+      display: block;
+      border-radius: 4px;
+  }
+  
+  
+  .expand-button, .link-button {
+    /* Use styles similar to your existing buttons in index.css */
+    border-radius: 6px;
+    border: 1px solid #555;
+    padding: 0.4em 0.8em;
+    font-size: 0.9em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #3a3a3a; /* Adjust colors */
+    color: rgba(255, 255, 255, 0.87);
+    cursor: pointer;
+    transition: border-color 0.25s, background-color 0.25s;
+    text-decoration: none; /* For link-button */
+    display: inline-block; /* For link-button */
+  }
+  
+  .expand-button:hover, .link-button:hover {
+    border-color: #646cff;
+    background-color: #4a4a4a;
+  }
+  
+  .details-row td {
+      background-color: #2a2a2a; /* Slightly different background for details */
+      border-bottom: 1px solid #555;
+  }
+  
+  .details-panel {
+    padding: 15px;
+    text-align: left;
+  }
+  
+  .details-panel h4 {
+    margin-top: 0;
+    color: #bbb; /* Lighter heading color */
+  }
+  .details-panel ul {
+      list-style: disc;
+      margin-left: 20px;
+      padding-left: 0;
+  }
+  .details-panel li {
+      margin-bottom: 8px;
+      color: #ccc; /* Lighter text color */
+  }
+  
+  /* Add light theme adjustments if necessary using media query */
+  @media (prefers-color-scheme: light) {
+      .user-row td, .details-row td {
+          border-bottom: 1px solid #ddd;
+      }
+      .details-row td {
+          background-color: #f0f0f0;
+      }
+      .tooltip-content {
+          background-color: #fff;
+          border: 1px solid #ccc;
+          color: #333;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .expand-button, .link-button {
+          background-color: #e9e9e9;
+          border: 1px solid #ccc;
+          color: #213547;
+      }
+      .expand-button:hover, .link-button:hover {
+          border-color: #747bff;
+          background-color: #f5f5f5;
+      }
+       .details-panel h4 { color: #444; }
+       .details-panel li { color: #555; }
+  }
+  
+  
