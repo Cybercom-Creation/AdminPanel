@@ -1,7 +1,7 @@
 // src/services/api.js (or wherever your API calls live)
 
 // Assuming your backend endpoint is /api/admin/users
-const API_BASE_URL = 'https://adminpanel-p8sw.onrender.com'; // Replace with your actual backend URL
+const API_BASE_URL = 'http://localhost:5001'; // Replace with your actual backend URL
 
 export const fetchAdminUsers = async () => {
   try {
@@ -31,21 +31,37 @@ export const fetchAdminUsers = async () => {
   }
 };
 
-// Helper function to format duration (seconds to HH:MM:SS) - place it here or in a utils file
-export const formatDuration = (totalSeconds) => {
-    if (typeof totalSeconds !== 'number' || totalSeconds < 0) {
-        return '00:00:00';
-    }
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = Math.floor(totalSeconds % 60);
+// *** NEW formatDuration function (from your suggestion) ***
+export const formatDuration = (ms) => {
+  // Add console log for debugging input
+  console.log(`formatDuration (new) received: ${ms} (type: ${typeof ms})`);
 
-    const paddedHours = String(hours).padStart(2, '0');
-    const paddedMinutes = String(minutes).padStart(2, '0');
-    const paddedSeconds = String(seconds).padStart(2, '0');
+  // Ensure ms is treated as a number
+  const numericMs = typeof ms === 'string' ? parseInt(ms, 10) : ms;
 
-    return `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+  if (typeof numericMs !== 'number' || isNaN(numericMs) || numericMs < 0) {
+      console.warn(`formatDuration (new) defaulting to "N/A" for input: ${ms}`);
+      return "N/A"; // Return "N/A" for invalid or missing data
+  }
+  if (numericMs < 1000) {
+      return `${numericMs} ms`;
+  }
+
+  const totalSeconds = Math.floor(numericMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  let formatted = "";
+  if (minutes > 0) {
+      formatted += `${minutes}m `;
+  }
+  // Always show seconds if total duration is >= 1 second
+  formatted += `${seconds}s`;
+
+  return formatted.trim(); // Trim any trailing space if minutes is 0
 };
+
+
 
 // Helper function to format violations object - place it here or in a utils file
 export const formatViolations = (violations) => {

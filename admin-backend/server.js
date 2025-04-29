@@ -235,7 +235,7 @@ app.get('/api/admin/users', async (req, res) => {
         // 1. Fetch all users - select necessary fields
         // Include testDuration and screenshotFolderUrl if they are stored on the User model
         const users = await User.find({})
-            .select('_id name email phone photoBase64 testDuration photoDriveLink')
+            .select('_id name email phone photoBase64 photoDriveLink testDurationMs')
             .lean(); // Use lean for better performance
 
         if (!users || users.length === 0) {
@@ -264,7 +264,8 @@ app.get('/api/admin/users', async (req, res) => {
                     violationDetailsList: { // Collect details for the expandable panel
                         $push: {
                             type: '$triggerEvent',
-                            timestamp: '$createdAt', // Use log creation time
+                            //timestamp: '$createdAt',
+                            duration: { $ifNull: ['$durationMs', 0] } // Use durationMs, default to 0 if null/missing
                             //details: '$details' // Include the details field from the log schema
                             // Add other log details you want to show
                         }
@@ -351,18 +352,52 @@ app.get('/api/admin/users', async (req, res) => {
 
             imageUrl = user.photoBase64; 
 
-            // Determine test duration - prioritize User.testDuration, then calculated, then 0
-            const testDuration = user.testDuration || /* userStats.calculatedDuration || */ 0;
+            // *** Refined Test Duration Handling ***
+    let numericTestDuration = 0; // Start with a default valid number
+    if (user.testDurationMs !== null && user.testDurationMs !== undefined) {
+        // Attempt to convert the value from the DB to a number
+        const parsedDuration = Number(user.testDurationMs);
+        // Check if conversion was successful and the number is valid (non-negative)
+        if (!isNaN(parsedDuration) && parsedDuration >= 0) {
+            numericTestDuration = parsedDuration;
+        } else {
+             // Optional: Log if parsing failed for debugging
+             console.warn(`User ${userIdStr}: Invalid testDurationMs value found: ${user.testDurationMs}`);
+        }
+    }
+    const finalTestDuration = numericTestDuration; // Use the validated number
 
+
+            // *** Refined Violation Details Handling ***
+    const finalViolationDetails = (userStats.violationDetails || []).map((detail, index) => {
+        let numericViolationDuration = 0; // Start with a default valid number
+        // The 'duration' field comes from the aggregation's $ifNull check
+        if (detail.duration !== null && detail.duration !== undefined) {
+            // Attempt conversion (might already be a number from aggregation, but good practice)
+            const parsedViolationDuration = Number(detail.duration);
+             // Check if conversion was successful and the number is valid (non-negative)
+            if (!isNaN(parsedViolationDuration) && parsedViolationDuration >= 0) {
+                numericViolationDuration = parsedViolationDuration;
+            } else {
+                
+                console.warn(`User ${userIdStr}, Violation Index ${index}: Invalid duration value found: ${detail.duration}`);
+            }
+        }
+        return {
+            type: detail.type || 'Unknown',
+            duration: numericViolationDuration // Use the validated number
+        };
+    });
+    console.log(`User ${userIdStr} (${user.name}) - Sending: testDuration=${finalTestDuration}, violationDetails=${JSON.stringify(finalViolationDetails)}`);
             return {
                 // Fields expected by the frontend (UserRow.jsx)
                 id: userIdStr,
                 name: user.name || 'Unknown User',
                 smallPicUrl: imageUrl,
                 largePicUrl: imageUrl,
-                testDuration: testDuration,
+                testDuration: finalTestDuration,
                 violations: userStats.violations, // e.g., { faceMismatch: 2, phoneDetected: 1 }
-                violationDetails: userStats.violationDetails, // e.g., [{ type: '...', timestamp: '...', details: '...' }]
+                violationDetails: finalViolationDetails, // e.g., [{ type: '...', timestamp: '...', details: '...' }]
                 screenshotFolderUrl: user.photoDriveLink || null, // Use value from User model or null
                 totalViolations: userStats.totalViolations // Calculated total for sorting
             };
