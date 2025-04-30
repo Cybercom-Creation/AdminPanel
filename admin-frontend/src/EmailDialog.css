@@ -1,129 +1,118 @@
 /* Style for the overlay */
 .dialog-overlay {
-    /* display: flex; /* Now controlled by conditional rendering in React */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
-    display: flex; /* Use flexbox for centering */
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Style for the dialog box itself */
-  .dialog-box {
-    background-color: #fefefe;
-    margin: auto; /* Center horizontally */
-    padding: 30px;
-    border: 1px solid #ddd;
-    width: 80%;
-    max-width: 450px; /* Adjust max width as needed */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    animation-name: animatetop;
-    animation-duration: 0.4s;
-    text-align: center; /* Center text inside */
-    position: relative; /* Needed for animation */
-  }
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  
-  
-  /* Add Animation */
-  @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
-  }
-  
-  
-  .dialog-box h2 {
-    margin-top: 0;
-    color: #333;
-  }
-  
-  .dialog-box p {
-    margin-bottom: 20px;
-    color: #555;
-  }
-  
-  .dialog-box input[type="email"] {
-    width: 90%; /* Take most of the width */
-    padding: 12px;
-    margin-bottom: 15px; /* Reduced margin */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1em;
-  }
-  .dialog-box input[type="email"]:disabled {
-    background-color: #e9ecef;
-    cursor: not-allowed;
-  }
-  
-  
-  /* Style for the buttons */
-  .cancle-buttons {
-    display: flex;
-    justify-content: space-between; /* Space out buttons */
-    margin-top: 20px; /* Increased margin */
-    background-color: #ff0000; /* Red */
-    color: white;
-    gap: 10px; /* Space between buttons */
-  }
-  .send-buttons {
-    display: flex;
-    justify-content: space-between; /* Space out buttons */
-    margin-top: 20px; /* Increased margin */
-    background-color: #00ff4c; /* Green */
-    color: white;
-    gap: 10px; /* Space between buttons */
-  }
-  
-  /* Basic button styling (adapt to your existing button styles) */
-  .dialog-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    min-width: 100px;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
-  }
-  .dialog-buttons button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  
-  .btn-primary {
-    background-color: #007bff; /* Blue */
-    color: white;
-  }
-  .btn-primary:hover:not(:disabled) {
-    background-color: #0056b3;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d; /* Gray */
-    color: white;
-  }
-  .btn-secondary:hover:not(:disabled) {
-    background-color: #5a6268;
-  }
-  
-  /* Style for messages inside the dialog */
-  .dialog-message {
-    margin-top: 0; /* Adjusted margin */
-    margin-bottom: 15px;
-    font-size: 0.9em;
-    min-height: 1.2em; /* Reserve space */
-    font-weight: bold;
-  }
-  .dialog-message.success {
-    color: green;
-  }
-  .dialog-message.error {
-    color: red;
-  }
+/* Style for the dialog box itself */
+.dialog-box {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  width: 80%;
+  max-width: 450px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  text-align: center;
+  position: relative;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+.dialog-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.dialog-box p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.dialog-box input[type="email"] {
+  width: 90%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+.dialog-box input[type="email"]:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* Style for the button container */
+.dialog-buttons {
+  display: flex; /* Enable Flexbox for the buttons */
+  justify-content: flex-end; /* Push buttons to the right */
+  gap: 10px; /* Space between the buttons */
+  margin-top: 20px;
+  background-color: transparent; /* Explicitly transparent */
+}
+
+/* Basic button styling - FORCE VISIBILITY */
+.dialog-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  min-width: 80px; /* Adjust minimum width as needed */
+  transition: background-color 0.3s ease, opacity 0.3s ease, color 0.3s ease; /* Added color transition */
+  opacity: 1 !important; /* Ensure full visibility */
+  color: white !important; /* Default text color for colored buttons */
+}
+.dialog-buttons button:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed;
+  color: #999 !important; /* Disabled text color */
+}
+
+/* Style for the Cancel button (using .btn-secondary) */
+.btn-secondary {
+  background-color: #dc3545 !important; /* Red */
+}
+.btn-secondary:hover:not(:disabled) {
+  background-color: #c82333 !important; /* Darker red on hover */
+}
+
+/* Style for the Send button (using .btn-primary) */
+.btn-primary {
+  background-color: #28a745 !important; /* Green */
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: #1e7e34 !important; /* Darker green on hover */
+}
+
+/* Style for messages inside the dialog */
+.dialog-message {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  min-height: 1.2em;
+  font-weight: bold;
+  text-align: center; /* Center the message */
+}
+.dialog-message.success {
+  color: green;
+}
+.dialog-message.error {
+  color: red;
+}

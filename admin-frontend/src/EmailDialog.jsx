@@ -106,7 +106,7 @@ function EmailDialog({ isOpen, onClose, onSend }) {
         <div className={`dialog-message ${messageType}`}>
           {message}
         </div>
-        <div className="cancle-buttons">
+        <div className="dialog-buttons">
           <button
             onClick={handleCancel}
             className="btn btn-secondary"
@@ -114,8 +114,6 @@ function EmailDialog({ isOpen, onClose, onSend }) {
           >
             Cancel
           </button>
-          </div>
-          <div className="send-buttons">
           <button
             onClick={handleSend} // This button calls the dialog's handleSend
             className="btn btn-primary"

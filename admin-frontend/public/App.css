@@ -7,20 +7,24 @@
 
 .app-header {
   display: flex; /* Use flexbox for layout */
-  justify-content: space-between; /* Pushes title left, actions right */
+  justify-content: center; /* Pushes title left, actions right */
   align-items: center; /* Vertically aligns items in the middle */
   padding: 15px 20px; /* Add some padding */
   border-bottom: 1px solid #eee; /* Optional separator */
   margin-bottom: 20px; /* Space below header */
+  flex-direction: column; /* Stack items vertically */
 }
 
 .app-title {
   margin: 0; /* Remove default margin */
+  text-align: center; /* Center the title */
+  
 }
 
 .header-actions {
   position: relative; /* Needed for absolute positioning of the dropdown */
   display: inline-block; /* Or flex, depending on layout needs */
+  margin-top: 10px;
 }
 
 /* Style your ExportButton and DownloadButton components as needed */
