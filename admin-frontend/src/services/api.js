@@ -1,7 +1,7 @@
 // src/services/api.js (or wherever your API calls live)
 
 // Assuming your backend endpoint is /api/admin/users
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL; // Replace with your actual backend URL
+const API_BASE_URL = 'https://adminpanel-p8sw.onrender.com'; // Replace with your actual backend URL
 
 export const fetchAdminUsers = async () => {
   try {
