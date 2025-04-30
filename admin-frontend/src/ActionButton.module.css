@@ -1,0 +1,67 @@
+/* src/ActionButton.module.css */
+
+/* Base styles remain the same */
+.actionButton {
+    width: 100%;
+    text-align: left;
+    padding: 8px 12px;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333; /* Default text color */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease; /* Add color transition */
+    border-radius: 3px; /* Slight rounding */
+  }
+  
+  /* Common hover for all action buttons */
+  .actionButton:hover {
+    background-color: #f0f0f0; /* Light grey hover */
+  }
+  
+  /* Specific styles for Download */
+  .downloadButton {
+     color: #1b5e20; /* Example: Dark green text */
+  }
+  .downloadButton:hover {
+    background-color: #e6f4ea; /* Light green background on hover */
+    color: #2e7d32; /* Darker green text on hover */
+  }
+  
+  /* Specific styles for Export */
+  .exportButton {
+      color: #0d47a1; 
+  }
+  .exportButton:hover {
+    background-color: #e3f2fd; /* Light blue background on hover */
+    color: #1565c0; /* Darker blue text on hover */
+  }
+  
+  
+  .actionButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: transparent !important; /* Ensure disabled doesn't keep hover color */
+    color: #999 !important;
+  }
+  
+  /* Spinner styles remain the same */
+  .spinner {
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #555;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  

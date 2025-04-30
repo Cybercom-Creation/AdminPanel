@@ -3,6 +3,19 @@ import React, { useState } from 'react';
 import { formatDuration, formatViolations } from '../services/api'; // Adjust path if needed
 import './UserRow.css'; // We'll create this CSS file next
 
+
+// Helper function to format the date/time (you might want a more robust solution)
+const formatStartTime = (timestamp) => {
+  if (!timestamp) return 'N/A';
+  try {
+    // Example: '10/27/2023, 10:30:00 AM' (depends on locale)
+    return new Date(timestamp).toLocaleString();
+  } catch (error) {
+    console.error("Error formatting timestamp:", timestamp, error);
+    return 'Invalid Date';
+  }
+};
+
 function UserRow({ user }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -66,9 +79,11 @@ function UserRow({ user }) {
           )}
         </td>
         <td>
-          {user.screenshotFolderUrl ? (
+          
+          {user.driveFolderLink ? (
              <a
-                href={user.screenshotFolderUrl}
+                // Use driveFolderLink for the href
+                href={user.driveFolderLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-button"
@@ -76,26 +91,38 @@ function UserRow({ user }) {
                 View Folder
              </a>
           ) : (
-             <span>N/A</span>
+             <span>N/A</span> // Show N/A if the link is missing
           )}
         </td>
       </tr>
 
-      {/* Expandable details row (remains the same) */}
       {isExpanded && user.violationDetails && user.violationDetails.length > 0 && (
         <tr className="details-row">
+          {/* Keep colSpan="7" to span the entire width */}
           <td colSpan="7">
             <div className="violation-details-container">
               <h4>Violation Details for {user.name}:</h4>
-              <ul>
-                {user.violationDetails.map((detail, index) => (
-                  <li key={index} className="violation-detail-item">
-                    <strong>Type:</strong> {detail.type || 'Unknown'}
-                    <br />
-                    <strong>Violation Duration:</strong> {formatDuration(detail.duration)}
-                  </li>
-                ))}
-              </ul>
+              {/* Use a table for structured details */}
+              <table className="violation-details-table">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Violation Duration</th>
+                    <th>Started At</th> {/* New Header */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {user.violationDetails.map((detail, index) => (
+                    // Use a unique key if available (like a detail ID), otherwise index is okay for static lists
+                    <tr key={detail.id || index} className="violation-detail-item">
+                       <td>{detail.type || 'Unknown'}</td>
+                       <td>{formatDuration(detail.duration)}</td>
+                       {/* Display the formatted start time */}
+                       <td>{formatStartTime(detail.startTime)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </td>
         </tr>

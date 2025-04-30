@@ -29,6 +29,8 @@
     text-align: center; /* Center text inside */
     position: relative; /* Needed for animation */
   }
+
+  
   
   /* Add Animation */
   @keyframes animatetop {
@@ -62,10 +64,21 @@
   
   
   /* Style for the buttons */
-  .dialog-buttons {
+  .cancle-buttons {
     display: flex;
-    justify-content: space-around; /* Space out buttons */
+    justify-content: space-between; /* Space out buttons */
     margin-top: 20px; /* Increased margin */
+    background-color: #ff0000; /* Red */
+    color: white;
+    gap: 10px; /* Space between buttons */
+  }
+  .send-buttons {
+    display: flex;
+    justify-content: space-between; /* Space out buttons */
+    margin-top: 20px; /* Increased margin */
+    background-color: #00ff4c; /* Green */
+    color: white;
+    gap: 10px; /* Space between buttons */
   }
   
   /* Basic button styling (adapt to your existing button styles) */

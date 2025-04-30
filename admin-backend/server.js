@@ -233,9 +233,9 @@ app.get('/api/admin/users', async (req, res) => {
     
     try {
         // 1. Fetch all users - select necessary fields
-        // Include testDuration and screenshotFolderUrl if they are stored on the User model
+        
         const users = await User.find({})
-            .select('_id name email phone photoBase64 photoDriveLink testDurationMs')
+            .select('_id name email phone photoBase64 photoDriveLink testDurationMs driveFolderLink')
             .lean(); // Use lean for better performance
 
         if (!users || users.length === 0) {
@@ -265,7 +265,8 @@ app.get('/api/admin/users', async (req, res) => {
                         $push: {
                             type: '$triggerEvent',
                             //timestamp: '$createdAt',
-                            duration: { $ifNull: ['$durationMs', 0] } // Use durationMs, default to 0 if null/missing
+                            duration: { $ifNull: ['$durationMs', 0] },// Use durationMs, default to 0 if null/missing
+                            startTime: '$startTime' 
                             //details: '$details' // Include the details field from the log schema
                             // Add other log details you want to show
                         }
@@ -385,7 +386,9 @@ app.get('/api/admin/users', async (req, res) => {
         }
         return {
             type: detail.type || 'Unknown',
-            duration: numericViolationDuration // Use the validated number
+            duration: numericViolationDuration, // Use the validated number
+            startTime: detail.startTime
+
         };
     });
     console.log(`User ${userIdStr} (${user.name}) - Sending: testDuration=${finalTestDuration}, violationDetails=${JSON.stringify(finalViolationDetails)}`);
@@ -398,7 +401,7 @@ app.get('/api/admin/users', async (req, res) => {
                 testDuration: finalTestDuration,
                 violations: userStats.violations, // e.g., { faceMismatch: 2, phoneDetected: 1 }
                 violationDetails: finalViolationDetails, // e.g., [{ type: '...', timestamp: '...', details: '...' }]
-                screenshotFolderUrl: user.photoDriveLink || null, // Use value from User model or null
+                driveFolderLink: user.driveFolderLink || null,
                 totalViolations: userStats.totalViolations // Calculated total for sorting
             };
         });

@@ -21,7 +21,7 @@ export const fetchAdminUsers = async () => {
         testDuration: user.testDuration || 0, // Assuming duration is in seconds
         violations: user.violations || {}, // e.g., { faceMismatch: 2, phoneDetected: 1 }
         violationDetails: user.violationDetails || [], // e.g., [{ type: '...', timestamp: '...', details: '...' }]
-        screenshotFolderUrl: user.screenshotFolderUrl || null,
+        driveFolderLink: user.driveFolderLink || null,
         totalViolations: Object.values(user.violations || {}).reduce((sum, count) => sum + count, 0) // Calculate total for sorting
     }));
   } catch (error) {

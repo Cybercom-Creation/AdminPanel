@@ -1,22 +1,19 @@
 // src/ExportButton.jsx
 import React, { useState } from 'react';
-import styles from './ExportButton.module.css';
+
 import EmailDialog from './EmailDialog'; // Import the dialog component (adjust path if needed)
+import styles from './ActionButton.module.css';
 
 function ExportButton() {
-  // State for the main button feedback (message, loading, error)
-  const [message, setMessage] = useState('');
+  // State for the API call loading state (affects the button)
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  // Removed message and isError state
 
   // State specifically for the dialog
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
 
   // Function to open the dialog
   const handleOpenDialog = () => {
-    // Reset main button message when opening dialog
-    setMessage('');
-    setIsError(false);
     setIsEmailDialogOpen(true);
   };
 
@@ -27,81 +24,57 @@ function ExportButton() {
 
   // Function to handle the actual API call - passed to the dialog
   const handleSendExportEmail = async (email) => {
-    // This function now lives inside ExportButton
-    setIsLoading(true); // Use the main button's loading state
-    setMessage(`Processing export request for ${email}...`); // Update main button message
-    setIsError(false);
+    setIsLoading(true);
+    // Removed setMessage calls
 
-    const backendUrl = `https://adminpanel-p8sw.onrender.com/export`; // Backend export endpoint
+    const backendUrl = `https://adminpanel-p8sw.onrender.com/export`;
 
     try {
       const response = await fetch(backendUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email }),
       });
-
-      const result = await response.json(); // Get backend response { success: boolean, message: string }
-
+      const result = await response.json();
       if (!response.ok) {
-        // Use message from backend response if available
         throw new Error(result.message || `HTTP error! Status: ${response.status}`);
       }
-
-      // Update main button message on success
-      setMessage(result.message || 'Export initiated successfully!');
-      setIsError(false);
-      return { success: true, message: result.message }; // Return success to the dialog
+      // Consider using a global notification system for success
+      console.log('Export initiated successfully!', result.message);
+      alert(result.message || 'Export email sent successfully!'); // Simple alert as placeholder
+      return { success: true, message: result.message };
 
     } catch (error) {
       console.error('Error during export request:', error);
-      // Update main button message on error
-      setMessage(`Error: ${error.message}`);
-      setIsError(true);
-      return { success: false, message: error.message }; // Return error to the dialog
+      // Consider using a global notification system for error
+      alert(`Export Error: ${error.message}`); // Simple alert as placeholder
+      return { success: false, message: error.message };
     } finally {
-      setIsLoading(false); // Stop the main button's loading state
+      setIsLoading(false);
     }
   };
 
-  
-
-  const messageClass = isError ? styles.error : styles.success;
-
+  // Render only the button and the dialog (dialog is likely modal and doesn't affect layout when hidden)
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Export Data via Email</h2>
-      <p className={styles.description}>
-        Click the button, enter the recipient email, and the user/log data report (two CSV files) will be sent.
-      </p>
-
-      {/* This button now opens the dialog */}
+    <>
       <button
-        className={styles.exportButton}
-        onClick={handleOpenDialog} // Changed from handleExport
-        disabled={isLoading} // Disable if the API call is in progress
+        className={`${styles.actionButton} ${styles.exportButton}`}
+        onClick={handleOpenDialog}
+        disabled={isLoading}
+        title="Send user and log data report via email" // Add a tooltip
       >
-        {/* Keep loading indicator if needed, tied to API call state */}
         {isLoading && <div className={styles.spinner}></div>}
-        {isLoading ? 'Processing...' : 'Export Data to Email'}
+        {isLoading ? 'Processing...' : 'Export to Email'}
       </button>
 
-      {/* Display the main feedback message */}
-      {message && (
-        <p className={`${styles.message} ${messageClass}`}>
-          {message}
-        </p>
-      )}
-
       {/* Render the Dialog Component conditionally */}
+      {/* The dialog manages its own visibility */}
       <EmailDialog
         isOpen={isEmailDialogOpen}
         onClose={handleCloseDialog}
-        onSend={handleSendExportEmail} // Pass the API call handler
+        onSend={handleSendExportEmail}
       />
-    </div>
+    </>
   );
 }
 

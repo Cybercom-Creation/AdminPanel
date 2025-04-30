@@ -99,6 +99,52 @@
       margin-bottom: 8px;
       color: #ccc; /* Lighter text color */
   }
+
+  .violation-details-container {
+    padding: 15px;
+    background-color: #f9f9f9; /* Light background for the details section */
+    border-top: 1px solid #eee;
+  }
+  
+  .violation-details-container h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .violation-details-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes space between borders */
+    margin-top: 10px;
+  }
+  
+  .violation-details-table th,
+  .violation-details-table td {
+    border: 1px solid #ddd; /* Light grey borders */
+    padding: 8px 12px; /* Add some padding */
+    text-align: left; /* Align text to the left */
+    vertical-align: top; /* Align content to the top */
+  }
+  
+  .violation-details-table th {
+    background-color: #f2f2f2; /* Light grey background for headers */
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .violation-details-table tbody tr:nth-child(odd) {
+    background-color: #fff; /* Zebra striping - optional */
+  }
+  
+  .violation-details-table tbody tr:hover {
+    background-color: #eaf6ff; /* Highlight row on hover - optional */
+  }
+  
+  /* Adjustments for specific columns if needed */
+  .violation-details-table td:nth-child(2), /* Duration column */
+  .violation-details-table td:nth-child(3) { /* Started At column */
+    white-space: nowrap; /* Prevent wrapping if desired */
+  }
   
   /* Add light theme adjustments if necessary using media query */
   @media (prefers-color-scheme: light) {
