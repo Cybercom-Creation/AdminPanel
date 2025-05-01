@@ -7,12 +7,11 @@
 
 .app-header {
   display: flex; /* Use flexbox for layout */
-  justify-content: center; /* Pushes title left, actions right */
+  justify-content: start; /* Pushes title left, actions right */
   align-items: center; /* Vertically aligns items in the middle */
   padding: 15px 20px; /* Add some padding */
   border-bottom: 1px solid #eee; /* Optional separator */
   margin-bottom: 20px; /* Space below header */
-  flex-direction: column; /* Stack items vertically */
 }
 
 .app-title {
@@ -22,11 +21,20 @@
 }
 
 .header-actions {
-  position: relative; /* Needed for absolute positioning of the dropdown */
-  display: inline-block; /* Or flex, depending on layout needs */
+  position: absolute; /* Needed for absolute positioning of the dropdown */
   margin-top: 10px;
+  top: 20px;  /* Adjust distance from top */
+  right: 30px;
+  display: inline-block;
 }
 
+/* Style for the avatar image inside the button */
+.admin-avatar-icon {
+  width: 24px; /* Adjust size as needed */
+  height: 24px; /* Adjust size as needed */
+  border-radius: 40%; /* Make it circular */
+  object-fit: cover; /* Ensure image covers the area well */
+}
 /* Style your ExportButton and DownloadButton components as needed */
 /* For example, give them consistent padding/margins */
 

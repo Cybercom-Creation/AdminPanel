@@ -70,30 +70,32 @@ function UserRow({ user }) {
           )}
         </td>
         <td>
+          
+          {user.driveFolderLink ? (
+             <a
+                href={user.driveFolderLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="icon-link screenshot-icon-link" // Use new classes for styling
+                title="View Drive Folder"
+             >
+                📁 {/* Folder Icon */}
+             </a>
+          ) : (
+            <span className="icon-link screenshot-icon-disabled" title="No screenshots Available">📁</span> // Disabled icon
+          )}
+        </td>
+        <td>
           {user.violationDetails && user.violationDetails.length > 0 ? (
             <button onClick={() => setIsExpanded(!isExpanded)} className="details-button">
-              {isExpanded ? 'Hide' : 'Show'} Details
+              {isExpanded ? 'Less' : 'More'} {/* Static text */}
+              <span className="details-arrow">{isExpanded ? ' ▲' : ' ▼'}</span> {/* Dynamic arrow */}
             </button>
           ) : (
             <span>No Details</span>
           )}
         </td>
-        <td>
-          
-          {user.driveFolderLink ? (
-             <a
-                // Use driveFolderLink for the href
-                href={user.driveFolderLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-button"
-             >
-                View Folder
-             </a>
-          ) : (
-             <span>N/A</span> // Show N/A if the link is missing
-          )}
-        </td>
+        
       </tr>
 
       {isExpanded && user.violationDetails && user.violationDetails.length > 0 && (
@@ -107,7 +109,7 @@ function UserRow({ user }) {
                 <thead>
                   <tr>
                     <th>Type</th>
-                    <th>Violation Duration</th>
+                    <th>Duration</th>
                     <th>Started At</th> {/* New Header */}
                   </tr>
                 </thead>

@@ -345,6 +345,7 @@ app.get('/api/admin/users', async (req, res) => {
         // 5. Combine user data with their violation stats
         const usersWithData = users.map(user => {
             const userIdStr = user._id.toString();
+            const userEmail = user.email;
             const userStats = statsMap.get(userIdStr) || { violations: {}, violationDetails: [], totalViolations: 0 }; // Default if no logs found
 
             // Determine the picture URLs - use photoDriveLink if available, otherwise default
@@ -394,7 +395,7 @@ app.get('/api/admin/users', async (req, res) => {
     console.log(`User ${userIdStr} (${user.name}) - Sending: testDuration=${finalTestDuration}, violationDetails=${JSON.stringify(finalViolationDetails)}`);
             return {
                 // Fields expected by the frontend (UserRow.jsx)
-                id: userIdStr,
+                id: userEmail,
                 name: user.name || 'Unknown User',
                 smallPicUrl: imageUrl,
                 largePicUrl: imageUrl,

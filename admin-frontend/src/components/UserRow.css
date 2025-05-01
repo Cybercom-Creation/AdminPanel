@@ -85,7 +85,7 @@
   }
   
   .user-avatar-large {
-    width: 150px;
+    width: 100%;
     height: auto;
     display: block;
     border-radius: 4px;
@@ -190,6 +190,48 @@
       color: #333;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+    /* --- Icon Link/Button Styles --- */
+    .icon-link {
+      display: inline-block; /* Allows padding/margin */
+      font-size: 1.5em; /* Make icon larger */
+      text-decoration: none; /* Remove underline from link */
+      color: #a0c4ff; /* Example icon color - adjust to your theme */
+      padding: 2px 5px; /* Small padding around icon */
+      border-radius: 4px; /* Slightly rounded corners for hover effect */
+      transition: background-color 0.2s ease; /* Smooth hover */
+    }
+
+    .screenshot-icon-link:hover {
+      background-color: rgba(255, 255, 255, 0.1); /* Subtle hover background */
+      cursor: pointer;
+    }
+
+    .screenshot-icon-disabled {
+      opacity: 0.4; /* Make it look faded */
+      cursor: not-allowed; /* Indicate it's not clickable */
+    }
+
+    /* Style for the arrow in the details button */
+    .details-arrow {
+      display: inline-block; /* Allows minor adjustments if needed */
+      margin-left: 4px; /* Add a small space before the arrow */
+    }
+
+    /* Make the details button look like plain text */
+    .details-button {
+      background: none; /* Remove background */
+      border: none; /* Remove border */
+      padding: 0; /* Remove padding */
+      color: #000000; /* Set text color (adjust to your theme) */
+      cursor: pointer; /* Keep the pointer cursor */
+      font: inherit; /* Inherit font from parent */
+      text-align: left; /* Align text to the left if needed */
+    }
+    /* Remove focus outline on the details button */
+    .details-button:focus {
+      outline: none;
+    }
+
     .expand-button, .link-button {
       background-color: #e9e9e9;
       border: 1px solid #ccc;

@@ -46,12 +46,14 @@ function App() {
       {/* Header Section */}
       <header className="app-header">
         <h1 className="app-title">Admin Dashboard</h1>
-        {/* Action Buttons Container - now holds the dropdown trigger */}
-        <div className="header-actions" ref={menuRef}> {/* Attach ref here */}
+      </header>
+      {/* Action Buttons Container - now holds the dropdown trigger */}
+      <div className="header-actions" ref={menuRef}> {/* Attach ref here */}
           {/* Button to trigger the dropdown */}
           <button onClick={toggleMenu} className="action-menu-trigger">
-            Actions &#9662; {/* Simple text and down arrow */}
-            {/* You could replace text with an icon (e.g., gear, dots) */}
+            <img src="/defaultAvtar.png" alt="Admin" className="admin-avatar-icon" />
+            <span className="admin-text">Admin</span> {/* Text */}
+            <span className="more-indicator">...</span> {/* More Indicator */}
           </button>
 
           {/* Conditionally render the dropdown menu */}
@@ -62,7 +64,6 @@ function App() {
             </div>
           )}
         </div>
-      </header>
 
       {/* Main Content Area */}
       <main className="app-main-content">

@@ -93,8 +93,8 @@ function UserTable() {
                <th onClick={() => requestSort('totalViolations')}> {/* Sort by total count */}
                 Violations{getSortIndicator('totalViolations')}
               </th>
-              <th>Details</th> {/* Action column, not sortable */}
               <th>Screenshots</th> {/* Action column, not sortable */}
+              <th>Details</th> {/* Action column, not sortable */}
             </tr>
           </thead>
           <tbody>
