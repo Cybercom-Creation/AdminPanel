@@ -235,7 +235,7 @@ app.get('/api/admin/users', async (req, res) => {
         // 1. Fetch all users - select necessary fields
         
         const users = await User.find({})
-            .select('_id name email phone photoBase64 photoDriveLink testDurationMs driveFolderLink')
+            .select('_id name email phone photoBase64 photoDriveLink testDurationMs driveFolderLink testStartTime testEndTime') // Select only the fields you need
             .lean(); // Use lean for better performance
 
         if (!users || users.length === 0) {
@@ -399,6 +399,8 @@ app.get('/api/admin/users', async (req, res) => {
                 name: user.name || 'Unknown User',
                 smallPicUrl: imageUrl,
                 largePicUrl: imageUrl,
+                testStartTime: user.testStartTime,
+                testEndTime: user.testEndTime,
                 testDuration: finalTestDuration,
                 violations: userStats.violations, // e.g., { faceMismatch: 2, phoneDetected: 1 }
                 violationDetails: finalViolationDetails, // e.g., [{ type: '...', timestamp: '...', details: '...' }]

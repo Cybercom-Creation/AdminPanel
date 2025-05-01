@@ -1,6 +1,6 @@
 /* src/components/UserTable.css */
 .user-table-container {
-    width: 95%;
+    width: 100%;
     margin: 20px auto;
     padding: 15px;
     background-color: #2c2c2c; /* Dark background */
@@ -22,7 +22,6 @@
     border-collapse: collapse; /* Removes space between cells */
     margin-top: 15px;
     table-layout: fixed; /* Helps with column widths */
-    min-width: 850px; /* Increased minimum width slightly */
   }
   
   .user-table th,
@@ -72,36 +71,53 @@
   /* Name Column */
   .user-table th:nth-child(3),
   .user-table td:nth-child(3) {
-    width: 22%; /* Slightly increased */
+    width: 15%; /* Slightly increased */
     min-width: 160px;
   }
+
+   /* Start Time Column (New) */
+   .user-table th:nth-child(4),
+   .user-table td:nth-child(4) {
+     width: 15%; /* Adjust percentage */
+     min-width: 140px;
+     text-align: center; /* Or left/right as preferred */
+   }
+ 
+   /* End Time Column (New) */
+   .user-table th:nth-child(5),
+   .user-table td:nth-child(5) {
+     width: 15%; /* Adjust percentage */
+     min-width: 140px;
+     text-align: center; /* Or left/right as preferred */
+   }
   
   /* Duration Column */
-  .user-table th:nth-child(4),
-  .user-table td:nth-child(4) {
+  .user-table th:nth-child(6),
+  .user-table td:nth-child(6) {
     width: 12%;
     min-width: 100px;
+    text-align: center;
   }
   
   /* Violations Column */
-  .user-table th:nth-child(5),
-  .user-table td:nth-child(5) {
+  .user-table th:nth-child(7),
+  .user-table td:nth-child(7) {
     width: 10%; /* Reduced width, will center content in UserRow.css */
     min-width: 80px;
     text-align: center; /* Center the header text */
   }
   
   /* Details Column */
-  .user-table th:nth-child(6),
-  .user-table td:nth-child(6) {
+  .user-table th:nth-child(8),
+  .user-table td:nth-child(8) {
     width: 13%; /* Increased width */
     min-width: 110px;
     text-align: center;
   }
   
   /* Screenshots Column */
-  .user-table th:nth-child(7),
-  .user-table td:nth-child(7) {
+  .user-table th:nth-child(9),
+  .user-table td:nth-child(9) {
     width: 15%;
     min-width: 120px;
     text-align: center;

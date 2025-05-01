@@ -27,7 +27,7 @@ function UserRow({ user }) {
     console.warn("UserRow received invalid user prop:", user);
     return (
         <tr>
-            <td colSpan="7">Invalid user data</td> {/* Adjust colSpan */}
+            <td colSpan="9">Invalid user data</td> {/* Adjust colSpan */}
         </tr>
     );
   }
@@ -61,6 +61,8 @@ function UserRow({ user }) {
           </div>
         </td>
         <td>{user.name}</td>
+        <td>{formatStartTime(user.testStartTime)}</td>
+        <td>{formatStartTime(user.testEndTime)}</td> 
         <td>{formatDuration(user.testDuration)}</td>
         <td>
           {user.totalViolations > 0 ? (

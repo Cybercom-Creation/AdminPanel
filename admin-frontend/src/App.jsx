@@ -45,7 +45,7 @@ function App() {
     <div className="app-container">
       {/* Header Section */}
       <header className="app-header">
-        <h1 className="app-title">Admin Dashboard</h1>
+        <h1 className="app-title">Admin</h1>
       </header>
       {/* Action Buttons Container - now holds the dropdown trigger */}
       <div className="header-actions" ref={menuRef}> {/* Attach ref here */}
@@ -53,7 +53,6 @@ function App() {
           <button onClick={toggleMenu} className="action-menu-trigger">
             <img src="/defaultAvtar.png" alt="Admin" className="admin-avatar-icon" />
             <span className="admin-text">Admin</span> {/* Text */}
-            <span className="more-indicator">...</span> {/* More Indicator */}
           </button>
 
           {/* Conditionally render the dropdown menu */}

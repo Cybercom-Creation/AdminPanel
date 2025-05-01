@@ -83,10 +83,12 @@ function UserTable() {
               <th onClick={() => requestSort('id')}>
                 ID{getSortIndicator('id')}
               </th>
-              <th>Pic</th> {/* Not typically sortable */}
+              <th>User</th> {/* Not typically sortable */}
               <th onClick={() => requestSort('name')}>
                 Name{getSortIndicator('name')}
               </th>
+              <th>Start Time</th> 
+              <th>End Time</th>   
               <th onClick={() => requestSort('testDuration')}>
                 Duration{getSortIndicator('testDuration')}
               </th>
