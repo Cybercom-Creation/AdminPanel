@@ -87,8 +87,6 @@ function UserTable() {
               <th onClick={() => requestSort('name')}>
                 Name{getSortIndicator('name')}
               </th>
-              <th>Start Time</th> 
-              <th>End Time</th>   
               <th onClick={() => requestSort('testDuration')}>
                 Duration{getSortIndicator('testDuration')}
               </th>

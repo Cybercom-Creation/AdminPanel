@@ -15,6 +15,7 @@
     gap: 8px;
     transition: background-color 0.2s ease, color 0.2s ease; /* Add color transition */
     border-radius: 3px; /* Slight rounding */
+    white-space: nowrap;
   }
   
   /* Common hover for all action buttons */

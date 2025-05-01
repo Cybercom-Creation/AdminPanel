@@ -27,7 +27,7 @@ function UserRow({ user }) {
     console.warn("UserRow received invalid user prop:", user);
     return (
         <tr>
-            <td colSpan="9">Invalid user data</td> {/* Adjust colSpan */}
+            <td colSpan="7">Invalid user data</td> {/* Adjust colSpan */}
         </tr>
     );
   }
@@ -61,14 +61,12 @@ function UserRow({ user }) {
           </div>
         </td>
         <td>{user.name}</td>
-        <td>{formatStartTime(user.testStartTime)}</td>
-        <td>{formatStartTime(user.testEndTime)}</td> 
         <td>{formatDuration(user.testDuration)}</td>
         <td>
           {user.totalViolations > 0 ? (
             <span className="violations-count">{user.totalViolations}</span>
           ) : (
-            'None'
+            '0'
           )}
         </td>
         <td>
@@ -105,14 +103,17 @@ function UserRow({ user }) {
           {/* Keep colSpan="7" to span the entire width */}
           <td colSpan="7">
             <div className="violation-details-container">
-              <h4>Violation Details for {user.name}:</h4>
+              <div className="details-header">
+                <h4 className="violation-title">Violation Details for {user.name}:</h4>
+                <h4 className="violation-title">Test started at: {formatStartTime(user.testStartTime)}</h4>
+              </div>
               {/* Use a table for structured details */}
               <table className="violation-details-table">
                 <thead>
                   <tr>
                     <th>Type</th>
                     <th>Duration</th>
-                    <th>Started At</th> {/* New Header */}
+                    <th>Time</th>
                   </tr>
                 </thead>
                 <tbody>

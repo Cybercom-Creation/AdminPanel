@@ -75,49 +75,33 @@
     min-width: 160px;
   }
 
-   /* Start Time Column (New) */
-   .user-table th:nth-child(4),
-   .user-table td:nth-child(4) {
-     width: 15%; /* Adjust percentage */
-     min-width: 140px;
-     text-align: center; /* Or left/right as preferred */
-   }
- 
-   /* End Time Column (New) */
-   .user-table th:nth-child(5),
-   .user-table td:nth-child(5) {
-     width: 15%; /* Adjust percentage */
-     min-width: 140px;
-     text-align: center; /* Or left/right as preferred */
-   }
-  
   /* Duration Column */
-  .user-table th:nth-child(6),
-  .user-table td:nth-child(6) {
+  .user-table th:nth-child(4),
+  .user-table td:nth-child(4) {
     width: 12%;
     min-width: 100px;
     text-align: center;
   }
   
   /* Violations Column */
-  .user-table th:nth-child(7),
-  .user-table td:nth-child(7) {
+  .user-table th:nth-child(5),
+  .user-table td:nth-child(5) {
     width: 10%; /* Reduced width, will center content in UserRow.css */
     min-width: 80px;
     text-align: center; /* Center the header text */
   }
   
   /* Details Column */
-  .user-table th:nth-child(8),
-  .user-table td:nth-child(8) {
+  .user-table th:nth-child(6),
+  .user-table td:nth-child(6) {
     width: 13%; /* Increased width */
     min-width: 110px;
     text-align: center;
   }
   
   /* Screenshots Column */
-  .user-table th:nth-child(9),
-  .user-table td:nth-child(9) {
+  .user-table th:nth-child(7),
+  .user-table td:nth-child(7) {
     width: 15%;
     min-width: 120px;
     text-align: center;
