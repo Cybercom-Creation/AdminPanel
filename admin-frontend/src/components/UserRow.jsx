@@ -9,7 +9,9 @@ const formatStartTime = (timestamp) => {
   if (!timestamp) return 'N/A';
   try {
     // Example: '10/27/2023, 10:30:00 AM' (depends on locale)
-    return new Date(timestamp).toLocaleString();
+    return new Date(timestamp).toLocaleTimeString([], {hour: '2-digit', // e.g., '09' or '18'
+      minute: '2-digit', // e.g., '05' or '30'
+      hour12: false });
   } catch (error) {
     console.error("Error formatting timestamp:", timestamp, error);
     return 'Invalid Date';
@@ -27,7 +29,7 @@ function UserRow({ user }) {
     console.warn("UserRow received invalid user prop:", user);
     return (
         <tr>
-            <td colSpan="7">Invalid user data</td> {/* Adjust colSpan */}
+            <td colSpan="8">Invalid user data</td> {/* Adjust colSpan */}
         </tr>
     );
   }
@@ -61,6 +63,7 @@ function UserRow({ user }) {
           </div>
         </td>
         <td>{user.name}</td>
+        <td>{formatStartTime(user.testStartTime)}</td>
         <td>{formatDuration(user.testDuration)}</td>
         <td>
           {user.totalViolations > 0 ? (
@@ -84,15 +87,13 @@ function UserRow({ user }) {
           ) : (
             <span className="icon-link screenshot-icon-disabled" title="No screenshots Available">📁</span> // Disabled icon
           )}
-        </td>
-        <td>
+
           {user.violationDetails && user.violationDetails.length > 0 ? (
             <button onClick={() => setIsExpanded(!isExpanded)} className="details-button">
-              {isExpanded ? 'Less' : 'More'} {/* Static text */}
-              <span className="details-arrow">{isExpanded ? ' ▲' : ' ▼'}</span> {/* Dynamic arrow */}
+              {isExpanded ? '−' : '+'} {/* Use Minus or Plus sign */}
             </button>
           ) : (
-            <span>No Details</span>
+            <span></span>
           )}
         </td>
         
@@ -104,16 +105,16 @@ function UserRow({ user }) {
           <td colSpan="7">
             <div className="violation-details-container">
               <div className="details-header">
-                <h4 className="violation-title">Violation Details for {user.name}:</h4>
+                <h4 className="violation-title">Alert Details</h4>
                 <h4 className="violation-title">Test started at: {formatStartTime(user.testStartTime)}</h4>
               </div>
               {/* Use a table for structured details */}
               <table className="violation-details-table">
                 <thead>
                   <tr>
-                    <th>Type</th>
-                    <th>Duration</th>
+                    <th>Alert type</th>
                     <th>Time</th>
+                    <th>Duration</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -121,9 +122,9 @@ function UserRow({ user }) {
                     // Use a unique key if available (like a detail ID), otherwise index is okay for static lists
                     <tr key={detail.id || index} className="violation-detail-item">
                        <td>{detail.type || 'Unknown'}</td>
+                       <td>{formatStartTime(detail.startTime)}</td>
                        <td>{formatDuration(detail.duration)}</td>
                        {/* Display the formatted start time */}
-                       <td>{formatStartTime(detail.startTime)}</td>
                     </tr>
                   ))}
                 </tbody>

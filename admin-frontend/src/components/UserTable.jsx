@@ -5,6 +5,16 @@ import { fetchAdminUsers } from '../services/api';
 import UserRow from './UserRow'; // Path within the same components folder
 import './UserTable.css'; // Path within the same components folder
 
+const formatStartTime = (timestamp) => {
+  if (!timestamp) return 'N/A';
+  try {
+    return new Date(timestamp).toLocaleDateString();
+  } catch (error) {
+    console.error("Error formatting timestamp:", timestamp, error);
+    return 'Invalid Date';
+  }
+};
+
 function UserTable() {
     
   const [users, setUsers] = useState([]);
@@ -73,7 +83,10 @@ function UserTable() {
 
   return (
     <div className="user-table-container">
-      <h2>User Management</h2>
+      <div className="user-table-header">
+        <h2>User Management</h2>
+        <h2>Date: {formatStartTime(sortedUsers[14].testStartTime)}</h2>
+      </div>
       {users.length === 0 ? (
         <p>No users found.</p>
       ) : (
@@ -87,14 +100,14 @@ function UserTable() {
               <th onClick={() => requestSort('name')}>
                 Name{getSortIndicator('name')}
               </th>
+              <th>Start Time</th>
               <th onClick={() => requestSort('testDuration')}>
                 Duration{getSortIndicator('testDuration')}
               </th>
                <th onClick={() => requestSort('totalViolations')}> {/* Sort by total count */}
-                Violations{getSortIndicator('totalViolations')}
+                Alerts{getSortIndicator('totalViolations')}
               </th>
-              <th>Screenshots</th> {/* Action column, not sortable */}
-              <th>Details</th> {/* Action column, not sortable */}
+              <th>Actions</th> {/* Action column, not sortable */}
             </tr>
           </thead>
           <tbody>
