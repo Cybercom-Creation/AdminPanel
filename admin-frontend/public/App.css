@@ -10,7 +10,6 @@
   justify-content: start; /* Pushes title left, actions right */
   align-items: center; /* Vertically aligns items in the middle */
   padding: 15px 20px; /* Add some padding */
-  border-bottom: 1px solid #eee; /* Optional separator */
   margin-bottom: 20px; /* Space below header */
 }
 

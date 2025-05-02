@@ -43,8 +43,25 @@ function UserTable() {
     let sortableItems = [...users];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
-        let aValue = a[sortConfig.key];
-        let bValue = b[sortConfig.key];
+        const key = sortConfig.key;
+        let aValue = a[key];
+        let bValue = b[key];
+
+        // Specific handling for date/time sorting
+        if (key === 'testStartTime') {
+          // Convert to numbers (timestamps) for reliable comparison
+          // Handle potential invalid dates by treating them as 0 or another default
+          const dateA = aValue ? new Date(aValue).getTime() : 0;
+          const dateB = bValue ? new Date(bValue).getTime() : 0;
+
+          if (dateA < dateB) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (dateA > dateB) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+          return 0;
+        }
 
         // Handle potential null/undefined or different types if necessary
         // Basic comparison for strings and numbers:
@@ -100,7 +117,9 @@ function UserTable() {
               <th onClick={() => requestSort('name')}>
                 Name{getSortIndicator('name')}
               </th>
-              <th>Start Time</th>
+              <th onClick={() => requestSort('testStartTime')}>
+                Start Time{getSortIndicator('testStartTime')}
+              </th>
               <th onClick={() => requestSort('testDuration')}>
                 Duration{getSortIndicator('testDuration')}
               </th>

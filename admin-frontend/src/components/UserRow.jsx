@@ -34,7 +34,25 @@ function UserRow({ user }) {
     );
   }
 
-  
+  const formatViolationType = (type) => {
+    if (!type) return 'Unknown';
+    switch (type.toLowerCase()) {
+      case 'high_noise':
+        return 'High Noise';
+      case 'tab_switch':
+        return 'App Switch';
+      case 'no_face':
+        return 'No Face';
+      case 'multiple_face':
+        return 'Multi Face';
+      case 'screenshare_stop':
+        return 'Screen Share Stop';
+      case 'incorrect_screen_share':
+        return 'Incorrect Screen Share';
+      default:
+        return type; 
+    }
+  };  
 
   return (
     <>
@@ -93,7 +111,7 @@ function UserRow({ user }) {
               {isExpanded ? '−' : '+'} {/* Use Minus or Plus sign */}
             </button>
           ) : (
-            <span></span>
+            <span>{'\u00A0\u00A0\u00A0'}</span>
           )}
         </td>
         
@@ -121,7 +139,7 @@ function UserRow({ user }) {
                   {user.violationDetails.map((detail, index) => (
                     // Use a unique key if available (like a detail ID), otherwise index is okay for static lists
                     <tr key={detail.id || index} className="violation-detail-item">
-                       <td>{detail.type || 'Unknown'}</td>
+                       <td>{formatViolationType(detail.type)}</td>
                        <td>{formatStartTime(detail.startTime)}</td>
                        <td>{formatDuration(detail.duration)}</td>
                        {/* Display the formatted start time */}
