@@ -102,7 +102,7 @@ function UserTable() {
     <div className="user-table-container">
       <div className="user-table-header">
         <h2>User Management</h2>
-        <h2>Date: {formatStartTime(sortedUsers[14].testStartTime)}</h2>
+        <h2>Date: {'02/05/2025'}</h2>
       </div>
       {users.length === 0 ? (
         <p>No users found.</p>
