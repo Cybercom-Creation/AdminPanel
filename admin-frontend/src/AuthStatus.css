@@ -1,0 +1,41 @@
+/* src/App.css or a dedicated component CSS file */
+
+.auth-status {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between text and button */
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .auth-status button {
+    padding: 8px 15px;
+    background-color: #dc3545; /* Red for sign out */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  .auth-status button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Adjust header layout if needed to place AuthStatus correctly */
+  header {
+    display: flex;
+    justify-content: space-between; /* Pushes AuthStatus to the right */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa; /* Light header background */
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  header h1 {
+      margin: 0;
+  }
+  

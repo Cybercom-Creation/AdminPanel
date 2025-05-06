@@ -5,7 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose'); // Import Mongoose
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-
+const authRoutes = require('./routes/auth');
 const { createObjectCsvStringifier } = require('csv-writer');
 const archiver = require('archiver');
 
@@ -221,6 +221,8 @@ async function generateUserCsvData() {
 
 
 // --- API Endpoints ---
+// --- Routes ---
+app.use('/api/auth', authRoutes); // Mount authentication routes
 
 // Basic route
 app.get('/', (req, res) => {

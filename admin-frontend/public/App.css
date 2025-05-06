@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width: 100%;
 }
 
 .app-header {
@@ -115,6 +116,8 @@
 .app-main-content {
   padding: 0 20px; /* Padding for the main content area */
 }
+
+
 
 
 .logo {

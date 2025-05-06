@@ -91,7 +91,12 @@ function UserTable() {
   }
 
   if (isLoading) {
-    return <div>Loading user data...</div>;
+    return (
+      <div className="loading-spinner-container">
+        <div className="loading-spinner"></div>
+        <p>Loading user data...</p>
+      </div>
+    );
   }
 
   if (error) {
