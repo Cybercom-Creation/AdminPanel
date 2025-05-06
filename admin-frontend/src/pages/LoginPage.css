@@ -51,6 +51,25 @@
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
   }
   
+  .show-password-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Keep consistent spacing */
+    font-size: 0.9rem;
+  }
+  
+  .show-password-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: auto; /* Override default input width */
+    /* Ensure visibility */
+    opacity: 1;
+    position: static; /* Ensure it's not accidentally positioned off-screen */
+    /* Add a little explicit size if auto isn't working, though usually not needed */
+    /* min-width: 13px; 
+    min-height: 13px; */
+    cursor: pointer; /* Make it clear it's clickable */
+  }
+  
   .login-button {
     width: 100%;
     padding: 12px;

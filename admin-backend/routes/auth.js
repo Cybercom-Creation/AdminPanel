@@ -10,25 +10,44 @@ const router = express.Router();
 // --- Login Route ---
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  //const { email, password } = req.body;
+    // The 'email' field from the frontend can now contain either an email or a username
+    const { email: identifier, password } = req.body; 
 
-  // Basic validation
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required.' });
+
+//   // Basic validation
+//   if (!email || !password) {
+//     return res.status(400).json({ message: 'Email and password are required.' });
+//   }
+
+    if (!identifier || !password) {
+    return res.status(400).json({ message: 'Email/Username and password are required.' });
   }
 
   try {
     // 1. Find user by email
-    const user = await AdminUser.findOne({ email: email.toLowerCase() });
+    //const user = await AdminUser.findOne({ email: email.toLowerCase() });
+
+     // 1. Find user by identifier (which can be an email or a username)
+            //    Emails are stored in lowercase, so we search for email in lowercase.
+            //    Usernames are stored as entered (case-sensitive in this setup unless schema changes).
+            const user = await AdminUser.findOne({
+                $or: [
+                  { email: identifier.toLowerCase() },
+                  { username: identifier }
+                ]
+              });
 
     if (!user) {
-      console.log(`Login attempt failed: User not found for email ${email}`);
+      //console.log(`Login attempt failed: User not found for email ${email}`);
+      console.log(`Login attempt failed: User not found for identifier ${identifier}`);
       return res.status(401).json({ message: 'Invalid credentials.' }); // Generic error
     }
 
     // 2. Check if user is active
     if (!user.is_active) {
-        console.log(`Login attempt failed: User ${email} is inactive.`);
+     //console.log(`Login attempt failed: User ${email} is inactive.`);
+        console.log(`Login attempt failed: User not found for identifier ${identifier}`);
         return res.status(403).json({ message: 'Account is inactive.' });
     }
 
@@ -36,7 +55,8 @@ router.post('/login', async (req, res) => {
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-      console.log(`Login attempt failed: Incorrect password for email ${email}`);
+      //console.log(`Login attempt failed: Incorrect password for email ${email}`);
+      console.log(`Login attempt failed: Incorrect password for user ${user.email} (identifier: ${identifier})`);
       return res.status(401).json({ message: 'Invalid credentials.' }); // Generic error
     }
 

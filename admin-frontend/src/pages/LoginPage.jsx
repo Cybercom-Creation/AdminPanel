@@ -7,6 +7,7 @@ import './LoginPage.css'; // Create this CSS file for styling
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const { login, isLoading, error, clearError } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,9 +42,9 @@ function LoginPage() {
         {error && <AlertOverlay message={error} onClose={clearError} />}
 
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email or Username</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -54,13 +55,23 @@ function LoginPage() {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             disabled={isLoading}
           />
+          </div>
+        <div className="form-group show-password-group">
+          <input
+            type="checkbox"
+            id="showPassword"
+            checked={showPassword}
+            onChange={() => setShowPassword(!showPassword)}
+            disabled={isLoading}
+          />
+          <label htmlFor="showPassword">Show Password</label>
         </div>
         <button type="submit" disabled={isLoading} className="login-button">
           {isLoading ? 'Logging in...' : 'Login'}

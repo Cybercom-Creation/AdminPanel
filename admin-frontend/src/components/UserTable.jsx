@@ -15,7 +15,7 @@ const formatStartTime = (timestamp) => {
   }
 };
 
-function UserTable() {
+function UserTable({ setIsContentLoading }) {
     
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +38,13 @@ function UserTable() {
     };
     loadUsers();
   }, []); // Empty dependency array means this runs once on mount
+
+  useEffect(() => {
+    // Pass the UserTable's loading state up to AppLayout
+    if (setIsContentLoading) {
+      setIsContentLoading(isLoading);
+    }
+  }, [isLoading, setIsContentLoading]);
 
   const sortedUsers = useMemo(() => {
     let sortableItems = [...users];

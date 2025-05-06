@@ -43,6 +43,8 @@ function AuthStatus() {
   const authStatus = AuthStatus(); // Call AuthStatus to get its return value
   const { handleLogout, isAuthenticated } = authStatus; // Destructure from the returned object
 
+  const [isContentLoading, setIsContentLoading] = useState(false); // New state for content loading
+
   const menuRef = useRef(null);
 
   // Function to toggle the menu
@@ -75,7 +77,7 @@ function AuthStatus() {
     <div className="app-container">
       {/* Header Section */}
       <header className="app-header">
-        <h1 className="app-title">Admin Panel</h1> {/* Changed title slightly for clarity */}
+      <h1 className="app-title">{!isContentLoading ? 'Admin' : ''}</h1>
         {/* The AuthStatus component is no longer directly rendered here for its text */}
       </header>
       {/* Action Buttons Container - now holds the dropdown trigger */}
@@ -104,7 +106,7 @@ function AuthStatus() {
 
       {/* Main Content Area */}
       <main className="app-main-content">
-        {children} {/* Render the protected page component passed as children */}
+        {React.cloneElement(children, { setIsContentLoading })}
       </main>
     </div>
   );
