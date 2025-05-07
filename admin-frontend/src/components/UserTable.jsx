@@ -114,7 +114,12 @@ function UserTable({ setIsContentLoading }) {
     <div className="user-table-container">
       <div className="user-table-header">
         <h2>User Management</h2>
-        <h2>Date: {'02/05/2025'}</h2>
+        <h2>Date: {new Date().toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          })}
+        </h2>
       </div>
       {users.length === 0 ? (
         <p>No users found.</p>
