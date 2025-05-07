@@ -103,9 +103,9 @@ function AuthStatus() {
           {isMenuOpen && (
             <div className="action-menu-dropdown"> {/* New class for dropdown */}
               <ExportButton />
-              <Link to="/settings" className="dropdown-link-button"> {/* Added Settings Link */}
+              {/* <Link to="/settings" className="dropdown-link-button"> 
                 Settings
-              </Link>
+              </Link> */}
               <DownloadButton />
               <button onClick={handleLogout} className="dropdown-logout-button">
                 Sign Out
