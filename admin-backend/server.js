@@ -222,7 +222,7 @@ async function generateUserCsvData() {
 
 // --- API Endpoints ---
 // --- Routes ---
-app.use('/api/auth', authRoutes); // Mount authentication routes
+app.use('/auth', authRoutes); // Mount authentication routes
 
 // Basic route
 app.get('/', (req, res) => {
@@ -230,7 +230,7 @@ app.get('/', (req, res) => {
 });
 
 // --- NEW Endpoint to get users for the Admin Panel Table ---
-app.get('/api/admin/users', async (req, res) => {
+app.get('/admin/users', async (req, res) => {
     console.log("GET /api/admin/users request received.");
     
     try {

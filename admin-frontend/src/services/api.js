@@ -1,11 +1,11 @@
 // src/services/api.js (or wherever your API calls live)
 
 // Assuming your backend endpoint is /api/admin/users
-const API_BASE_URL = 'https://adminpanel-p8sw.onrender.com'; // Replace with your actual backend URL
+const API_BASE_URL = 'http://localhost:5001'; // Replace with your actual backend URL
 
 export const fetchAdminUsers = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/admin/users`); // Adjust endpoint if needed
+    const response = await fetch(`${API_BASE_URL}/admin/users`); // Adjust endpoint if needed
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
