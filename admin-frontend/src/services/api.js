@@ -1,7 +1,7 @@
 // src/services/api.js (or wherever your API calls live)
 
 // Assuming your backend endpoint is /api/admin/users
-const API_BASE_URL = 'http://localhost:5001'; // Replace with your actual backend URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 export const fetchAdminUsers = async () => {
   try {
