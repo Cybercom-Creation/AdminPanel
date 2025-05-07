@@ -7,7 +7,7 @@ const AuthContext = createContext(null);
 // Define backend API URL (use environment variables for flexibility)
 //const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001'; // Adjust port if needed
 // Use Vite's import.meta.env for client-side environment variables
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api'; // Adjust port and path if needed
+const API_URL = import.meta.env.VITE_API_URL || 'https://localhost:5001/api'; // Adjust port and path if needed
 // const API_URL = process.env.VITE_API_URL || 'http://localhost:5001/api'; // Adjust port and path if needed
 
 
