@@ -135,13 +135,21 @@
   background-color: #f0f0f0; /* Example hover effect - match other items */
 }
 
+
 /* If you have dark mode styles, add corresponding styles for .dropdown-link-button */
 [data-theme="dark"] .action-menu-dropdown .dropdown-link-button { /* Or your dark mode selector */
+
   color: #e0e0e0; /* Light text for dark mode */
 }
 
 [data-theme="dark"] .action-menu-dropdown .dropdown-link-button:hover {
   background-color: #444; /* Dark mode hover */
+}
+
+/* Dark mode for the Sign Out button text */
+[data-theme="dark"] .action-menu-dropdown .dropdown-logout-button {
+  color: #e0e0e0; /* Light text for dark mode */
+  /* You might also need to adjust background or border if they are too dark */
 }
 
 
