@@ -117,6 +117,32 @@
   padding: 0 20px; /* Padding for the main content area */
 }
 
+.action-menu-dropdown .dropdown-link-button {
+  display: block; /* Make it take full width like a button */
+  width: 100%;
+  padding: 10px 15px; /* Match padding of other dropdown items */
+  text-align: left; /* Or center, depending on your design */
+  background-color: transparent; /* Or match your dropdown item background */
+  color: #333; /* Adjust text color for light mode */
+  border: none;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline from link */
+  font-size: 0.9em; /* Match font size */
+  box-sizing: border-box; /* Ensure padding doesn't break layout */
+}
+
+.action-menu-dropdown .dropdown-link-button:hover {
+  background-color: #f0f0f0; /* Example hover effect - match other items */
+}
+
+/* If you have dark mode styles, add corresponding styles for .dropdown-link-button */
+[data-theme="dark"] .action-menu-dropdown .dropdown-link-button { /* Or your dark mode selector */
+  color: #e0e0e0; /* Light text for dark mode */
+}
+
+[data-theme="dark"] .action-menu-dropdown .dropdown-link-button:hover {
+  background-color: #444; /* Dark mode hover */
+}
 
 
 .logo {

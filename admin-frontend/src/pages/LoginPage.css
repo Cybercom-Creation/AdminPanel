@@ -116,6 +116,17 @@
 .forgot-password a:hover {
   text-decoration: underline;
 }
+/* Styles for the disabled "Forgot Password?" link */
+.forgot-password.disabled a {
+  color: #aaa; /* Lighter color to indicate disabled state */
+  cursor: not-allowed; /* Change cursor */
+  pointer-events: none; /* Crucial for <Link> to prevent interaction */
+  text-decoration: none; /* Ensure no underline when disabled */
+}
+
+.forgot-password.disabled a:hover {
+  text-decoration: none; /* Ensure no underline on hover when disabled */
+}
 
 /* Alert Overlay Styles (from your LoginPage.jsx) */
 .alert-overlay {

@@ -6,7 +6,7 @@ import ExportButton from './ExportButton';
 import DownloadButton from './DownloadButton'; // Import the new component
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 
-import { BrowserRouter as Router, Routes, Route, useNavigate, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, Link, Navigate, useLocation  } from 'react-router-dom';
 import UserTable from './components/UserTable';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
@@ -103,6 +103,9 @@ function AuthStatus() {
           {isMenuOpen && (
             <div className="action-menu-dropdown"> {/* New class for dropdown */}
               <ExportButton />
+              <Link to="/settings" className="dropdown-link-button"> {/* Added Settings Link */}
+                Settings
+              </Link>
               <DownloadButton />
               <button onClick={handleLogout} className="dropdown-logout-button">
                 Sign Out

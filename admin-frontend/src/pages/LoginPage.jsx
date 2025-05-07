@@ -76,9 +76,18 @@ function LoginPage() {
         <button type="submit" disabled={isLoading} className="login-button">
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
-        <div className="forgot-password">
-          {/* TODO: Implement Forgot Password functionality */}
-          <Link to="/forgot-password">Forgot Password?</Link> {/* Use Link component */}
+         {/* Conditionally disable the forgot password link during loading */}
+         <div className={`forgot-password ${isLoading ? 'disabled' : ''}`}>
+          <Link
+            to="/forgot-password"
+            onClick={(e) => {
+              if (isLoading) {
+                e.preventDefault(); // Prevent navigation if loading
+              }
+            }}
+          >
+            Forgot Password?
+          </Link>
         </div>
       </form>
     </div>
