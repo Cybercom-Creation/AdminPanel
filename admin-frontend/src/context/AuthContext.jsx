@@ -6,10 +6,9 @@ const AuthContext = createContext(null);
 
 // Define backend API URL (use environment variables for flexibility)
 //const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001'; // Adjust port if needed
-// Use Vite's import.meta.env for client-side environment variables
-// const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'; // Adjust port and path if needed
-const API_URL = process.env.API_URL || 'http://localhost:5001'; // Adjust port and path if needed
-
+// Use Vite's import.meta.env for client-side environment variables.
+// The fallback 'http://localhost:5001' is for local development.
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 export const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
