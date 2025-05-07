@@ -12,8 +12,17 @@ import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
 import ForgotPasswordPage from './pages/ForgotPasswordPage'; // Import Forgot Password page
 import ResetPasswordPage from './pages/ResetPasswordPage';   // Import Reset Password page
-
+import SettingsPage from './pages/SettingsPage'; // Import the new page
 import '../public/App.css';
+
+
+function ProtectedRoute({ children }) {
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
 
 // Simple component to show a logout button when logged in
 function AuthStatus() {
@@ -134,17 +143,17 @@ function App() {
               </PrivateRoute>
             }
           />
-          {/* Example of another protected route */}
-          {/* <Route
-            path="/settings"
+         <Route 
+            path="/settings" 
             element={
-              <PrivateRoute>
+              <ProtectedRoute>
                 <AppLayout>
-                  <SettingsPage />
+                  <SettingsPage /> {/* New Settings Page */}
                 </AppLayout>
-              </PrivateRoute>
-            }
-          /> */}
+              </ProtectedRoute>
+            } 
+          />
+          
 
           {/* Catch-all or Not Found Route */}
           <Route path="*" element={

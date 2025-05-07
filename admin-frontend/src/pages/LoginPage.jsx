@@ -63,7 +63,7 @@ function LoginPage() {
             disabled={isLoading}
           />
           </div>
-        <div className="form-group show-password-group">
+        <div className="show-password-container">
           <input
             type="checkbox"
             id="showPassword"

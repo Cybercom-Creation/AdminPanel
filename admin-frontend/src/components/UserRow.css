@@ -124,7 +124,8 @@
   
   .details-panel h4 {
     margin-top: 0;
-    color: #bbb;
+    /* color: #bbb; */
+    color: #e0e0e0; /* Dark mode default: Light text for panel h4 */
   }
   .details-panel ul {
     list-style: disc;
@@ -133,13 +134,18 @@
   }
   .details-panel li {
     margin-bottom: 8px;
-    color: #ccc;
+    /* color: #ccc; */
+    color: #cccccc; /* Dark mode default: Light text for panel list items */
   }
   
   .violation-details-container {
     padding: 15px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #eee;
+    /* background-color: #f9f9f9;
+    border-top: 1px solid #eee; */
+    /* Dark mode default styles for the details container */
+    background-color: #2c2c2c; /* Dark background */
+    border-top: 1px solid #444; /* Darker border */
+    color: #e0e0e0; /* Default light text color for content inside for dark mode */
   }
   
   .details-header {
@@ -152,6 +158,8 @@
   .details-header h4 {
     margin-top: 0;
     margin-bottom: 0;
+    color: #e0e0e0; /* Dark mode default: Light text for "Alert Details" and "Test started at" */
+
    }
   
   .violation-details-table {
@@ -162,24 +170,38 @@
   
   .violation-details-table th,
   .violation-details-table td {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
+    /* Dark mode default styles for table cells */
+    border: 1px solid #444; /* Darker border */
     padding: 8px 12px;
     text-align: left;
     vertical-align: top;
+    color: #cccccc; /* Light text for table data */
   }
   
   .violation-details-table th {
-    background-color: #f2f2f2;
+    /* background-color: #f2f2f2; */
+    /* Dark mode default styles for table headers (ALERT TYPE, TIME, DURATION) */
+    background-color: #383838; /* Darker background for headers */
     font-weight: bold;
-    color: #333;
+    /* color: #333; */
+    color: #e0e0e0; /* Lighter text for headers */
   }
   
   .violation-details-table tbody tr:nth-child(odd) {
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: #2c2c2c; /* Or inherit from container */
   }
+
+  .violation-details-table tbody tr:nth-child(even) {
+    /* Dark mode default: Optional striping */
+    background-color: #333333; /* Example for striping */
+  }
+
   
   .violation-details-table tbody tr:hover {
-    background-color: #eaf6ff;
+    /* background-color: #eaf6ff; */
+    background-color: #454545; /* Dark mode hover effect for table rows */
   }
   
   /* Add light theme adjustments */
@@ -190,11 +212,22 @@
     .details-row td {
       background-color: #f0f0f0;
     }
+    /* Light mode override for the details container */
+    .violation-details-container {
+      background-color: #f9f9f9; /* Light background */
+      border-top: 1px solid #eee; /* Lighter border */
+      color: #333; /* Default dark text color for content inside for light mode */
+    }
+
     .tooltip-content {
       background-color: #fff;
       border: 1px solid #ccc;
       color: #333;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    /* Light mode override for "Alert Details" and "Test started at" headers */
+    .details-header h4 {
+      color: #333; /* Dark text */
     }
     /* --- Icon Link/Button Styles --- */
     .icon-link {
@@ -206,6 +239,7 @@
       border-radius: 4px; /* Slightly rounded corners for hover effect */
       transition: background-color 0.2s ease; /* Smooth hover */
     }
+    
 
     .screenshot-icon-link:hover {
       background-color: rgba(255, 255, 255, 0.1); /* Subtle hover background */
@@ -249,4 +283,23 @@
     }
      .details-panel h4 { color: #444; }
      .details-panel li { color: #555; }
+     /* Light theme overrides for violation details table */
+    .violation-details-table th,
+    .violation-details-table td {
+      border: 1px solid #ddd; /* Lighter border */
+      color: #333; /* Dark text for table data */
+    }
+    .violation-details-table th {
+      background-color: #f2f2f2; /* Light background for headers */
+      color: #333; /* Dark text for headers */
+    }
+    .violation-details-table tbody tr:nth-child(odd) {
+      background-color: #fff; /* White background for odd rows */
+    }
+    .violation-details-table tbody tr:nth-child(even) {
+      background-color: #f9f9f9; /* Light striping for even rows */
+    }
+    .violation-details-table tbody tr:hover {
+      background-color: #eaf6ff; /* Light mode hover effect */
+    }
   }
