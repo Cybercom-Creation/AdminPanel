@@ -1,157 +1,213 @@
+body {
+  /* Default light theme background */
+  background-color: #f4f7f6; /* Or your preferred light background */
+}
+
 #root {
-  max-width: 85%;
-  margin: 0 auto;
+  max-width: 90%;
+  margin: 0px;
   padding: 2rem;
   text-align: center;
   width: 100%;
 }
-
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* Header Styles */
 .app-header {
-  display: flex; /* Use flexbox for layout */
-  justify-content: start; /* Pushes title left, actions right */
-  align-items: center; /* Vertically aligns items in the middle */
-  padding: 15px 20px; /* Add some padding */
-  margin-bottom: 20px; /* Space below header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff; /* Light mode header background */
+  color: #2c3e50; /* Header text color for light mode */
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: sticky;
+  z-index: 1000; /* Ensure header stays on top */
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Dark mode considerations for header */
+body.dark-mode .app-header {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border-bottom: 1px solid #34495e; /* Darker border for dark mode */
 }
 
 .app-title {
-  margin: 0; /* Remove default margin */
-  text-align: center; /* Center the title */
-  
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+
+.header-controls {
+  display: flex;
+  align-items: center;
 }
 
 .header-actions {
-  position: absolute; /* Needed for absolute positioning of the dropdown */
-  margin-top: 10px;
-  top: 20px;  /* Adjust distance from top */
-  right: 30px;
-  display: inline-block;
+  position: relative; /* For dropdown positioning */
+  margin-right: 15px; /* Space between avatar and settings icon */
 }
-
-/* Style for the avatar image inside the button */
-.admin-avatar-icon {
-  width: 24px; /* Adjust size as needed */
-  height: 24px; /* Adjust size as needed */
-  border-radius: 40%; /* Make it circular */
-  object-fit: cover; /* Ensure image covers the area well */
-}
-/* Style your ExportButton and DownloadButton components as needed */
-/* For example, give them consistent padding/margins */
-
-
-/* --- NEW Styles for the Action Menu --- */
-.action-menu {
-  display: flex; /* Arrange buttons inside the menu horizontally */
-  gap: 10px; /* Add space between the buttons within the menu */
-  /* Add other styles as needed, e.g., padding, border */
-  /* padding: 5px; */
-  /* border: 1px solid #ccc; */
-  /* border-radius: 4px; */
-}
-/* Style your ExportButton and DownloadButton components as needed */
-/* For example, ensure they look consistent */
-.action-menu button { /* Target buttons inside the menu */
-  padding: 8px 15px;
-  border: 1px solid #ccc;
-  background-color: #f8f8f8;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.action-menu button:hover {
-  background-color: #eee;
-}
-
 
 .action-menu-trigger {
-  /* Style the trigger button */
-  padding: 0;
-  background-color: transparent;
-  color: inherit;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9em;
-  display: flex; /* Align text and arrow */
+  display: flex;
   align-items: center;
-  gap: 5px; /* Space between text and arrow */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+}
+.action-menu-trigger:hover {
+  background-color: #e0e0e0;
 }
 
-.action-menu-trigger:focus {
-  outline: none;
+.admin-avatar-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
 }
+
+.admin-text {
+  font-size: 0.9rem;
+}
+
+/* body.dark-mode .admin-text {
+  color: #ecf0f1; 
+} */
 
 .action-menu-dropdown {
-  /* Style the dropdown container */
-  display: flex; /* Stack buttons vertically */
-  flex-direction: column;
-  gap: 5px; /* Space between buttons */
-  position: absolute; /* Position relative to header-actions */
-  top: 100%; /* Position below the trigger button */
-  right: 0; /* Align to the right */
+  position: absolute;
+  top: 100%; /* Position below the trigger */
+  right: 0;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  z-index: 10; /* Ensure it appears above other content */
-  min-width: 150px; /* Give it some minimum width */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1050; /* Higher than drawer during its animation */
+  width: 180px; /* Adjust as needed */
 }
 
-/* Optional: Style buttons inside the dropdown if needed */
-.action-menu-dropdown button {
-   width: 100%; /* Make buttons fill the dropdown width */
-   text-align: left; /* Align text left */
-   padding: 8px 12px;
-   /* Add other button styles */
-   background-color: transparent;
-   border: none;
-   cursor: pointer;
-}
-
-.action-menu-dropdown button:hover {
-  background-color: #f5f5f5; /* Highlight on hover */
-}
-.app-main-content {
-  padding: 0 20px; /* Padding for the main content area */
-}
-
-.action-menu-dropdown .dropdown-link-button {
-  display: block; /* Make it take full width like a button */
+.action-menu-dropdown .dropdown-link-button,
+.action-menu-dropdown .dropdown-logout-button,
+.action-menu-dropdown > button { /* For ExportButton/DownloadButton if they render a button */
+  display: block;
   width: 100%;
-  padding: 10px 15px; /* Match padding of other dropdown items */
-  text-align: left; /* Or center, depending on your design */
-  background-color: transparent; /* Or match your dropdown item background */
-  color: #333; /* Adjust text color for light mode */
+  text-align: left;
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none; /* For Link components styled as buttons */
+}
+
+.action-menu-dropdown .dropdown-link-button:hover,
+.action-menu-dropdown .dropdown-logout-button:hover,
+.action-menu-dropdown > button:hover {
+  background-color: #f5f5f5;
+}
+
+
+/* Settings Icon and Drawer */
+.settings-control {
+  position: relative; 
+}
+
+.settings-icon-button {
+  background: none;
   border: none;
   cursor: pointer;
-  text-decoration: none; /* Remove underline from link */
-  font-size: 0.9em; /* Match font size */
-  box-sizing: border-box; /* Ensure padding doesn't break layout */
+  font-size: 1.5rem; /* Adjust icon size */
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  border-radius: 50%;
+  color: #2c3e50; /* Icon color for light mode */
+}
+.settings-icon-button:hover {
+  background-color: #e0e0e0;
 }
 
-.action-menu-dropdown .dropdown-link-button:hover {
-  background-color: #f0f0f0; /* Example hover effect - match other items */
+body.dark-mode .settings-icon-button {
+  color: #ecf0f1; 
+}
+.settings-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px; /* Adjust as needed */
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -3px 0 15px rgba(0,0,0,0.15);
+  z-index: 1040; /* Ensure it's above content but can be below dropdown when open */
+  padding: 20px;
+  transform: translateX(100%); /* Start off-screen */
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto; /* Allow scrolling within the drawer if content is long */
 }
 
-
-/* If you have dark mode styles, add corresponding styles for .dropdown-link-button */
-[data-theme="dark"] .action-menu-dropdown .dropdown-link-button { /* Or your dark mode selector */
-
-  color: #e0e0e0; /* Light text for dark mode */
+.settings-drawer.open {
+  transform: translateX(0); /* Slide in */
 }
 
-[data-theme="dark"] .action-menu-dropdown .dropdown-link-button:hover {
-  background-color: #444; /* Dark mode hover */
+.settings-drawer nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Dark mode for the Sign Out button text */
-[data-theme="dark"] .action-menu-dropdown .dropdown-logout-button {
-  color: #e0e0e0; /* Light text for dark mode */
-  /* You might also need to adjust background or border if they are too dark */
+.settings-drawer nav ul li a {
+  display: block;
+  padding: 10px 0;
+  color: #333;
+  text-decoration: none;
+  font-size: 1rem;
 }
 
+.settings-drawer nav ul li a:hover {
+  color: #007bff; /* Example hover color */
+}
+
+/* Ensure main content doesn't overlap header */
+.app-main-content {
+  flex-grow: 1; /* Allow it to take up remaining vertical space */
+  padding: 20px; /* Add some padding around the content if needed */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  width: 100%; /* Ensure it spans the full width of AppLayout */
+}
+
+.user-table-container {
+  width: 100%; /* Make the table container full width */
+  box-sizing: border-box; /* Ensure padding/border don't affect width */
+  /* Add any other styling for the table container as needed */
+}
+
+.user-table {
+  width: 100%; /* Make the table itself full width */
+  border-collapse: collapse; /* Collapse borders for a cleaner look */
+  /* Add other table styling (e.g., borders, padding) */
+}
+
+.user-table th, .user-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
 
 .logo {
   height: 6em;
@@ -177,14 +233,14 @@
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+    /* animation: logo-spin infinite 20s linear; */
   }
 }
 
 .card {
-  padding: 2em;
+  /* padding: 2em; */
 }
 
 .read-the-docs {
-  color: #888;
+  /* color: #888; */
 }

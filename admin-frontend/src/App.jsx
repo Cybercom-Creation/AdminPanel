@@ -12,17 +12,19 @@ import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
 import ForgotPasswordPage from './pages/ForgotPasswordPage'; // Import Forgot Password page
 import ResetPasswordPage from './pages/ResetPasswordPage';   // Import Reset Password page
-import SettingsPage from './pages/SettingsPage'; // Import the new page
+import SettingsControls from './components/SettingsControls'; // Import the new settings controls component
 import '../public/App.css';
 
 
-function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
-}
+// function ProtectedRoute({ children }) {
+//   const { isAuthenticated } = useAuth();
+//   if (!isAuthenticated) {
+//     return <Navigate to="/login" replace />;
+//   }
+//   return children;
+// }
+
+
 
 // Simple component to show a logout button when logged in
 function AuthStatus() {
@@ -52,7 +54,14 @@ function AuthStatus() {
   const authStatus = AuthStatus(); // Call AuthStatus to get its return value
   const { handleLogout, isAuthenticated } = authStatus; // Destructure from the returned object
 
+  // State for settings navigation drawer
+  const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
+  const settingsDrawerRef = useRef(null);
+  const settingsIconRef = useRef(null);
+
   const [isContentLoading, setIsContentLoading] = useState(false); // New state for content loading
+
+  
 
   const menuRef = useRef(null);
 
@@ -61,11 +70,15 @@ function AuthStatus() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleSettingsDrawer = () => {
+    setIsSettingsDrawerOpen(!isSettingsDrawerOpen);
+  };
+
   // Effect to handle clicks outside the menu to close it
   useEffect(() => {
     function handleClickOutside(event) {
       // Close if clicked outside the menu area (ref)
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (menuRef.current && !menuRef.current.contains(event.target) && !event.target.closest('.action-menu-trigger')) {
         setIsMenuOpen(false);
       }
     }
@@ -82,30 +95,89 @@ function AuthStatus() {
     };
   }, [isMenuOpen]); // Re-run effect when isMenuOpen changes
 
+  // Effect to handle clicks outside the settings drawer to close it
+  useEffect(() => {
+    function handleClickOutsideSettings(event) {
+      if (
+        settingsDrawerRef.current &&
+        !settingsDrawerRef.current.contains(event.target) &&
+        settingsIconRef.current && 
+        !settingsIconRef.current.contains(event.target)
+      ) {
+        setIsSettingsDrawerOpen(false);
+      }
+    }
+    if (isSettingsDrawerOpen) {
+      document.addEventListener('mousedown', handleClickOutsideSettings);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutsideSettings);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideSettings);
+    };
+  }, [isSettingsDrawerOpen]);
+
+
   return (
     <div className="app-container">
       {/* Header Section */}
       <header className="app-header">
       <h1 className="app-title">{!isContentLoading ? 'Admin' : ''}</h1>
-        {/* The AuthStatus component is no longer directly rendered here for its text */}
+      {isAuthenticated && (
+          <div className="header-controls">
+            {/* User Avatar Dropdown */}
+            <div className="header-actions" ref={menuRef}>
+              <button onClick={toggleMenu} className="action-menu-trigger">
+                <img src="/defaultAvtar.png" alt="Admin" className="admin-avatar-icon" />
+                <span className="admin-text">Admin</span>
+              </button>
+              {isMenuOpen && (
+                <div className="action-menu-dropdown">
+                  <ExportButton />
+                  <DownloadButton />
+                  <button onClick={handleLogout} className="dropdown-logout-button">
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Settings Icon and Drawer */}
+            <div className="settings-control" ref={settingsIconRef}>
+              <button onClick={toggleSettingsDrawer} className="settings-icon-button" aria-label="Open Settings">
+                {/* Replace with an actual gear icon (SVG or Font Icon) */}
+                <span role="img" aria-label="settings">⚙️</span>
+              </button>
+            </div>
+          </div>
+        )}
       </header>
+
+      {/* Settings Drawer */}
+      {isAuthenticated && isSettingsDrawerOpen && (
+        <div className={`settings-drawer ${isSettingsDrawerOpen ? 'open' : ''}`} ref={settingsDrawerRef}>
+          <nav>
+          <SettingsControls />
+          </nav>
+        </div>
+       )}
       {/* Action Buttons Container - now holds the dropdown trigger */}
       {/* Only show header actions if authenticated */}
-      {isAuthenticated && (
-      <div className="header-actions" ref={menuRef}> {/* Attach ref here */}
-        {/* Button to trigger the dropdown */}
+      {/* {isAuthenticated && (
+      <div className="header-actions" ref={menuRef}> 
+        
           <button onClick={toggleMenu} className="action-menu-trigger">
             <img src="/defaultAvtar.png" alt="Admin" className="admin-avatar-icon" />
-            <span className="admin-text">Admin</span> {/* Text */}
+            <span className="admin-text">Admin</span> 
           </button>
 
-          {/* Conditionally render the dropdown menu */}
+          
           {isMenuOpen && (
-            <div className="action-menu-dropdown"> {/* New class for dropdown */}
+            <div className="action-menu-dropdown"> 
               <ExportButton />
-              {/* <Link to="/settings" className="dropdown-link-button"> 
+              <Link to="/settings" className="dropdown-link-button"> 
                 Settings
-              </Link> */}
+              </Link>
               <DownloadButton />
               <button onClick={handleLogout} className="dropdown-logout-button">
                 Sign Out
@@ -113,9 +185,10 @@ function AuthStatus() {
             </div>
           )}
         </div>
-      )}
+      )} */}
 
 
+      {/* Main Content Area */}
       {/* Main Content Area */}
       <main className="app-main-content">
         {React.cloneElement(children, { setIsContentLoading })}
@@ -146,16 +219,7 @@ function App() {
               </PrivateRoute>
             }
           />
-         <Route 
-            path="/settings" 
-            element={
-              <ProtectedRoute>
-                <AppLayout>
-                  <SettingsPage /> {/* New Settings Page */}
-                </AppLayout>
-              </ProtectedRoute>
-            } 
-          />
+         
           
 
           {/* Catch-all or Not Found Route */}

@@ -27,13 +27,17 @@ router.put('/', async (req, res) => {
             userPhotoFeatureEnabled,
             periodicScreenshotsEnabled,
             screenshotIntervalSeconds,
+            testDurationInterval, 
         } = req.body;
 
         // Validate screenshotIntervalSeconds
         if (periodicScreenshotsEnabled && (screenshotIntervalSeconds === undefined || screenshotIntervalSeconds < 10)) {
             return res.status(400).json({ message: 'Screenshot interval must be at least 10 seconds when enabled.' });
         }
-
+        // Optional: Validate testDurationInterval
+        if (testDurationInterval !== undefined && testDurationInterval < 5) { // Assuming 5 is the minimum
+            return res.status(400).json({ message: 'Test duration interval must be at least 5 minutes.' });
+        }
 
         const settings = await AppSettings.findOneAndUpdate(
             { identifier: 'global_settings' },
@@ -45,6 +49,7 @@ router.put('/', async (req, res) => {
                     periodicScreenshotsEnabled,
                     // Only update interval if screenshots are enabled and interval is provided
                     ...(periodicScreenshotsEnabled && screenshotIntervalSeconds !== undefined && { screenshotIntervalSeconds }),
+                    ...(testDurationInterval !== undefined && { testDurationInterval }), // Update test duration if provided
                 }
             },
             { new: true, upsert: true, runValidators: true } // upsert:true creates if not found

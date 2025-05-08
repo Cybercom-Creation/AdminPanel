@@ -24,13 +24,18 @@ const AppSettingsSchema = new mongoose.Schema({
     },
     periodicScreenshotsEnabled: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     screenshotIntervalSeconds: {
         type: Number,
         default: 300, // Default to 5 minutes
         min: 10,      // Minimum interval (e.g., 10 seconds)
     },
+    testDurationInterval: { // New field for test duration
+        type: Number,
+        default: 10, // Default to 60 minutes
+        min: 5,      // Minimum test duration (e.g., 5 minutes)
+    }
 }, { timestamps: true });
 
 // Method to get or create settings
