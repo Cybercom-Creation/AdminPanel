@@ -73,23 +73,59 @@
     align-items: center;
     text-align: center;
     margin-bottom: 15px;
+    overflow: hidden;
   }
   
-  .settings-error,
+  /* .settings-error,
   .settings-success,
   .message-placeholder {
     margin: 0;
     padding: 5px 0;
     font-size: 0.9em;
+  } */
+  .settings-feedback-message {
+    margin: 0;
+    padding: 5px 0;
+    font-size: 0.9em;
+    width: 100%; /* Take full width of message-area */
+    opacity: 0;
+    transform: translateY(10px); /* Start slightly below */
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0s linear 0.3s;
   }
   
-  .settings-error {
+  .settings-feedback-message.visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0s linear 0s;
+  }
+
+  
+  /* .settings-error {
+    color: #e74c3c;
+  } */
+
+  .settings-feedback-message.settings-error {
     color: #e74c3c;
   }
   
-  .settings-success {
+  /* .settings-success {
+    color: #2ecc71;
+  } */
+
+  .settings-feedback-message.settings-success {
     color: #2ecc71;
   }
+  .settings-feedback-message.loading {
+    color: #34495e; /* Or your preferred loading text color */
+    /* Override transition for loading message if it should appear/disappear instantly */
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition: none; 
+  }
+
   
   .save-settings-button {
     padding: 10px 15px;

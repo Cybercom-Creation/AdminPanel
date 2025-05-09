@@ -34,7 +34,7 @@ const AppSettingsSchema = new mongoose.Schema({
     testDurationInterval: { // New field for test duration
         type: Number,
         default: 10, // Default to 60 minutes
-        min: 5,      // Minimum test duration (e.g., 5 minutes)
+        min: 1,      // Minimum test duration (e.g., 5 minutes)
     }
 }, { timestamps: true });
 

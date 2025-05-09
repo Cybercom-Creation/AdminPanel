@@ -118,7 +118,7 @@ body.dark-mode .app-header {
 
 
 /* Settings Icon and Drawer */
-.settings-control {
+/* .settings-control {
   position: relative; 
 }
 
@@ -126,13 +126,13 @@ body.dark-mode .app-header {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.5rem; /* Adjust icon size */
+  font-size: 1.5rem; 
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;  
   border-radius: 50%;
-  color: #2c3e50; /* Icon color for light mode */
+  color: #2c3e50; 
 }
 .settings-icon-button:hover {
   background-color: #e0e0e0;
@@ -140,7 +140,7 @@ body.dark-mode .app-header {
 
 body.dark-mode .settings-icon-button {
   color: #ecf0f1; 
-}
+} */
 .settings-drawer {
   position: fixed;
   top: 0;

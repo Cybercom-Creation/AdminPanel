@@ -49,6 +49,7 @@
     object-fit: cover;
     display: block;
     margin: 0 auto;
+    background-color: #3e3e3e; /* Placeholder background for the avatar area */
   }
   
   .user-pic-cell {
@@ -56,16 +57,26 @@
   }
   
   /* Simple CSS Tooltip */
-  .tooltip-container {
+  /* .tooltip-container {
     position: relative;
     display: inline-block;
+  } */
+  .tooltip-container {
+    position: relative;
+    display: flex; /* Use flex for robust centering */
+    align-items: center; /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    width: 40px;  /* Fixed width, matching user-avatar-small */
+    height: 40px; /* Fixed height, matching user-avatar-small */
+    margin: 0 auto; /* Center this container within the table cell */
   }
   
   .tooltip-content {
     visibility: hidden;
     opacity: 0;
     position: absolute;
-    z-index: 10;
+    z-index: 100000;
+    top : auto; /* Adjusted to align with the bottom of the avatar */
     bottom: 110%;
     left: 50%;
     transform: translateX(-50%);
@@ -89,6 +100,8 @@
     height: auto;
     display: block;
     border-radius: 4px;
+    overflow: visible;
+    overflow-x: auto;
   }
   
   
@@ -231,24 +244,22 @@
     }
     /* --- Icon Link/Button Styles --- */
     .icon-link {
-      display: inline-block; /* Allows padding/margin */
-      font-size: 1.5em; /* Make icon larger */
-      text-decoration: none; /* Remove underline from link */
-      color: #a0c4ff; /* Example icon color - adjust to your theme */
-      padding: 2px 5px; /* Small padding around icon */
-      border-radius: 4px; /* Slightly rounded corners for hover effect */
-      transition: background-color 0.2s ease; /* Smooth hover */
+      color: #007bff; /* Standard link blue for light mode */
     }
     
 
     .screenshot-icon-link:hover {
-      background-color: rgba(255, 255, 255, 0.1); /* Subtle hover background */
-      cursor: pointer;
+      /* background-color: rgba(255, 255, 255, 0.1); 
+      cursor: pointer; */
+      background-color: #e9ecef; /* Light hover background */
+      color: #0056b3; /* Darker blue on hover */
     }
 
     .screenshot-icon-disabled {
-      opacity: 0.4; /* Make it look faded */
-      cursor: not-allowed; /* Indicate it's not clickable */
+      opacity: 0.4; 
+      cursor: not-allowed; 
+      /* color: #aaa;  */
+
     }
 
     /* Style for the arrow in the details button */

@@ -57,7 +57,7 @@ function AuthStatus() {
   // State for settings navigation drawer
   const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
   const settingsDrawerRef = useRef(null);
-  const settingsIconRef = useRef(null);
+  //const settingsIconRef = useRef(null);
 
   const [isContentLoading, setIsContentLoading] = useState(false); // New state for content loading
 
@@ -101,9 +101,12 @@ function AuthStatus() {
       if (
         settingsDrawerRef.current &&
         !settingsDrawerRef.current.contains(event.target) &&
-        settingsIconRef.current && 
-        !settingsIconRef.current.contains(event.target)
-      ) {
+      //   settingsIconRef.current && 
+      //   !settingsIconRef.current.contains(event.target)
+      // ) {
+      // Check if the click was outside the action menu trigger as well, if settings is opened from there
+      !event.target.closest('.action-menu-trigger') && !event.target.closest('.action-menu-dropdown .dropdown-settings-button')
+    ) {
         setIsSettingsDrawerOpen(false);
       }
     }
@@ -135,6 +138,9 @@ function AuthStatus() {
                 <div className="action-menu-dropdown">
                   <ExportButton />
                   <DownloadButton />
+                  <button onClick={toggleSettingsDrawer} className="dropdown-settings-button dropdown-link-button">
+                    Settings
+                  </button>
                   <button onClick={handleLogout} className="dropdown-logout-button">
                     Sign Out
                   </button>
@@ -142,19 +148,19 @@ function AuthStatus() {
               )}
             </div>
 
-            {/* Settings Icon and Drawer */}
-            <div className="settings-control" ref={settingsIconRef}>
+            
+            {/* <div className="settings-control" ref={settingsIconRef}>
               <button onClick={toggleSettingsDrawer} className="settings-icon-button" aria-label="Open Settings">
-                {/* Replace with an actual gear icon (SVG or Font Icon) */}
+                
                 <span role="img" aria-label="settings">⚙️</span>
               </button>
-            </div>
+            </div> */}
           </div>
         )}
       </header>
 
       {/* Settings Drawer */}
-      {isAuthenticated && isSettingsDrawerOpen && (
+      {isAuthenticated && (
         <div className={`settings-drawer ${isSettingsDrawerOpen ? 'open' : ''}`} ref={settingsDrawerRef}>
           <nav>
           <SettingsControls />

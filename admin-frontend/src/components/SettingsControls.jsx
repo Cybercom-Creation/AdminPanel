@@ -18,6 +18,8 @@ function SettingsControls() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const [isSuccessVisible, setIsSuccessVisible] = useState(false);
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
   const { authToken } = useAuth(); // For authenticated requests
 
   const fetchSettings = useCallback(async () => {
@@ -40,7 +42,12 @@ function SettingsControls() {
       }
     } catch (err) {
       console.error('Failed to fetch settings:', err);
-      setError(err.response?.data?.message || 'Failed to load settings.');
+      //setError(err.response?.data?.message || 'Failed to load settings.');
+      const errorMsg = err.response?.data?.message || 'Failed to load settings.';
+      setError(errorMsg);
+      setIsErrorVisible(true);
+      setSuccessMessage(''); // Clear any existing success message
+      setIsSuccessVisible(false);
     } finally {
       setIsLoading(false);
     }
@@ -63,17 +70,20 @@ function SettingsControls() {
     setIsLoading(true);
     setError(null);
     setSuccessMessage('');
-
+    setIsErrorVisible(false); // Hide previous errors immediately
+    setIsSuccessVisible(false); // Hide previous success immediately
     if (settings.periodicScreenshotsEnabled && settings.screenshotIntervalSeconds < 10) {
         setError('Screenshot interval must be at least 10 seconds when enabled.');
         setIsLoading(false);
+        setIsErrorVisible(true);
         return;
     }
 
     // Optional: Client-side validation for testDurationInterval
-    if (settings.testDurationInterval < 5) { // Assuming 5 is the minimum
+    if (settings.testDurationInterval < 1) { // Assuming 5 is the minimum
         setError('Test duration interval must be at least 5 minutes.');
         setIsLoading(false);
+        setIsErrorVisible(true);
         return;
     }
 
@@ -83,15 +93,28 @@ function SettingsControls() {
         // otherwise, add: headers: { Authorization: `Bearer ${authToken}` },
       });
       setSuccessMessage('Settings updated successfully!');
+      setIsSuccessVisible(true);
+      setError(null); // Clear any previous error
+      setIsErrorVisible(false);
       // fetchSettings(); // Optionally re-fetch to confirm
     } catch (err) {
       console.error('Failed to update settings:', err);
       setError(err.response?.data?.message || 'Failed to save settings.');
+      setIsErrorVisible(true);
+      setSuccessMessage(''); // Clear any previous success
+      setIsSuccessVisible(false);
     } finally {
       setIsLoading(false);
       setTimeout(() => {
-        setError(null);
-        setSuccessMessage('');
+        // setError(null);
+        // setSuccessMessage('');
+        setIsSuccessVisible(false);
+        setIsErrorVisible(false);
+        // After the animation out, clear the message content
+        setTimeout(() => {
+          setError(null);
+          setSuccessMessage('');
+        }, 300); // This duration should match your CSS transition duration
       }, 5000);
     }
   };
@@ -101,11 +124,17 @@ function SettingsControls() {
       <h4>Application Settings</h4>
 
       
-      {isLoading && !error && <p>Loading current settings...</p>}
-      {error && <p className="settings-error">{error}</p>}
-      {successMessage && <p className="settings-success">{successMessage}</p>}
-      {/* Placeholder for spacing when no message and not loading */}
-      {!isLoading && !error && !successMessage && <p className="message-placeholder">&nbsp;</p>}
+      <div className="message-area">
+        {isLoading && !error && !successMessage && (
+          <p className="settings-feedback-message loading visible">Loading current settings...</p>
+        )}
+        {error && ( // Only render if error string is not empty
+          <p className={`settings-feedback-message settings-error ${isErrorVisible ? 'visible' : ''}`}>{error}</p>
+        )}
+        {successMessage && ( // Only render if successMessage string is not empty
+          <p className={`settings-feedback-message settings-success ${isSuccessVisible ? 'visible' : ''}`}>{successMessage}</p>
+        )}
+      </div>
 
 
        <form onSubmit={handleSubmit} className="settings-form">
@@ -144,7 +173,7 @@ function SettingsControls() {
         {/* Test Duration Interval */}
         <div className="form-group checkbox-group">
           <label htmlFor="testDurationInterval">Test Duration Interval (minutes):</label>
-          <input type="number" id="testDurationInterval" name="testDurationInterval" value={settings.testDurationInterval} onChange={handleChange} min="5" disabled={isLoading} required />
+          <input type="number" id="testDurationInterval" name="testDurationInterval" value={settings.testDurationInterval} onChange={handleChange} min="1" disabled={isLoading} required />
         </div>
 
         <button type="submit" disabled={isLoading} className="save-settings-button">

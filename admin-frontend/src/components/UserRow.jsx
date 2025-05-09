@@ -1,5 +1,5 @@
 // src/components/UserRow.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatDuration, formatViolations } from '../services/api'; // Adjust path if needed
 import './UserRow.css'; // We'll create this CSS file next
 
@@ -23,6 +23,26 @@ function UserRow({ user }) {
 
   // Optional: Log the received user prop to verify its structure in the browser console
   // console.log('UserRow received user:', user);
+
+  // State to manage image sources, allowing onError to permanently switch to fallback
+  const [smallImgSrc, setSmallImgSrc] = useState(user.smallPicUrl || '/default-avatar.png');
+  const [largeImgSrc, setLargeImgSrc] = useState(user.largePicUrl || '/default-avatar.png');
+
+  // Update image sources if the user prop (and thus its pic URLs) changes
+  useEffect(() => {
+    setSmallImgSrc(user.smallPicUrl || '/defaultAvtar.png');
+  }, [user.smallPicUrl]);
+
+  useEffect(() => {
+    setLargeImgSrc(user.largePicUrl || '/defaultAvtar.png');
+  }, [user.largePicUrl]);
+
+  const handleImageError = (setImageSrcCallback) => {
+    // Set to default avatar path if the current src is not already the default
+    // This prevents potential issues if the default avatar itself had a problem (though unlikely here)
+    // And stops retrying the bad URL.
+    setImageSrcCallback('/defaultAvtar.png');
+  };
 
   // Basic check in case user prop is somehow invalid
   if (!user || !user.id) {
@@ -53,6 +73,10 @@ function UserRow({ user }) {
         return type; 
     }
   };  
+  // Determine if the folder icon should be visually enabled and if it's a link
+  const hasDriveLink = !!user.driveFolderLink;
+  const hasUserPhoto = !!user.smallPicUrl; // Check the original prop for an actual user photo
+  const isFolderIconVisuallyEnabled = hasDriveLink || hasUserPhoto;
 
   return (
     <>
@@ -64,18 +88,20 @@ function UserRow({ user }) {
           {/* Container for positioning the tooltip */}
           <div className="tooltip-container">
              <img
-                src={user.smallPicUrl || '/default-avatar.png'} // Use fallback
+                src={smallImgSrc} // Use fallback
                 alt={`${user.name}'s avatar`}
                 className="user-avatar-small"
-                onError={(e) => { e.target.onerror = null; e.target.src='/default-avatar.png'; }} // Handle broken images
+                //onError={(e) => { e.target.onerror = null; e.target.src='/default-avatar.png'; }} // Handle broken images
+                onError={() => handleImageError(setSmallImgSrc)}
              />
              {/* The tooltip content (large image) */}
              <div className="tooltip-content">
                  <img
-                    src={user.largePicUrl || '/default-avatar.png'} // Use fallback
+                    src={largeImgSrc} // Use fallback
                     alt={`${user.name}'s avatar (large)`}
                     className="user-avatar-large"
-                    onError={(e) => { e.target.onerror = null; e.target.src='/default-avatar.png'; }} // Handle broken images
+                    //onError={(e) => { e.target.onerror = null; e.target.src='/default-avatar.png'; }} // Handle broken images
+                    onError={() => handleImageError(setLargeImgSrc)}
                  />
              </div>
           </div>
@@ -92,7 +118,8 @@ function UserRow({ user }) {
         </td>
         <td>
           
-          {user.driveFolderLink ? (
+          {/* {user.driveFolderLink ? ( */}
+          {hasDriveLink ? (
              <a
                 href={user.driveFolderLink}
                 target="_blank"
@@ -103,7 +130,13 @@ function UserRow({ user }) {
                 📁 {/* Folder Icon */}
              </a>
           ) : (
-            <span className="icon-link screenshot-icon-disabled" title="No screenshots Available">📁</span> // Disabled icon
+            // <span className="icon-link screenshot-icon-disabled" title="No screenshots Available">📁</span> // Disabled icon
+            <span 
+              className={`icon-link ${isFolderIconVisuallyEnabled ? '' : 'screenshot-icon-disabled'}`}
+              title={isFolderIconVisuallyEnabled ? "No screenshots available" : "No user photo or screenshots available"}
+            >
+              📁 {/* Folder Icon */}
+            </span>
           )}
 
           {user.violationDetails && user.violationDetails.length > 0 ? (
