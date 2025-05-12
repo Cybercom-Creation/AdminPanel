@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import './ResetPasswordPage.css'; // Create this CSS file
 
-const API_URL =  process.env.API_URL  || 'http://localhost:5001';
+const API_URL =  process.env.VITE_API_URL  || 'http://localhost:5001';
 
 function ResetPasswordPage() {
   const { token } = useParams(); // Get token from URL
