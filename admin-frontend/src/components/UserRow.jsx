@@ -120,17 +120,9 @@ function UserRow({ user }) {
           
           {/* {user.driveFolderLink ? ( */}
           {hasDriveLink ? (
-             <a
-                href={user.driveFolderLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="icon-link screenshot-icon-link" // Use new classes for styling
-                title="View Drive Folder"
-             >
-                📁 {/* Folder Icon */}
-             </a>
+             <span className="icon-link screenshot-icon-disabled" title="No screenshots Available">📁 {/* Folder Icon */}	</span> // Disabled icon
           ) : (
-            // <span className="icon-link screenshot-icon-disabled" title="No screenshots Available">📁</span> // Disabled icon
+            
             <span 
               className={`icon-link ${isFolderIconVisuallyEnabled ? '' : 'screenshot-icon-disabled'}`}
               title={isFolderIconVisuallyEnabled ? "No screenshots available" : "No user photo or screenshots available"}

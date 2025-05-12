@@ -37,7 +37,7 @@ function AuthStatus() {
     navigate('/login');
   };
 
-  return { handleLogout, isAuthenticated: auth.isAuthenticated };
+  return { handleLogout, isAuthenticated: auth.isAuthenticated, user: auth.user };
 }
 
 
@@ -52,7 +52,8 @@ function AuthStatus() {
    // We need to call AuthStatus to get its returned object which includes handleLogout
   // AuthStatus itself uses useAuth and useNavigate internally.
   const authStatus = AuthStatus(); // Call AuthStatus to get its return value
-  const { handleLogout, isAuthenticated } = authStatus; // Destructure from the returned object
+  const { handleLogout, isAuthenticated, user } = authStatus; // Destructure from the returned object
+  console.log('User object in AppLayout:', user); // <-- Add this line
 
   // State for settings navigation drawer
   const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
@@ -132,7 +133,8 @@ function AuthStatus() {
             <div className="header-actions" ref={menuRef}>
               <button onClick={toggleMenu} className="action-menu-trigger">
                 <img src="/defaultAvtar.png" alt="Admin" className="admin-avatar-icon" />
-                <span className="admin-text">Admin</span>
+               {/* Display user's name, fallback to 'User' or email if name is not present */}
+               <span className="admin-text">{user?.username || 'User'}</span>
               </button>
               {isMenuOpen && (
                 <div className="action-menu-dropdown">

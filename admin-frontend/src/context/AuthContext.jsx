@@ -64,6 +64,8 @@ export const AuthProvider = ({ children }) => {
     // navigate('/login'); // Remove this - navigation will be handled by the calling component
   };
 
+  
+
   const value = {
     authToken,
     user,
@@ -75,7 +77,12 @@ export const AuthProvider = ({ children }) => {
     clearError: () => setError(null) // Function to clear error message
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+  
 };
 
 // Custom hook to use the auth context
