@@ -14,6 +14,7 @@ function ResetPasswordPage() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showPasswords, setShowPasswords] = useState(false); // Single state for both password fields
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -57,7 +58,8 @@ function ResetPasswordPage() {
         <div className="form-group">
           <label htmlFor="password">New Password</label>
           <input
-            type="password"
+            // type="password"
+            type={showPasswords ? 'text' : 'password'}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -69,7 +71,8 @@ function ResetPasswordPage() {
         <div className="form-group">
           <label htmlFor="confirmPassword">Confirm New Password</label>
           <input
-            type="password"
+            // type="password"
+            type={showPasswords ? 'text' : 'password'}
             id="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -78,6 +81,19 @@ function ResetPasswordPage() {
             placeholder="Confirm new password"
           />
         </div>
+
+      <div className="show-password-container">
+          <input
+            type="checkbox"
+            id="showPasswordsToggle" // Updated id
+            checked={showPasswords}
+            onChange={() => setShowPasswords(!showPasswords)} // Toggle shared state
+            disabled={isLoading || !!message}
+          />
+          <label htmlFor="showNewPassword">Show Password</label>
+        </div>
+
+       
 
         <button type="submit" disabled={isLoading || !!message} className="submit-button">
           {isLoading ? 'Resetting...' : 'Reset Password'}

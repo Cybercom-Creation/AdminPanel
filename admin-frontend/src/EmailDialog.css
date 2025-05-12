@@ -61,7 +61,7 @@
 /* Style for the button container */
 .dialog-buttons {
   display: flex; /* Enable Flexbox for the buttons */
-  justify-content: flex-end; /* Push buttons to the right */
+  justify-content: space-between; /* Push buttons to the right */
   gap: 10px; /* Space between the buttons */
   margin-top: 20px;
   background-color: transparent; /* Explicitly transparent */
