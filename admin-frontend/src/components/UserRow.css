@@ -3,10 +3,12 @@
 .user-row td, .details-row td {
     padding: 8px 12px;
     vertical-align: middle;
-    border-bottom: 1px solid #444; /* Match your theme */
+     /* Light theme default */
+    border-bottom: 1px solid #ddd;
   }
   
   /* Define widths for each column in the main row - these should ideally match UserTable.css */
+  
   /* ID Column */
   .user-row td:nth-child(1) {
     /* width: 10%; - Inherited from UserTable.css */
@@ -49,7 +51,8 @@
     object-fit: cover;
     display: block;
     margin: 0 auto;
-    background-color: #3e3e3e; /* Placeholder background for the avatar area */
+    /* Light theme: if a placeholder bg is needed, make it light */
+    background-color: #f0f0f0; /* Example light placeholder */
   }
   
   .user-pic-cell {
@@ -80,8 +83,10 @@
     bottom: 110%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #333;
-    border: 1px solid #555;
+    /* Light theme tooltip */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
     border-radius: 6px;
     padding: 5px;
     transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
@@ -107,13 +112,14 @@
   
   .expand-button, .link-button {
     border-radius: 6px;
-    border: 1px solid #555;
     padding: 0.4em 0.8em;
     font-size: 0.9em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #3a3a3a;
-    color: rgba(255, 255, 255, 0.87);
+    /* Light theme defaults */
+    background-color: #e9e9e9;
+    border: 1px solid #ccc;
+    color: #213547;
     cursor: pointer;
     transition: border-color 0.25s, background-color 0.25s;
     text-decoration: none;
@@ -121,13 +127,15 @@
   }
   
   .expand-button:hover, .link-button:hover {
-    border-color: #646cff;
-    background-color: #4a4a4a;
+    /* Light theme hover */
+    border-color: #747bff;
+    background-color: #f5f5f5;
   }
   
   .details-row td {
-    background-color: #2a2a2a;
-    border-bottom: 1px solid #555;
+   /* Light theme */
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd; /* Ensure consistency */
   }
   
   .details-panel {
@@ -137,8 +145,8 @@
   
   .details-panel h4 {
     margin-top: 0;
-    /* color: #bbb; */
-    color: #e0e0e0; /* Dark mode default: Light text for panel h4 */
+    /* Light theme */
+    color: #444;/
   }
   .details-panel ul {
     list-style: disc;
@@ -147,18 +155,18 @@
   }
   .details-panel li {
     margin-bottom: 8px;
-    /* color: #ccc; */
-    color: #cccccc; /* Dark mode default: Light text for panel list items */
+    /* Light theme */
+    color: #555;
   }
   
   .violation-details-container {
     padding: 15px;
     /* background-color: #f9f9f9;
     border-top: 1px solid #eee; */
-    /* Dark mode default styles for the details container */
-    background-color: #2c2c2c; /* Dark background */
-    border-top: 1px solid #444; /* Darker border */
-    color: #e0e0e0; /* Default light text color for content inside for dark mode */
+    /* Light theme default styles for the details container */
+    background-color: #f9f9f9; /* Light background */
+    border-top: 1px solid #eee; /* Lighter border */
+    color: #333; /* Default dark text color for content inside for light mode */
   }
   
   .details-header {
@@ -171,7 +179,8 @@
   .details-header h4 {
     margin-top: 0;
     margin-bottom: 0;
-    color: #e0e0e0; /* Dark mode default: Light text for "Alert Details" and "Test started at" */
+    /* Light theme default for "Alert Details" and "Test started at" */
+    color: #333; /* Dark text */
 
    }
   
@@ -184,69 +193,46 @@
   .violation-details-table th,
   .violation-details-table td {
     /* border: 1px solid #ddd; */
-    /* Dark mode default styles for table cells */
-    border: 1px solid #444; /* Darker border */
+     /* Light theme default styles for table cells */
+    border: 1px solid #ddd; /* Lighter border */
     padding: 8px 12px;
     text-align: left;
     vertical-align: top;
-    color: #cccccc; /* Light text for table data */
+    color: #333; /* Dark text for table data */
   }
   
   .violation-details-table th {
     /* background-color: #f2f2f2; */
-    /* Dark mode default styles for table headers (ALERT TYPE, TIME, DURATION) */
-    background-color: #383838; /* Darker background for headers */
+    
+    /* Light theme default styles for table headers (ALERT TYPE, TIME, DURATION) */
+    background-color: #f2f2f2; /* Light background for headers */
     font-weight: bold;
     /* color: #333; */
-    color: #e0e0e0; /* Lighter text for headers */
+    color: #333; /* Dark text for headers */
   }
   
   .violation-details-table tbody tr:nth-child(odd) {
-    /* background-color: #fff; */
-    background-color: #2c2c2c; /* Or inherit from container */
+     /* Light theme */
+    background-color: #fff; /* White background for odd rows */
   }
 
   .violation-details-table tbody tr:nth-child(even) {
-    /* Dark mode default: Optional striping */
-    background-color: #333333; /* Example for striping */
+    /* Light theme: Optional striping */
+    background-color: #f9f9f9; /* Light striping for even rows */
   }
 
   
   .violation-details-table tbody tr:hover {
     /* background-color: #eaf6ff; */
-    background-color: #454545; /* Dark mode hover effect for table rows */
+    /* Light theme hover effect */
+    background-color: #eaf6ff;
   }
   
-  /* Add light theme adjustments */
-  @media (prefers-color-scheme: light) {
-    .user-row td, .details-row td {
-      border-bottom: 1px solid #ddd;
-    }
-    .details-row td {
-      background-color: #f0f0f0;
-    }
-    /* Light mode override for the details container */
-    .violation-details-container {
-      background-color: #f9f9f9; /* Light background */
-      border-top: 1px solid #eee; /* Lighter border */
-      color: #333; /* Default dark text color for content inside for light mode */
-    }
-
-    .tooltip-content {
-      background-color: #fff;
-      border: 1px solid #ccc;
-      color: #333;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    /* Light mode override for "Alert Details" and "Test started at" headers */
-    .details-header h4 {
-      color: #333; /* Dark text */
-    }
-    /* --- Icon Link/Button Styles --- */
-    .icon-link {
-      color: #007bff; /* Standard link blue for light mode */
-    }
-    
+  
+  /* --- Icon Link/Button Styles (already light theme oriented) --- */
+.icon-link {
+  color: #007bff; /* Standard link blue */
+}  
 
     .screenshot-icon-link:hover {
       /* background-color: rgba(255, 255, 255, 0.1); 
@@ -283,34 +269,4 @@
       outline: none;
     }
 
-    .expand-button, .link-button {
-      background-color: #e9e9e9;
-      border: 1px solid #ccc;
-      color: #213547;
-    }
-    .expand-button:hover, .link-button:hover {
-      border-color: #747bff;
-      background-color: #f5f5f5;
-    }
-     .details-panel h4 { color: #444; }
-     .details-panel li { color: #555; }
-     /* Light theme overrides for violation details table */
-    .violation-details-table th,
-    .violation-details-table td {
-      border: 1px solid #ddd; /* Lighter border */
-      color: #333; /* Dark text for table data */
-    }
-    .violation-details-table th {
-      background-color: #f2f2f2; /* Light background for headers */
-      color: #333; /* Dark text for headers */
-    }
-    .violation-details-table tbody tr:nth-child(odd) {
-      background-color: #fff; /* White background for odd rows */
-    }
-    .violation-details-table tbody tr:nth-child(even) {
-      background-color: #f9f9f9; /* Light striping for even rows */
-    }
-    .violation-details-table tbody tr:hover {
-      background-color: #eaf6ff; /* Light mode hover effect */
-    }
-  }
+    

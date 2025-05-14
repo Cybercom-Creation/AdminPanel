@@ -34,13 +34,13 @@ export const fetchAdminUsers = async () => {
 // *** NEW formatDuration function (from your suggestion) ***
 export const formatDuration = (ms) => {
   // Add console log for debugging input
-  console.log(`formatDuration (new) received: ${ms} (type: ${typeof ms})`);
+  // console.log(`formatDuration (new) received: ${ms} (type: ${typeof ms})`);
 
   // Ensure ms is treated as a number
   const numericMs = typeof ms === 'string' ? parseInt(ms, 10) : ms;
 
   if (typeof numericMs !== 'number' || isNaN(numericMs) || numericMs < 0) {
-      console.warn(`formatDuration (new) defaulting to "N/A" for input: ${ms}`);
+      // console.warn(`formatDuration (new) defaulting to "N/A" for input: ${ms}`);
       return "N/A"; // Return "N/A" for invalid or missing data
   }
   if (numericMs < 1000) {

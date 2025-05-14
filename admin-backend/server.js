@@ -105,6 +105,28 @@ const transporter = nodemailer.createTransport({
 // --- Helper Function: Generate Combined Log CSV Data (MongoDB Version) ---
 async function generateCombinedCsvData() {
     try {
+
+        // 1. Calculate total number of alerts for each user
+        console.log("Calculating total alerts per user...");
+        const userAlertCountsAgg = await ProctoringLog.aggregate([
+            {
+                $group: {
+                    _id: "$userId", // Group by the user ID
+                    totalAlerts: { $sum: 1 } // Count the number of logs (alerts) for each user
+                }
+            }
+        ]);
+
+        const alertCountsMap = new Map();
+        userAlertCountsAgg.forEach(item => {
+            if (item._id) { // Ensure _id is not null
+                alertCountsMap.set(item._id.toString(), item.totalAlerts);
+            }
+        });
+        console.log(`Calculated alert counts for ${alertCountsMap.size} users.`);
+
+
+
         console.log("Fetching proctoring logs and populating user data...");
 
         // *** CRITICAL STEP: Populate based on the correct field name ***
@@ -115,7 +137,7 @@ async function generateCombinedCsvData() {
             .sort({ userId: 1, createdAt: 1 }) // Sort by user ID, then log creation time
             .lean(); // Use .lean() for plain JS objects
 
-        console.log(`Fetched ${logs.length} logs.`);
+        // console.log(`Fetched ${logs.length} logs.`);
 
         // Debugging: Check if population worked
         const logsWithUserData = logs.filter(log => log.userId && typeof log.userId === 'object'); // Check if userId was populated (became an object)
@@ -143,7 +165,8 @@ async function generateCombinedCsvData() {
                 { id: 'log_id', title: 'LogID' },           // From log._id
                 { id: 'trigger_event', title: 'TriggerEvent' }, // From log.triggerEvent
                 { id: 'start_time', title: 'StartTime' },   // From log.startTime
-                { id: 'end_time', title: 'EndTime' }        // From log.endTime
+                { id: 'end_time', title: 'EndTime' },       // From log.endTime
+                { id: 'total_user_alerts', title: 'TotalUserAlerts' }, // From alertCountsMap
                 // { id: 'interval_seconds', title: 'IntervalSeconds' } // Add back if needed
             ]
         });
@@ -152,6 +175,9 @@ async function generateCombinedCsvData() {
         const processedRows = logs.map(log => {
             // Access populated user data via log.userId (or log.user if that's the field name)
             const populatedUser = log.userId; // Assuming the field name used in populate was 'userId'
+            const userIdStr = populatedUser?._id?.toString();
+            const numberOfAlertsForUser = userIdStr ? (alertCountsMap.get(userIdStr) || 0) : 0;
+
 
             return {
                 // Use data from the populated user object, providing defaults if population failed
@@ -159,17 +185,27 @@ async function generateCombinedCsvData() {
                 user_name: populatedUser?.name || 'N/A',
                 user_email: populatedUser?.email || 'N/A',
                 user_phone: populatedUser?.phone || '', // Default to empty string for phone
-
+                
                 // Use data directly from the log object
                 log_id: log._id.toString(), // Convert ObjectId to string
                 trigger_event: log.triggerEvent || '', // Use correct field name
                 start_time: log.startTime instanceof Date ? log.startTime.toISOString() : '', // Use correct field name
                 end_time: log.endTime instanceof Date ? log.endTime.toISOString() : '', // Use correct field name
+                total_user_alerts: numberOfAlertsForUser,
                 // interval_seconds: log.interval_seconds ?? '' // Add back if needed
             };
         });
 
-        return csvStringifier.getHeaderString() + csvStringifier.stringifyRecords(processedRows);
+         // Temporary log to inspect a few processed rows before stringification
+        if (processedRows.length > 0) {
+            console.log("Sample of processed rows for CSV (first 3):", JSON.stringify(processedRows.slice(0, 3), null, 2));
+        }
+
+        // return csvStringifier.getHeaderString() + csvStringifier.stringifyRecords(processedRows);
+        const headerString = csvStringifier.getHeaderString();
+        const recordsString = csvStringifier.stringifyRecords(processedRows);
+        console.log("Generated CSV Header String for combined_logs:", headerString); // Log the generated header
+        return headerString + recordsString;
 
     } catch (error) {
         console.error("Error generating combined CSV data:", error);
@@ -398,7 +434,7 @@ app.get('/admin/users', async (req, res) => {
 
         };
     });
-    console.log(`User ${userIdStr} (${user.name}) - Sending: testDuration=${finalTestDuration}, violationDetails=${JSON.stringify(finalViolationDetails)}`);
+    //console.log(`User ${userIdStr} (${user.name}) - Sending: testDuration=${finalTestDuration}, violationDetails=${JSON.stringify(finalViolationDetails)}`);
             return {
                 // Fields expected by the frontend (UserRow.jsx)
                 id: userEmail,
@@ -416,7 +452,7 @@ app.get('/admin/users', async (req, res) => {
         });
 
         console.log(`Sending ${usersWithData.length} user records to the frontend.`);
-        console.log(`Sending ${users.photoBase64} user records to the frontend.`);
+        //console.log(`Sending ${users.photoBase64} user records to the frontend.`);
         res.status(200).json(usersWithData);
 
     } catch (error) {
@@ -428,6 +464,7 @@ app.get('/admin/users', async (req, res) => {
 
 // --- MODIFIED Export Route (now POST) ---
 app.post('/export', async (req, res) => {
+    console.log("POST /export request received.");
     const recipientEmail = req.body.email;
 
     if (!recipientEmail) {
@@ -511,6 +548,7 @@ app.post('/export', async (req, res) => {
 
 // --- NEW Download Route ---
 app.get('/download', async (req, res) => {
+    console.log("GET /download request received.");
     console.log('Download request received.');
     try {
         // Generate CSV data using MongoDB helper functions

@@ -32,11 +32,11 @@ body {
 }
 
 /* Dark mode considerations for header */
-body.dark-mode .app-header {
+/* body.dark-mode .app-header {
   background-color: #2c3e50;
   color: #ecf0f1;
-  border-bottom: 1px solid #34495e; /* Darker border for dark mode */
-}
+  border-bottom: 1px solid #34495e; 
+} */
 
 .app-title {
   margin: 0;
@@ -117,30 +117,6 @@ body.dark-mode .app-header {
 }
 
 
-/* Settings Icon and Drawer */
-/* .settings-control {
-  position: relative; 
-}
-
-.settings-icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem; 
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;  
-  border-radius: 50%;
-  color: #2c3e50; 
-}
-.settings-icon-button:hover {
-  background-color: #e0e0e0;
-}
-
-body.dark-mode .settings-icon-button {
-  color: #ecf0f1; 
-} */
 .settings-drawer {
   position: fixed;
   top: 0;
