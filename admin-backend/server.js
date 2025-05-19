@@ -35,6 +35,18 @@ const connectDB = async () => {
 connectDB(); // Connect to the database when the app starts
 
 // --- Mongoose Schemas ---
+// Define College Schema
+const CollegeSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+        
+    }
+}, { timestamps: true });
+const College = mongoose.model('College', CollegeSchema);
+// --- Mongoose Schemas ---
 // Define User Schema
 const UserSchema = new mongoose.Schema({
     // Assuming user_id from MySQL becomes the default _id or a custom field if needed
@@ -61,6 +73,11 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
     photoDriveLink: { type: String },
+    college: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'College',
+        // required: false // Set to true if a college is mandatory for every user
+    },
 }, { timestamps: true }); // Adds createdAt and updatedAt automatically
 
 const User = mongoose.model('User', UserSchema); // Model name 'User' -> collection 'users'
@@ -103,8 +120,20 @@ const transporter = nodemailer.createTransport({
 });
 
 // --- Helper Function: Generate Combined Log CSV Data (MongoDB Version) ---
-async function generateCombinedCsvData() {
+async function generateCombinedCsvData(collegeIdParam = null) {
     try {
+        let userFilter = {};
+         if (collegeIdParam) {
+            userFilter.college = collegeIdParam; // Use 'college' field for filtering
+        }
+
+        const relevantUsers = await User.find(userFilter).select('_id college').lean(); // Select college field
+        const relevantUserIds = relevantUsers.map(u => u._id);
+
+        if (collegeIdParam && relevantUserIds.length === 0) {
+            console.log(`No users found for collegeId: ${collegeIdParam}. Returning empty CSV data for combined logs.`);
+            return null; // Or return header only: csvStringifier.getHeaderString()
+        }
 
         // 1. Calculate total number of alerts for each user
         console.log("Calculating total alerts per user...");
@@ -112,7 +141,7 @@ async function generateCombinedCsvData() {
             {
                 $group: {
                     _id: "$userId", // Group by the user ID
-                    totalAlerts: { $sum: 1 } // Count the number of logs (alerts) for each user
+                    totalAlerts: { $sum: 1 } 
                 }
             }
         ]);
@@ -129,20 +158,26 @@ async function generateCombinedCsvData() {
 
         console.log("Fetching proctoring logs and populating user data...");
 
-        // *** CRITICAL STEP: Populate based on the correct field name ***
-        // If your field in ProctoringLogSchema is 'userId', use 'userId'.
-        // If it's 'user' (like in the original code), use 'user'.
-        const logs = await ProctoringLog.find({})
-            .populate('userId', 'name email phone') // Populate using the 'userId' field, selecting specific user fields
+        const logQuery = {};
+        if (collegeIdParam) { // Corrected variable name from previous diff, ensure it's used here
+            logQuery.userId = { $in: relevantUserIds };
+        }
+
+        const logs = await ProctoringLog.find(logQuery)
+            .populate({
+                path: 'userId', 
+                select: 'name email phone college', // Include collegeId in user population
+                populate: { path: 'college', select: 'name' } // Corrected: Populate college name from user's 'college' field
+            })
             .sort({ userId: 1, createdAt: 1 }) // Sort by user ID, then log creation time
             .lean(); // Use .lean() for plain JS objects
 
         // console.log(`Fetched ${logs.length} logs.`);
 
         // Debugging: Check if population worked
-        const logsWithUserData = logs.filter(log => log.userId && typeof log.userId === 'object'); // Check if userId was populated (became an object)
+        const logsWithUserData = logs.filter(log => log.userId && typeof log.userId === 'object' && log.userId.college); // Check if userId was populated (became an object)
         console.log(`${logsWithUserData.length} logs successfully populated with user data.`);
-        if (logs.length > 0 && logsWithUserData.length < logs.length) {
+         if (logs.length > 0 && (logsWithUserData.length < logs.length || logs.some(log => log.userId && !log.userId.college))) {
              console.warn(`Warning: ${logs.length - logsWithUserData.length} logs could not be linked to existing users. Check 'userId' field references in 'proctoringlogs' collection.`);
              // Log a few examples of failed populations if needed:
              // console.log("Examples of logs that failed population:", logs.filter(log => !log.userId || typeof log.userId !== 'object').slice(0, 5));
@@ -161,12 +196,14 @@ async function generateCombinedCsvData() {
                 { id: 'user_name', title: 'Name' },         // From populated log.userId.name
                 { id: 'user_email', title: 'Email' },       // From populated log.userId.email
                 { id: 'user_phone', title: 'Phone' },       // From populated log.userId.phone
+                { id: 'college_name', title: 'CollegeName' }, // New column for College Name
                 // Use the log's own fields
                 { id: 'log_id', title: 'LogID' },           // From log._id
                 { id: 'trigger_event', title: 'TriggerEvent' }, // From log.triggerEvent
                 { id: 'start_time', title: 'StartTime' },   // From log.startTime
                 { id: 'end_time', title: 'EndTime' },       // From log.endTime
                 { id: 'total_user_alerts', title: 'TotalUserAlerts' }, // From alertCountsMap
+                
                 // { id: 'interval_seconds', title: 'IntervalSeconds' } // Add back if needed
             ]
         });
@@ -185,6 +222,7 @@ async function generateCombinedCsvData() {
                 user_name: populatedUser?.name || 'N/A',
                 user_email: populatedUser?.email || 'N/A',
                 user_phone: populatedUser?.phone || '', // Default to empty string for phone
+                college_name: populatedUser?.college?.name || 'N/A', // Get college name
                 
                 // Use data directly from the log object
                 log_id: log._id.toString(), // Convert ObjectId to string
@@ -214,12 +252,18 @@ async function generateCombinedCsvData() {
 }
 
 // --- Helper Function: Generate User Details CSV Data (MongoDB Version - Using photoDriveLink) ---
-async function generateUserCsvData() {
+async function generateUserCsvData(collegeIdParam = null) {
     try {
+        const userQuery = {};
+        if (collegeIdParam) {
+            userQuery.college = collegeIdParam;
+        }
+
         // Fetch all users, selecting necessary fields including photoDriveLink
         // We no longer need photo_base64 for this specific CSV export
-        const users = await User.find({})
-            .select('name email phone photoDriveLink') // Select photoDriveLink instead of photo_base64
+        const users = await User.find(userQuery)
+            .populate('college', 'name') // Corrected: Populate college name using 'college' field
+            .select('name email phone photoDriveLink college') 
             .sort({ createdAt: 1 }) // Or sort by name, email, etc.
             .lean();
 
@@ -231,6 +275,7 @@ async function generateUserCsvData() {
                 { id: 'user_name', title: 'Name' },
                 { id: 'user_email', title: 'Email' },
                 { id: 'user_phone', title: 'Phone' },
+                { id: 'college_name', title: 'CollegeName' }, // New column for College Name
                 // Header remains the same, but the content will be the Drive link
                 { id: 'photo_link', title: 'PhotoLink' }
             ]
@@ -246,7 +291,8 @@ async function generateUserCsvData() {
                 user_name: user.name,
                 user_email: user.email,
                 user_phone: user.phone || '', // Handle potentially missing phone
-                photo_link: photoLink // Use the Google Drive link here
+                college_name: user.college?.name || 'N/A', // Get college name
+                photo_link: photoLink 
             };
         });
 
@@ -269,15 +315,29 @@ app.get('/', (req, res) => {
     res.send('Admin Panel Backend (MongoDB) is running!');
 });
 
+// --- NEW Endpoint to get all colleges for the dropdown ---
+// --- NEW Endpoint to get all colleges for the dropdown ---
+app.get('/api/colleges', async (req, res) => {
+    try {
+        const colleges = await College.find({}).sort({ name: 1 }).lean();
+        // Map to { id: _id, name: name } structure expected by frontend
+        res.status(200).json(colleges.map(c => ({ id: c._id.toString(), name: c.name })));
+    } catch (error) {
+        console.error('Error fetching colleges:', error);
+        res.status(500).json({ message: 'Failed to fetch colleges', error: error.message });
+    }
+});
+
 // --- NEW Endpoint to get users for the Admin Panel Table ---
 app.get('/admin/users', async (req, res) => {
-    console.log("GET /api/admin/users request received.");
-    
+    const { collegeId } = req.query;
+    console.log(`GET /admin/users request received. CollegeId: ${collegeId}`);
+
     try {
-        // 1. Fetch all users - select necessary fields
-        
-        const users = await User.find({})
-            .select('_id name email phone photoBase64 photoDriveLink testDurationMs driveFolderLink testStartTime testEndTime') // Select only the fields you need
+        const userQuery = {};
+        if (collegeId) userQuery.college = collegeId; // Corrected: Filter by 'college' field
+        const users = await User.find(userQuery)
+            .select('_id name email phone photoBase64 photoDriveLink testDurationMs driveFolderLink testStartTime testEndTime college') // Select only the fields you need
             .lean(); // Use lean for better performance
 
         if (!users || users.length === 0) {
@@ -465,7 +525,7 @@ app.get('/admin/users', async (req, res) => {
 // --- MODIFIED Export Route (now POST) ---
 app.post('/export', async (req, res) => {
     console.log("POST /export request received.");
-    const recipientEmail = req.body.email;
+    const { email: recipientEmail, collegeId } = req.body; // Extract collegeId from body
 
     if (!recipientEmail) {
         return res.status(400).json({ success: false, message: 'Recipient email address is required.' });
@@ -474,12 +534,12 @@ app.post('/export', async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid email address format.' });
     }
 
-    console.log(`Export request received for email: ${recipientEmail}`);
+    console.log(`Export request received for email: ${recipientEmail}, CollegeId: ${collegeId}`);
 
     try {
         // Generate CSV data using MongoDB helper functions
-        const combinedCsvData = await generateCombinedCsvData();
-        const userCsvData = await generateUserCsvData();
+        const combinedCsvData = await generateCombinedCsvData(collegeId); // Pass collegeId
+        const userCsvData = await generateUserCsvData(collegeId); // Pass collegeId
 
         if (!combinedCsvData && !userCsvData) {
             console.log('No data found to export.');
@@ -548,12 +608,14 @@ app.post('/export', async (req, res) => {
 
 // --- NEW Download Route ---
 app.get('/download', async (req, res) => {
-    console.log("GET /download request received.");
-    console.log('Download request received.');
+    const { collegeId } = req.query; // Extract collegeId from query
+    console.log(`GET /download request received. CollegeId: ${collegeId}`);
+
     try {
         // Generate CSV data using MongoDB helper functions
-        const combinedCsvData = await generateCombinedCsvData();
-        const userCsvData = await generateUserCsvData();
+        // Pass collegeId to helper functions
+        const combinedCsvData = await generateCombinedCsvData(collegeId);
+        const userCsvData = await generateUserCsvData(collegeId);
 
         if (!combinedCsvData && !userCsvData) {
             console.log('No data found to download.');

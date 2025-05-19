@@ -60,6 +60,10 @@ function AuthStatus() {
   const settingsDrawerRef = useRef(null);
   //const settingsIconRef = useRef(null);
 
+  const [colleges, setColleges] = useState([]);
+  const [selectedCollegeId, setSelectedCollegeId] = useState(''); // To store the ID of the selected college
+  const [isLoadingColleges, setIsLoadingColleges] = useState(false);
+
   const [isContentLoading, setIsContentLoading] = useState(false); // New state for content loading
 
   
@@ -121,6 +125,40 @@ function AuthStatus() {
     };
   }, [isSettingsDrawerOpen]);
 
+ // Inside AppLayout component in your admin-frontend App.jsx
+useEffect(() => {
+  const fetchColleges = async () => {
+    setIsLoadingColleges(true);
+    try {
+      console.log('Fetching colleges from /api/colleges...'); // Log before fetch
+      const response = await fetch('/api/colleges');
+      if (!response.ok) {
+        console.error('Failed to fetch colleges, status:', response.status);
+        throw new Error('Failed to fetch colleges');
+      }
+      const data = await response.json();
+      console.log('Data received from /api/colleges:', JSON.stringify(data, null, 2)); // Log the raw data
+      setColleges(data);
+      console.log('Colleges state updated in App.jsx'); // Log after setting state
+    } catch (error) {
+      console.error('Error in fetchColleges:', error);
+      setColleges([]);
+    } finally {
+      setIsLoadingColleges(false);
+    }
+  };
+
+  if (isAuthenticated) {
+    fetchColleges();
+  }
+}, [isAuthenticated]);
+
+
+  const handleCollegeChange = (event) => {
+    setSelectedCollegeId(event.target.value);
+  };
+
+
 
   return (
     <div className="app-container">
@@ -129,6 +167,22 @@ function AuthStatus() {
       <h1 className="app-title">{!isContentLoading ? 'Admin' : ''}</h1>
       {isAuthenticated && (
           <div className="header-controls">
+            {/* College Filter Dropdown */}
+            <div className="college-filter-container">
+              <label htmlFor="college-select" className="college-filter-label">College:</label>
+              <select
+                id="college-select"
+                value={selectedCollegeId}
+                onChange={handleCollegeChange}
+                disabled={isLoadingColleges}
+                className="college-filter-select"
+              >
+                <option value="">All Colleges</option>
+                {colleges.map((college) => (
+                  <option key={college.id} value={college.id}>{college.name}</option>
+                ))}
+              </select>
+            </div>
             {/* User Avatar Dropdown */}
             <div className="header-actions" ref={menuRef}>
               <button onClick={toggleMenu} className="action-menu-trigger">
@@ -138,8 +192,10 @@ function AuthStatus() {
               </button>
               {isMenuOpen && (
                 <div className="action-menu-dropdown">
-                  <ExportButton />
-                  <DownloadButton />
+                  {/* <ExportButton />
+                  <DownloadButton /> */}
+                  <ExportButton selectedCollegeId={selectedCollegeId} />
+                  <DownloadButton selectedCollegeId={selectedCollegeId} />
                   <button onClick={toggleSettingsDrawer} className="dropdown-settings-button dropdown-link-button">
                     Settings
                   </button>
@@ -199,7 +255,8 @@ function AuthStatus() {
       {/* Main Content Area */}
       {/* Main Content Area */}
       <main className="app-main-content">
-        {React.cloneElement(children, { setIsContentLoading })}
+        {/* {React.cloneElement(children, { setIsContentLoading })} */}
+         {React.cloneElement(children, { setIsContentLoading, selectedCollegeId })}
       </main>
     </div>
   );

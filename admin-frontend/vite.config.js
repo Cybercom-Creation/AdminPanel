@@ -9,6 +9,22 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    server: {
+    proxy: {
+      // Proxy API requests starting with /admin or /api to your backend
+      '/admin': {
+        target: 'http://localhost:5001', // Your backend server
+        changeOrigin: true,
+        secure: false,      // If your backend is not HTTPS
+        // rewrite: (path) => path.replace(/^\/api/, '') // if you need to rewrite path
+      },
+      '/api': { // If you also have /api/colleges, etc.
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  },
     define: {
       // This will replace 'process.env.API_URL' in your client-side code
       // with the value of the API_URL environment variable.

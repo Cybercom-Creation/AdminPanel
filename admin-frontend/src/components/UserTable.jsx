@@ -1,6 +1,6 @@
 // src/components/UserTable.jsx (or integrate into your page component)
 import React, { useState, useEffect, useMemo } from 'react';
-// Correct path assuming api.js is now in admin-frontend/src/services/
+// We will fetch directly in this component as per guidance, so fetchAdminUsers might be bypassed for this specific filtering.
 import { fetchAdminUsers } from '../services/api';
 import UserRow from './UserRow'; // Path within the same components folder
 import './UserTable.css'; // Path within the same components folder
@@ -15,29 +15,45 @@ const formatStartTime = (timestamp) => {
   }
 };
 
-function UserTable({ setIsContentLoading }) {
+function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selectedCollegeId
     
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
 
+  // useEffect to fetch users based on selectedCollegeId
   useEffect(() => {
     const loadUsers = async () => {
       setIsLoading(true);
+      if (setIsContentLoading) {
+        setIsContentLoading(true); // Notify parent about loading state
+      }
       setError(null);
       try {
-        const fetchedUsers = await fetchAdminUsers();
+        // Construct API URL with collegeId if selected
+        let apiUrl = '/admin/users'; // Base API endpoint for users
+        if (selectedCollegeId) {
+          apiUrl += `?collegeId=${selectedCollegeId}`;
+        }
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch users: ${response.statusText}`);
+        }
+        const fetchedUsers = await response.json();
         setUsers(fetchedUsers);
       } catch (err) {
         setError('Failed to load user data.');
         console.error(err); // Log the actual error
       } finally {
         setIsLoading(false);
+        if (setIsContentLoading) {
+          setIsContentLoading(false); // Notify parent that loading is done
+        }
       }
     };
     loadUsers();
-  }, []); // Empty dependency array means this runs once on mount
+  }, [selectedCollegeId, setIsContentLoading]); // Re-fetch when selectedCollegeId or setIsContentLoading changes
 
   useEffect(() => {
     // Pass the UserTable's loading state up to AppLayout

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
  // Reusing styles for simplicity
 import styles from './ActionButton.module.css'; // Assuming you have a CSS module for button styles
 
-function DownloadButton() {
+function DownloadButton({ selectedCollegeId }) { // Accept selectedCollegeId
   const [isLoading, setIsLoading] = useState(false);
   // Removed message and isError state as we are only rendering the button
 
@@ -11,8 +11,15 @@ function DownloadButton() {
     setIsLoading(true);
     // Removed setMessage calls
 
-    const backendUrl = `https://adminpanel-p8sw.onrender.com/download`; // Backend download endpoint
-    //const backendUrl = "http://localhost:5001/download";
+    let backendUrl = `https://adminpanel-p8sw.onrender.com/download`; // Backend download endpoint
+    //let backendUrl = "http://localhost:5001/download";
+    
+   
+
+    if (selectedCollegeId) {
+      backendUrl += `?collegeId=${selectedCollegeId}`;
+    }
+    console.log('[DownloadButton] Requesting download from URL:', backendUrl); // Log the final URL
 
     try {
       const response = await fetch(backendUrl);
