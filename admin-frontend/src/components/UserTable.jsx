@@ -15,6 +15,8 @@ const formatStartTime = (timestamp) => {
   }
 };
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+
 function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selectedCollegeId
     
   const [users, setUsers] = useState([]);
@@ -32,11 +34,11 @@ function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selec
       setError(null);
       try {
         // Construct API URL with collegeId if selected
-        let apiUrl = '/admin/users'; // Base API endpoint for users
+        let path = '/admin/users'; // Path for the users endpoint
         if (selectedCollegeId) {
-          apiUrl += `?collegeId=${selectedCollegeId}`;
+          path += `?collegeId=${selectedCollegeId}`;
         }
-        const response = await fetch(apiUrl);
+        const response = await fetch(`${API_BASE_URL}${path}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch users: ${response.statusText}`);
         }
