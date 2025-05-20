@@ -3,6 +3,8 @@ import React, { useState } from 'react';
  // Reusing styles for simplicity
 import styles from './ActionButton.module.css'; // Assuming you have a CSS module for button styles
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'; // Use environment variable
+
 function DownloadButton({ selectedCollegeId }) { // Accept selectedCollegeId
   const [isLoading, setIsLoading] = useState(false);
   // Removed message and isError state as we are only rendering the button
@@ -11,9 +13,9 @@ function DownloadButton({ selectedCollegeId }) { // Accept selectedCollegeId
     setIsLoading(true);
     // Removed setMessage calls
 
-    let backendUrl = `https://adminpanel-p8sw.onrender.com/download`; // Backend download endpoint
+    //let backendUrl = `https://adminpanel-p8sw.onrender.com/download`; // Backend download endpoint
     //let backendUrl = "http://localhost:5001/download";
-    
+    let backendUrl = `${API_BASE_URL}/download`; // Use environment variable
    
 
     if (selectedCollegeId) {

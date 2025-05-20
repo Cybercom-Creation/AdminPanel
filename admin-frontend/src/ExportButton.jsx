@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import EmailDialog from './EmailDialog'; // Import the dialog component (adjust path if needed)
 import styles from './ActionButton.module.css';
 
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'; // Use environment variable
 function ExportButton({ selectedCollegeId }) { // Accept selectedCollegeId
   // State for the API call loading state (affects the button)
   const [isLoading, setIsLoading] = useState(false);
@@ -28,8 +30,9 @@ function ExportButton({ selectedCollegeId }) { // Accept selectedCollegeId
     // Removed setMessage calls
 
     // Use relative path, assuming frontend and backend are on the same domain or proxied
-    let backendUrl = `https://adminpanel-p8sw.onrender.com/export`;
+    //let backendUrl = `https://adminpanel-p8sw.onrender.com/export`;
     //let backendUrl = "http://localhost:5001/export";
+    let backendUrl = `${API_BASE_URL}/export`; // Use environment variable
     
 
     try {
