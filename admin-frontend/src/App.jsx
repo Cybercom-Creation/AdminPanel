@@ -131,7 +131,7 @@ useEffect(() => {
     setIsLoadingColleges(true);
     try {
       console.log('Fetching colleges from /api/colleges...'); // Log before fetch
-      const response = await fetch('${API_BASE_URL}/api/colleges');
+      const response = await fetch(`${API_BASE_URL}/api/colleges`);
       if (!response.ok) {
         console.error('Failed to fetch colleges, status:', response.status);
         throw new Error('Failed to fetch colleges');
