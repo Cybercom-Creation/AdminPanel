@@ -41,8 +41,11 @@ const CollegeSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true
-        
+        unique: true  
+    },
+    driveFolderId: { // ID of the Google Drive folder for this college
+        type: String,
+        sparse: true, // Optional: use if not all colleges will immediately have a Drive folder
     }
 }, { timestamps: true });
 const College = mongoose.model('College', CollegeSchema);
