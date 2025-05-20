@@ -2,11 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const AppSettings = require('../models/AppSettings');
-// const { protect, admin } = require('../middleware/authMiddleware'); // Optional: Protect these routes
 
-// GET current application settings
-// For simplicity, not protecting this route now, but you should in production
-// router.get('/', protect, admin, async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const settings = await AppSettings.getSettings();

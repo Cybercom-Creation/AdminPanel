@@ -135,30 +135,7 @@
   }
   
   
-  /* Add light theme adjustments */
-  /* @media (prefers-color-scheme: light) {
-    .user-table-container {
-      background-color: #fff;
-      color: #213547;
-      border: 1px solid #eee;
-    }
-    .user-table-container h2 {
-      border-bottom: 1px solid #eee;
-      color: #333;
-    }
-    .user-table th {
-      background-color: #f9f9f9;
-      border-bottom-color: #ddd;
-    }
-     .user-table th:hover {
-      background-color: #f0f0f0;
-    }
-    .user-table th,
-    .user-table td {
-      border-bottom-color: #ddd;
-    } */
 
-    /* Add to UserTable.css or App.css */
 .loading-spinner-container {
   display: flex;
   flex-direction: column;

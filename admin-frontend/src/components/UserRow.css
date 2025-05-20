@@ -59,11 +59,7 @@
     position: relative;
   }
   
-  /* Simple CSS Tooltip */
-  /* .tooltip-container {
-    position: relative;
-    display: inline-block;
-  } */
+ 
   .tooltip-container {
     position: relative;
     display: flex; /* Use flex for robust centering */

@@ -2,8 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import './SettingsControls.css'; // Create this CSS file for styling
-
+import './SettingsControls.css'; 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 function SettingsControls() {
@@ -27,8 +26,7 @@ function SettingsControls() {
     setError(null);
     try {
       const response = await axios.get(`${API_BASE_URL}/settings`, {
-        // No auth token needed if GET /settings is public,
-        // otherwise, add: headers: { Authorization: `Bearer ${authToken}` },
+        
       });
       if (response.data) {
         setSettings({
@@ -42,16 +40,16 @@ function SettingsControls() {
       }
     } catch (err) {
       console.error('Failed to fetch settings:', err);
-      //setError(err.response?.data?.message || 'Failed to load settings.');
+      
       const errorMsg = err.response?.data?.message || 'Failed to load settings.';
       setError(errorMsg);
       setIsErrorVisible(true);
-      setSuccessMessage(''); // Clear any existing success message
+      setSuccessMessage('');
       setIsSuccessVisible(false);
     } finally {
       setIsLoading(false);
     }
-  }, [authToken]); // Add authToken if used in headers
+  }, [authToken]); 
 
   useEffect(() => {
     fetchSettings();
@@ -70,8 +68,8 @@ function SettingsControls() {
     setIsLoading(true);
     setError(null);
     setSuccessMessage('');
-    setIsErrorVisible(false); // Hide previous errors immediately
-    setIsSuccessVisible(false); // Hide previous success immediately
+    setIsErrorVisible(false); 
+    setIsSuccessVisible(false); 
     if (settings.periodicScreenshotsEnabled && settings.screenshotIntervalSeconds < 10) {
         setError('Screenshot interval must be at least 10 seconds when enabled.');
         setIsLoading(false);
@@ -79,8 +77,8 @@ function SettingsControls() {
         return;
     }
 
-    // Optional: Client-side validation for testDurationInterval
-    if (settings.testDurationInterval < 1) { // Assuming 5 is the minimum
+    
+    if (settings.testDurationInterval < 1) { 
         setError('Test duration interval must be at least 5 minutes.');
         setIsLoading(false);
         setIsErrorVisible(true);
@@ -89,32 +87,30 @@ function SettingsControls() {
 
     try {
       await axios.put(`${API_BASE_URL}/settings`, settings, {
-        // No auth token needed if PUT /settings is public or uses a different auth scheme for admin actions
-        // otherwise, add: headers: { Authorization: `Bearer ${authToken}` },
+       
       });
       setSuccessMessage('Settings updated successfully!');
       setIsSuccessVisible(true);
-      setError(null); // Clear any previous error
+      setError(null); 
       setIsErrorVisible(false);
-      // fetchSettings(); // Optionally re-fetch to confirm
+      
     } catch (err) {
       console.error('Failed to update settings:', err);
       setError(err.response?.data?.message || 'Failed to save settings.');
       setIsErrorVisible(true);
-      setSuccessMessage(''); // Clear any previous success
+      setSuccessMessage(''); 
       setIsSuccessVisible(false);
     } finally {
       setIsLoading(false);
       setTimeout(() => {
-        // setError(null);
-        // setSuccessMessage('');
+        
         setIsSuccessVisible(false);
         setIsErrorVisible(false);
-        // After the animation out, clear the message content
+        
         setTimeout(() => {
           setError(null);
           setSuccessMessage('');
-        }, 300); // This duration should match your CSS transition duration
+        }, 300);
       }, 5000);
     }
   };

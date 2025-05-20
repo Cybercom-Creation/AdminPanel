@@ -76,13 +76,7 @@
     overflow: hidden;
   }
   
-  /* .settings-error,
-  .settings-success,
-  .message-placeholder {
-    margin: 0;
-    padding: 5px 0;
-    font-size: 0.9em;
-  } */
+  
   .settings-feedback-message {
     margin: 0;
     padding: 5px 0;
@@ -110,16 +104,13 @@
     color: #e74c3c;
   }
   
-  /* .settings-success {
-    color: #2ecc71;
-  } */
+ 
 
   .settings-feedback-message.settings-success {
     color: #2ecc71;
   }
   .settings-feedback-message.loading {
-    color: #34495e; /* Or your preferred loading text color */
-    /* Override transition for loading message if it should appear/disappear instantly */
+    color: #34495e; 
     opacity: 1;
     transform: translateY(0);
     visibility: visible;

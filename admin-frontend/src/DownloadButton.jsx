@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
-// You can create a separate CSS module or reuse/adapt ExportButton.module.css
- // Reusing styles for simplicity
-import styles from './ActionButton.module.css'; // Assuming you have a CSS module for button styles
+
+import styles from './ActionButton.module.css'; 
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'; // Use environment variable
 
-function DownloadButton({ selectedCollegeId }) { // Accept selectedCollegeId
+function DownloadButton({ selectedCollegeId }) { 
   const [isLoading, setIsLoading] = useState(false);
-  // Removed message and isError state as we are only rendering the button
+  
 
   const handleDownload = async () => {
     setIsLoading(true);
-    // Removed setMessage calls
-
-    //let backendUrl = `https://adminpanel-p8sw.onrender.com/download`; // Backend download endpoint
-    //let backendUrl = "http://localhost:5001/download";
+    
     let backendUrl = `${API_BASE_URL}/download`; // Use environment variable
    
 
     if (selectedCollegeId) {
       backendUrl += `?collegeId=${selectedCollegeId}`;
     }
-    console.log('[DownloadButton] Requesting download from URL:', backendUrl); // Log the final URL
+    console.log('[DownloadButton] Requesting download from URL:', backendUrl); 
 
     try {
       const response = await fetch(backendUrl);
@@ -31,7 +27,7 @@ function DownloadButton({ selectedCollegeId }) { // Accept selectedCollegeId
         try {
           const errorText = await response.text();
           if (errorText) errorMsg = errorText;
-        } catch (e) { /* Ignore */ }
+        } catch (e) { }
         throw new Error(errorMsg);
       }
 
@@ -54,27 +50,25 @@ function DownloadButton({ selectedCollegeId }) { // Accept selectedCollegeId
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-      // --- End File Download Handling ---
-
-      // Consider using a global notification system for success/error messages
+      
       console.log('Download started successfully!');
 
     } catch (error) {
       console.error('Error during download request:', error);
-      // Consider using a global notification system for error messages
-      alert(`Download Error: ${error.message}`); // Simple alert as placeholder
+     
+      alert(`Download Error: ${error.message}`); 
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Render only the button
+  
   return (
     <button
       className={`${styles.actionButton} ${styles.downloadButton}`}
       onClick={handleDownload}
       disabled={isLoading}
-      title="Download user and log data as CSV files (.zip)" // Add a tooltip
+      title="Download user and log data as CSV files (.zip)" 
     >
       {isLoading && <div className={styles.spinner}></div>}
       {isLoading ? 'Generating...' : 'Download Report'}

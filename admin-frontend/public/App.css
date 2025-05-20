@@ -31,12 +31,7 @@ body {
   box-sizing: border-box; /* Ensure padding doesn't affect width */
 }
 
-/* Dark mode considerations for header */
-/* body.dark-mode .app-header {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  border-bottom: 1px solid #34495e; 
-} */
+
 
 .app-title {
   margin: 0;
@@ -79,9 +74,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* body.dark-mode .admin-text {
-  color: #ecf0f1; 
-} */
+
 
 .action-menu-dropdown {
   position: absolute;
@@ -97,7 +90,7 @@ body {
 
 .action-menu-dropdown .dropdown-link-button,
 .action-menu-dropdown .dropdown-logout-button,
-.action-menu-dropdown > button { /* For ExportButton/DownloadButton if they render a button */
+.action-menu-dropdown > button { 
   display: block;
   width: 100%;
   text-align: left;
@@ -171,7 +164,7 @@ body {
 .user-table {
   width: 100%; /* Make the table itself full width */
   border-collapse: collapse; /* Collapse borders for a cleaner look */
-  /* Add other table styling (e.g., borders, padding) */
+  
 }
 
 .user-table th, .user-table td {
@@ -209,7 +202,7 @@ body {
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
-    /* animation: logo-spin infinite 20s linear; */
+    
   }
 }
 

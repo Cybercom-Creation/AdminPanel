@@ -1,16 +1,14 @@
-// src/services/api.js (or wherever your API calls live)
-
-// Assuming your backend endpoint is /api/admin/users
+// src/services/api.js 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 export const fetchAdminUsers = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/users`); // Adjust endpoint if needed
+    const response = await fetch(`${API_BASE_URL}/admin/users`); 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    // Optional: Pre-process data if needed (e.g., calculate total violations)
+    
     return data.map(user => ({
         ...user,
         // Ensure necessary fields exist, provide defaults if needed
@@ -18,30 +16,28 @@ export const fetchAdminUsers = async () => {
         name: user.name || 'Unknown User',
         smallPicUrl: user.smallPicUrl || '/path/to/default/small-avatar.png', // Provide a default avatar
         largePicUrl: user.largePicUrl || '/path/to/default/large-avatar.png',
-        testDuration: user.testDuration || 0, // Assuming duration is in seconds
-        violations: user.violations || {}, // e.g., { faceMismatch: 2, phoneDetected: 1 }
-        violationDetails: user.violationDetails || [], // e.g., [{ type: '...', timestamp: '...', details: '...' }]
+        testDuration: user.testDuration || 0, 
+        violations: user.violations || {}, 
+        violationDetails: user.violationDetails || [], 
         driveFolderLink: user.driveFolderLink || null,
         totalViolations: Object.values(user.violations || {}).reduce((sum, count) => sum + count, 0) // Calculate total for sorting
     }));
   } catch (error) {
     console.error("Error fetching admin users:", error);
-    // Handle error appropriately in UI (e.g., show message)
-    return []; // Return empty array on error
+    
+    return []; 
   }
 };
 
-// *** NEW formatDuration function (from your suggestion) ***
+// *** formatDuration function ***
 export const formatDuration = (ms) => {
-  // Add console log for debugging input
-  // console.log(`formatDuration (new) received: ${ms} (type: ${typeof ms})`);
-
+ 
   // Ensure ms is treated as a number
   const numericMs = typeof ms === 'string' ? parseInt(ms, 10) : ms;
 
   if (typeof numericMs !== 'number' || isNaN(numericMs) || numericMs < 0) {
-      // console.warn(`formatDuration (new) defaulting to "N/A" for input: ${ms}`);
-      return "N/A"; // Return "N/A" for invalid or missing data
+     
+      return "N/A"; 
   }
   if (numericMs < 1000) {
       return `${numericMs} ms`;
@@ -55,15 +51,15 @@ export const formatDuration = (ms) => {
   if (minutes > 0) {
       formatted += `${minutes}m `;
   }
-  // Always show seconds if total duration is >= 1 second
+  
   formatted += `${seconds}s`;
 
-  return formatted.trim(); // Trim any trailing space if minutes is 0
+  return formatted.trim(); 
 };
 
 
 
-// Helper function to format violations object - place it here or in a utils file
+
 export const formatViolations = (violations) => {
     if (!violations || Object.keys(violations).length === 0) return 'None';
     return Object.entries(violations)

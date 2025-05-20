@@ -1,9 +1,9 @@
-// src/components/UserTable.jsx (or integrate into your page component)
+
 import React, { useState, useEffect, useMemo } from 'react';
-// We will fetch directly in this component as per guidance, so fetchAdminUsers might be bypassed for this specific filtering.
+
 import { fetchAdminUsers } from '../services/api';
-import UserRow from './UserRow'; // Path within the same components folder
-import './UserTable.css'; // Path within the same components folder
+import UserRow from './UserRow'; 
+import './UserTable.css'; 
 
 const formatStartTime = (timestamp) => {
   if (!timestamp) return 'N/A';
@@ -17,7 +17,7 @@ const formatStartTime = (timestamp) => {
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
-function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selectedCollegeId
+function UserTable({ setIsContentLoading, selectedCollegeId }) { 
     
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,12 +29,12 @@ function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selec
     const loadUsers = async () => {
       setIsLoading(true);
       if (setIsContentLoading) {
-        setIsContentLoading(true); // Notify parent about loading state
+        setIsContentLoading(true); 
       }
       setError(null);
       try {
         // Construct API URL with collegeId if selected
-        let path = '/admin/users'; // Path for the users endpoint
+        let path = '/admin/users'; 
         if (selectedCollegeId) {
           path += `?collegeId=${selectedCollegeId}`;
         }
@@ -46,19 +46,19 @@ function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selec
         setUsers(fetchedUsers);
       } catch (err) {
         setError('Failed to load user data.');
-        console.error(err); // Log the actual error
+        console.error(err);
       } finally {
         setIsLoading(false);
         if (setIsContentLoading) {
-          setIsContentLoading(false); // Notify parent that loading is done
+          setIsContentLoading(false); 
         }
       }
     };
     loadUsers();
-  }, [selectedCollegeId, setIsContentLoading]); // Re-fetch when selectedCollegeId or setIsContentLoading changes
+  }, [selectedCollegeId, setIsContentLoading]);
 
   useEffect(() => {
-    // Pass the UserTable's loading state up to AppLayout
+    
     if (setIsContentLoading) {
       setIsContentLoading(isLoading);
     }
@@ -72,10 +72,9 @@ function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selec
         let aValue = a[key];
         let bValue = b[key];
 
-        // Specific handling for date/time sorting
+        
         if (key === 'testStartTime') {
-          // Convert to numbers (timestamps) for reliable comparison
-          // Handle potential invalid dates by treating them as 0 or another default
+          
           const dateA = aValue ? new Date(aValue).getTime() : 0;
           const dateB = bValue ? new Date(bValue).getTime() : 0;
 
@@ -88,7 +87,7 @@ function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selec
           return 0;
         }
 
-        // Handle potential null/undefined or different types if necessary
+        
         // Basic comparison for strings and numbers:
         if (aValue < bValue) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -148,7 +147,7 @@ function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selec
               <th onClick={() => requestSort('id')}>
                 ID{getSortIndicator('id')}
               </th>
-              <th>User</th> {/* Not typically sortable */}
+              <th>User</th> 
               <th onClick={() => requestSort('name')}>
                 Name{getSortIndicator('name')}
               </th>
@@ -158,10 +157,10 @@ function UserTable({ setIsContentLoading, selectedCollegeId }) { // Accept selec
               <th onClick={() => requestSort('testDuration')}>
                 Duration{getSortIndicator('testDuration')}
               </th>
-               <th onClick={() => requestSort('totalViolations')}> {/* Sort by total count */}
+               <th onClick={() => requestSort('totalViolations')}> 
                 Alerts{getSortIndicator('totalViolations')}
               </th>
-              <th>Actions</th> {/* Action column, not sortable */}
+              <th>Actions</th> 
             </tr>
           </thead>
           <tbody>

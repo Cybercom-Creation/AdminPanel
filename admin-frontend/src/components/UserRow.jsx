@@ -1,16 +1,14 @@
 // src/components/UserRow.jsx
 import React, { useState, useEffect } from 'react';
-import { formatDuration, formatViolations } from '../services/api'; // Adjust path if needed
-import './UserRow.css'; // We'll create this CSS file next
+import { formatDuration, formatViolations } from '../services/api'; 
+import './UserRow.css'; 
 
-
-// Helper function to format the date/time (you might want a more robust solution)
+// Helper function to format the date/time 
 const formatStartTime = (timestamp) => {
   if (!timestamp) return 'N/A';
   try {
-    // Example: '10/27/2023, 10:30:00 AM' (depends on locale)
-    return new Date(timestamp).toLocaleTimeString([], {hour: '2-digit', // e.g., '09' or '18'
-      minute: '2-digit', // e.g., '05' or '30'
+    return new Date(timestamp).toLocaleTimeString([], {hour: '2-digit',
+      minute: '2-digit', 
       hour12: false });
   } catch (error) {
     console.error("Error formatting timestamp:", timestamp, error);
@@ -21,8 +19,7 @@ const formatStartTime = (timestamp) => {
 function UserRow({ user }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Optional: Log the received user prop to verify its structure in the browser console
-  // console.log('UserRow received user:', user);
+  
 
   // State to manage image sources, allowing onError to permanently switch to fallback
   const [smallImgSrc, setSmallImgSrc] = useState(user.smallPicUrl || '/default-avatar.png');
@@ -39,8 +36,7 @@ function UserRow({ user }) {
 
   const handleImageError = (setImageSrcCallback) => {
     // Set to default avatar path if the current src is not already the default
-    // This prevents potential issues if the default avatar itself had a problem (though unlikely here)
-    // And stops retrying the bad URL.
+    
     setImageSrcCallback('/defaultAvtar.png');
   };
 
@@ -49,7 +45,7 @@ function UserRow({ user }) {
     console.warn("UserRow received invalid user prop:", user);
     return (
         <tr>
-            <td colSpan="8">Invalid user data</td> {/* Adjust colSpan */}
+            <td colSpan="8">Invalid user data</td> {}
         </tr>
     );
   }
@@ -91,16 +87,16 @@ function UserRow({ user }) {
                 src={smallImgSrc} // Use fallback
                 alt={`${user.name}'s avatar`}
                 className="user-avatar-small"
-                //onError={(e) => { e.target.onerror = null; e.target.src='/default-avatar.png'; }} // Handle broken images
+                
                 onError={() => handleImageError(setSmallImgSrc)}
              />
-             {/* The tooltip content (large image) */}
+             
              <div className="tooltip-content">
                  <img
                     src={largeImgSrc} // Use fallback
                     alt={`${user.name}'s avatar (large)`}
                     className="user-avatar-large"
-                    //onError={(e) => { e.target.onerror = null; e.target.src='/default-avatar.png'; }} // Handle broken images
+                   
                     onError={() => handleImageError(setLargeImgSrc)}
                  />
              </div>
@@ -118,13 +114,13 @@ function UserRow({ user }) {
         </td>
         <td>
           
-          {/* {user.driveFolderLink ? ( */}
+          
           {hasDriveLink ? (
             <a
                 href={user.driveFolderLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="icon-link screenshot-icon-link" // Use new classes for styling
+                className="icon-link screenshot-icon-link" 
                 title="View Drive Folder"
           >
                 📁 {/* Folder Icon */}
@@ -135,7 +131,7 @@ function UserRow({ user }) {
 
           {user.violationDetails && user.violationDetails.length > 0 ? (
             <button onClick={() => setIsExpanded(!isExpanded)} className="details-button">
-              {isExpanded ? '−' : '+'} {/* Use Minus or Plus sign */}
+              {isExpanded ? '−' : '+'} {}
             </button>
           ) : (
             <span>{'\u00A0\u00A0\u00A0'}</span>
@@ -146,14 +142,14 @@ function UserRow({ user }) {
 
       {isExpanded && user.violationDetails && user.violationDetails.length > 0 && (
         <tr className="details-row">
-          {/* Keep colSpan="7" to span the entire width */}
+         
           <td colSpan="7">
             <div className="violation-details-container">
               <div className="details-header">
                 <h4 className="violation-title">Alert Details</h4>
                 <h4 className="violation-title">Test started at: {formatStartTime(user.testStartTime)}</h4>
               </div>
-              {/* Use a table for structured details */}
+              
               <table className="violation-details-table">
                 <thead>
                   <tr>
@@ -169,7 +165,7 @@ function UserRow({ user }) {
                        <td>{formatViolationType(detail.type)}</td>
                        <td>{formatStartTime(detail.startTime)}</td>
                        <td>{formatDuration(detail.duration)}</td>
-                       {/* Display the formatted start time */}
+                       
                     </tr>
                   ))}
                 </tbody>

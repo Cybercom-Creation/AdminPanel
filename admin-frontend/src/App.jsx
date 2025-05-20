@@ -3,35 +3,29 @@
 
 import React, { useState, useEffect, useRef } from 'react'; 
 import ExportButton from './ExportButton';
-import DownloadButton from './DownloadButton'; // Import the new component
+import DownloadButton from './DownloadButton'; 
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link, Navigate, useLocation  } from 'react-router-dom';
 import UserTable from './components/UserTable';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
-import ForgotPasswordPage from './pages/ForgotPasswordPage'; // Import Forgot Password page
-import ResetPasswordPage from './pages/ResetPasswordPage';   // Import Reset Password page
-import SettingsControls from './components/SettingsControls'; // Import the new settings controls component
+import ForgotPasswordPage from './pages/ForgotPasswordPage'; 
+import ResetPasswordPage from './pages/ResetPasswordPage';   
+import SettingsControls from './components/SettingsControls';
 import '../public/App.css';
 
 
-// function ProtectedRoute({ children }) {
-//   const { isAuthenticated } = useAuth();
-//   if (!isAuthenticated) {
-//     return <Navigate to="/login" replace />;
-//   }
-//   return children;
-// }
+
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
-// Simple component to show a logout button when logged in
+
 function AuthStatus() {
   let auth = useAuth();
   let navigate = useNavigate();
 
-  // This component will now only provide the logout function to the dropdown
+  
   const handleLogout = () => {
     auth.logout();
     navigate('/login');
@@ -46,31 +40,28 @@ function AuthStatus() {
   function AppLayout({ children }) {
   // State to manage dropdown visibility
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // Ref to detect clicks outside the menu
-  // Get logout function and authentication status
-  //const { handleLogout, isAuthenticated } = useAuth(); // Changed to use useAuth directly here
-   // We need to call AuthStatus to get its returned object which includes handleLogout
+  
   // AuthStatus itself uses useAuth and useNavigate internally.
   const authStatus = AuthStatus(); // Call AuthStatus to get its return value
-  const { handleLogout, isAuthenticated, user } = authStatus; // Destructure from the returned object
-  console.log('User object in AppLayout:', user); // <-- Add this line
+  const { handleLogout, isAuthenticated, user } = authStatus;t
+  console.log('User object in AppLayout:', user); 
 
   // State for settings navigation drawer
   const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
   const settingsDrawerRef = useRef(null);
-  //const settingsIconRef = useRef(null);
+  
 
   const [colleges, setColleges] = useState([]);
-  const [selectedCollegeId, setSelectedCollegeId] = useState(''); // To store the ID of the selected college
+  const [selectedCollegeId, setSelectedCollegeId] = useState(''); 
   const [isLoadingColleges, setIsLoadingColleges] = useState(false);
 
-  const [isContentLoading, setIsContentLoading] = useState(false); // New state for content loading
+  const [isContentLoading, setIsContentLoading] = useState(false);
 
   
 
   const menuRef = useRef(null);
 
-  // Function to toggle the menu
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -82,7 +73,7 @@ function AuthStatus() {
   // Effect to handle clicks outside the menu to close it
   useEffect(() => {
     function handleClickOutside(event) {
-      // Close if clicked outside the menu area (ref)
+      
       if (menuRef.current && !menuRef.current.contains(event.target) && !event.target.closest('.action-menu-trigger')) {
         setIsMenuOpen(false);
       }
@@ -98,7 +89,7 @@ function AuthStatus() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isMenuOpen]); // Re-run effect when isMenuOpen changes
+  }, [isMenuOpen]);
 
   // Effect to handle clicks outside the settings drawer to close it
   useEffect(() => {
@@ -106,10 +97,7 @@ function AuthStatus() {
       if (
         settingsDrawerRef.current &&
         !settingsDrawerRef.current.contains(event.target) &&
-      //   settingsIconRef.current && 
-      //   !settingsIconRef.current.contains(event.target)
-      // ) {
-      // Check if the click was outside the action menu trigger as well, if settings is opened from there
+      
       !event.target.closest('.action-menu-trigger') && !event.target.closest('.action-menu-dropdown .dropdown-settings-button')
     ) {
         setIsSettingsDrawerOpen(false);
@@ -125,21 +113,21 @@ function AuthStatus() {
     };
   }, [isSettingsDrawerOpen]);
 
- // Inside AppLayout component in your admin-frontend App.jsx
+ 
 useEffect(() => {
   const fetchColleges = async () => {
     setIsLoadingColleges(true);
     try {
-      console.log('Fetching colleges from /api/colleges...'); // Log before fetch
+      console.log('Fetching colleges from /api/colleges...');
       const response = await fetch(`${API_BASE_URL}/api/colleges`);
       if (!response.ok) {
         console.error('Failed to fetch colleges, status:', response.status);
         throw new Error('Failed to fetch colleges');
       }
       const data = await response.json();
-      console.log('Data received from /api/colleges:', JSON.stringify(data, null, 2)); // Log the raw data
+      console.log('Data received from /api/colleges:', JSON.stringify(data, null, 2)); 
       setColleges(data);
-      console.log('Colleges state updated in App.jsx'); // Log after setting state
+      console.log('Colleges state updated in App.jsx'); 
     } catch (error) {
       console.error('Error in fetchColleges:', error);
       setColleges([]);
@@ -187,7 +175,7 @@ useEffect(() => {
             <div className="header-actions" ref={menuRef}>
               <button onClick={toggleMenu} className="action-menu-trigger">
                 <img src="/defaultAvtar.png" alt="Admin" className="admin-avatar-icon" />
-               {/* Display user's name, fallback to 'User' or email if name is not present */}
+              
                <span className="admin-text">{user?.username || 'User'}</span>
               </button>
               {isMenuOpen && (
@@ -207,12 +195,6 @@ useEffect(() => {
             </div>
 
             
-            {/* <div className="settings-control" ref={settingsIconRef}>
-              <button onClick={toggleSettingsDrawer} className="settings-icon-button" aria-label="Open Settings">
-                
-                <span role="img" aria-label="settings">⚙️</span>
-              </button>
-            </div> */}
           </div>
         )}
       </header>
@@ -225,37 +207,10 @@ useEffect(() => {
           </nav>
         </div>
        )}
-      {/* Action Buttons Container - now holds the dropdown trigger */}
-      {/* Only show header actions if authenticated */}
-      {/* {isAuthenticated && (
-      <div className="header-actions" ref={menuRef}> 
-        
-          <button onClick={toggleMenu} className="action-menu-trigger">
-            <img src="/defaultAvtar.png" alt="Admin" className="admin-avatar-icon" />
-            <span className="admin-text">Admin</span> 
-          </button>
-
-          
-          {isMenuOpen && (
-            <div className="action-menu-dropdown"> 
-              <ExportButton />
-              <Link to="/settings" className="dropdown-link-button"> 
-                Settings
-              </Link>
-              <DownloadButton />
-              <button onClick={handleLogout} className="dropdown-logout-button">
-                Sign Out
-              </button>
-            </div>
-          )}
-        </div>
-      )} */}
-
-
-      {/* Main Content Area */}
+      
       {/* Main Content Area */}
       <main className="app-main-content">
-        {/* {React.cloneElement(children, { setIsContentLoading })} */}
+        
          {React.cloneElement(children, { setIsContentLoading, selectedCollegeId })}
       </main>
     </div>
@@ -289,7 +244,7 @@ function App() {
 
           {/* Catch-all or Not Found Route */}
           <Route path="*" element={
-            <AppLayout> {/* Optionally wrap not found in layout too, or have a simpler one */}
+            <AppLayout>
               <div>Page Not Found</div>
             </AppLayout>
           } />

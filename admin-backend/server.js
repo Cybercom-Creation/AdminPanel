@@ -49,12 +49,10 @@ const CollegeSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 const College = mongoose.model('College', CollegeSchema);
-// --- Mongoose Schemas ---
-// Define User Schema
+
+//  User Schema
 const UserSchema = new mongoose.Schema({
-    // Assuming user_id from MySQL becomes the default _id or a custom field if needed
-    // If you need to keep the old numeric user_id, add:
-    // mysql_user_id: { type: Number, unique: true, sparse: true }, // If migrating old IDs
+    
     name: {
         type: String,
         required: true,
@@ -79,37 +77,35 @@ const UserSchema = new mongoose.Schema({
     college: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'College',
-        // required: false // Set to true if a college is mandatory for every user
+        
     },
-}, { timestamps: true }); // Adds createdAt and updatedAt automatically
+}, { timestamps: true }); 
 
-const User = mongoose.model('User', UserSchema); // Model name 'User' -> collection 'users'
+const User = mongoose.model('User', UserSchema); 
 
 // Define ProctoringLog Schema
 const ProctoringLogSchema = new mongoose.Schema({
     // _id is added automatically
-    // IMPORTANT: Ensure this field name 'userId' matches what's in your DB
-    // If your actual field name is 'user', change it here or in the populate call.
-    userId: { // Reference to the User document
+    
+    userId: { 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Refers to the 'User' model
-        required: true // Make sure every log MUST have a user reference
+        ref: 'User', 
+        required: true 
     },
-    triggerEvent: { // Renamed from trigger_event to match your description
+    triggerEvent: { 
         type: String,
         trim: true
     },
-    startTime: { // Renamed from warning_start_time
+    startTime: { 
         type: Date
     },
-    endTime: { // Renamed from warning_end_time
+    endTime: { 
         type: Date
     }
-    // interval_seconds: { type: Number } // Keep or remove based on your actual schema
+    
 }, { timestamps: true });
 
-// Ensure the model name 'ProctoringLog' maps to your collection name 'proctoringlogs'
-// Mongoose usually pluralizes automatically, but double-check if needed.
+
 const ProctoringLog = mongoose.model('ProctoringLog', ProctoringLogSchema);
 
 
@@ -122,20 +118,20 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// --- Helper Function: Generate Combined Log CSV Data (MongoDB Version) ---
+//Function: Generate Combined Log CSV Data (MongoDB Version) ---
 async function generateCombinedCsvData(collegeIdParam = null) {
     try {
         let userFilter = {};
          if (collegeIdParam) {
-            userFilter.college = collegeIdParam; // Use 'college' field for filtering
+            userFilter.college = collegeIdParam; 
         }
 
-        const relevantUsers = await User.find(userFilter).select('_id college').lean(); // Select college field
+        const relevantUsers = await User.find(userFilter).select('_id college').lean(); 
         const relevantUserIds = relevantUsers.map(u => u._id);
 
         if (collegeIdParam && relevantUserIds.length === 0) {
             console.log(`No users found for collegeId: ${collegeIdParam}. Returning empty CSV data for combined logs.`);
-            return null; // Or return header only: csvStringifier.getHeaderString()
+            return null; 
         }
 
         // 1. Calculate total number of alerts for each user
@@ -162,28 +158,25 @@ async function generateCombinedCsvData(collegeIdParam = null) {
         console.log("Fetching proctoring logs and populating user data...");
 
         const logQuery = {};
-        if (collegeIdParam) { // Corrected variable name from previous diff, ensure it's used here
+        if (collegeIdParam) { 
             logQuery.userId = { $in: relevantUserIds };
         }
 
         const logs = await ProctoringLog.find(logQuery)
             .populate({
                 path: 'userId', 
-                select: 'name email phone college', // Include collegeId in user population
-                populate: { path: 'college', select: 'name' } // Corrected: Populate college name from user's 'college' field
+                select: 'name email phone college', 
+                populate: { path: 'college', select: 'name' } 
             })
-            .sort({ userId: 1, createdAt: 1 }) // Sort by user ID, then log creation time
-            .lean(); // Use .lean() for plain JS objects
+            .sort({ userId: 1, createdAt: 1 }) 
+            .lean(); 
 
-        // console.log(`Fetched ${logs.length} logs.`);
-
-        // Debugging: Check if population worked
-        const logsWithUserData = logs.filter(log => log.userId && typeof log.userId === 'object' && log.userId.college); // Check if userId was populated (became an object)
+        
+        const logsWithUserData = logs.filter(log => log.userId && typeof log.userId === 'object' && log.userId.college); 
         console.log(`${logsWithUserData.length} logs successfully populated with user data.`);
          if (logs.length > 0 && (logsWithUserData.length < logs.length || logs.some(log => log.userId && !log.userId.college))) {
              console.warn(`Warning: ${logs.length - logsWithUserData.length} logs could not be linked to existing users. Check 'userId' field references in 'proctoringlogs' collection.`);
-             // Log a few examples of failed populations if needed:
-             // console.log("Examples of logs that failed population:", logs.filter(log => !log.userId || typeof log.userId !== 'object').slice(0, 5));
+             
         }
 
 
@@ -195,26 +188,26 @@ async function generateCombinedCsvData(collegeIdParam = null) {
         const csvStringifier = createObjectCsvStringifier({
             header: [
                 // Use the populated user data fields
-                { id: 'user_id', title: 'UserID' },         // From populated log.userId._id
-                { id: 'user_name', title: 'Name' },         // From populated log.userId.name
-                { id: 'user_email', title: 'Email' },       // From populated log.userId.email
-                { id: 'user_phone', title: 'Phone' },       // From populated log.userId.phone
-                { id: 'college_name', title: 'CollegeName' }, // New column for College Name
-                // Use the log's own fields
-                { id: 'log_id', title: 'LogID' },           // From log._id
-                { id: 'trigger_event', title: 'TriggerEvent' }, // From log.triggerEvent
-                { id: 'start_time', title: 'StartTime' },   // From log.startTime
-                { id: 'end_time', title: 'EndTime' },       // From log.endTime
-                { id: 'total_user_alerts', title: 'TotalUserAlerts' }, // From alertCountsMap
+                { id: 'user_id', title: 'UserID' },         
+                { id: 'user_name', title: 'Name' },         
+                { id: 'user_email', title: 'Email' },       
+                { id: 'user_phone', title: 'Phone' },       
+                { id: 'college_name', title: 'CollegeName' },
+                // Use the proctoring log's own fields
+                { id: 'log_id', title: 'LogID' },          
+                { id: 'trigger_event', title: 'TriggerEvent' }, 
+                { id: 'start_time', title: 'StartTime' },   
+                { id: 'end_time', title: 'EndTime' },       
+                { id: 'total_user_alerts', title: 'TotalUserAlerts' }, 
                 
-                // { id: 'interval_seconds', title: 'IntervalSeconds' } // Add back if needed
+                
             ]
         });
 
         // Process rows for CSV structure
         const processedRows = logs.map(log => {
-            // Access populated user data via log.userId (or log.user if that's the field name)
-            const populatedUser = log.userId; // Assuming the field name used in populate was 'userId'
+            
+            const populatedUser = log.userId; 
             const userIdStr = populatedUser?._id?.toString();
             const numberOfAlertsForUser = userIdStr ? (alertCountsMap.get(userIdStr) || 0) : 0;
 
@@ -224,25 +217,25 @@ async function generateCombinedCsvData(collegeIdParam = null) {
                 user_id: populatedUser?._id?.toString() || 'N/A',
                 user_name: populatedUser?.name || 'N/A',
                 user_email: populatedUser?.email || 'N/A',
-                user_phone: populatedUser?.phone || '', // Default to empty string for phone
-                college_name: populatedUser?.college?.name || 'N/A', // Get college name
+                user_phone: populatedUser?.phone || '', 
+                college_name: populatedUser?.college?.name || 'N/A', 
                 
-                // Use data directly from the log object
-                log_id: log._id.toString(), // Convert ObjectId to string
-                trigger_event: log.triggerEvent || '', // Use correct field name
-                start_time: log.startTime instanceof Date ? log.startTime.toISOString() : '', // Use correct field name
-                end_time: log.endTime instanceof Date ? log.endTime.toISOString() : '', // Use correct field name
+                // Use data directly from the proctoring log object
+                log_id: log._id.toString(), 
+                trigger_event: log.triggerEvent || '', 
+                start_time: log.startTime instanceof Date ? log.startTime.toISOString() : '', 
+                end_time: log.endTime instanceof Date ? log.endTime.toISOString() : '', 
                 total_user_alerts: numberOfAlertsForUser,
-                // interval_seconds: log.interval_seconds ?? '' // Add back if needed
+                
             };
         });
 
-         // Temporary log to inspect a few processed rows before stringification
+         
         if (processedRows.length > 0) {
             console.log("Sample of processed rows for CSV (first 3):", JSON.stringify(processedRows.slice(0, 3), null, 2));
         }
 
-        // return csvStringifier.getHeaderString() + csvStringifier.stringifyRecords(processedRows);
+        
         const headerString = csvStringifier.getHeaderString();
         const recordsString = csvStringifier.stringifyRecords(processedRows);
         console.log("Generated CSV Header String for combined_logs:", headerString); // Log the generated header
@@ -250,11 +243,11 @@ async function generateCombinedCsvData(collegeIdParam = null) {
 
     } catch (error) {
         console.error("Error generating combined CSV data:", error);
-        throw error; // Re-throw to be caught by the route handler
+        throw error; 
     }
 }
 
-// --- Helper Function: Generate User Details CSV Data (MongoDB Version - Using photoDriveLink) ---
+//Function: Generate User Details CSV DatahotoDriveLin  ---
 async function generateUserCsvData(collegeIdParam = null) {
     try {
         const userQuery = {};
@@ -262,39 +255,38 @@ async function generateUserCsvData(collegeIdParam = null) {
             userQuery.college = collegeIdParam;
         }
 
-        // Fetch all users, selecting necessary fields including photoDriveLink
-        // We no longer need photo_base64 for this specific CSV export
+        
         const users = await User.find(userQuery)
-            .populate('college', 'name') // Corrected: Populate college name using 'college' field
+            .populate('college', 'name') 
             .select('name email phone photoDriveLink college') 
-            .sort({ createdAt: 1 }) // Or sort by name, email, etc.
+            .sort({ createdAt: 1 }) 
             .lean();
 
         if (!users || users.length === 0) return null;
 
         const csvStringifier = createObjectCsvStringifier({
             header: [
-                { id: 'user_id', title: 'UserID' }, // Use user._id
+                { id: 'user_id', title: 'UserID' }, 
                 { id: 'user_name', title: 'Name' },
                 { id: 'user_email', title: 'Email' },
                 { id: 'user_phone', title: 'Phone' },
-                { id: 'college_name', title: 'CollegeName' }, // New column for College Name
-                // Header remains the same, but the content will be the Drive link
+                { id: 'college_name', title: 'CollegeName' }, 
+                
                 { id: 'photo_link', title: 'PhotoLink' }
             ]
         });
 
         // Process rows: use photoDriveLink directly
         const processedRows = users.map(user => {
-            // Use the photoDriveLink directly. Provide an empty string if it's missing.
+            
             const photoLink = user.photoDriveLink || '';
 
             return {
                 user_id: user._id,
                 user_name: user.name,
                 user_email: user.email,
-                user_phone: user.phone || '', // Handle potentially missing phone
-                college_name: user.college?.name || 'N/A', // Get college name
+                user_phone: user.phone || '', 
+                college_name: user.college?.name || 'N/A', 
                 photo_link: photoLink 
             };
         });
@@ -303,7 +295,7 @@ async function generateUserCsvData(collegeIdParam = null) {
 
     } catch (error) {
         console.error("Error generating user CSV data:", error);
-        throw error; // Re-throw
+        throw error;
     }
 }
 
@@ -319,11 +311,11 @@ app.get('/', (req, res) => {
 });
 
 // --- NEW Endpoint to get all colleges for the dropdown ---
-// --- NEW Endpoint to get all colleges for the dropdown ---
+
 app.get('/api/colleges', async (req, res) => {
     try {
         const colleges = await College.find({}).sort({ name: 1 }).lean();
-        // Map to { id: _id, name: name } structure expected by frontend
+        
         res.status(200).json(colleges.map(c => ({ id: c._id.toString(), name: c.name })));
     } catch (error) {
         console.error('Error fetching colleges:', error);
@@ -338,14 +330,13 @@ app.get('/admin/users', async (req, res) => {
 
     try {
         const userQuery = {};
-        if (collegeId) userQuery.college = collegeId; // Corrected: Filter by 'college' field
+        if (collegeId) userQuery.college = collegeId; 
         const users = await User.find(userQuery)
-            .select('_id name email phone photoBase64 photoDriveLink testDurationMs driveFolderLink testStartTime testEndTime college') // Select only the fields you need
-            .lean(); // Use lean for better performance
+            .select('_id name email phone photoBase64 photoDriveLink testDurationMs driveFolderLink testStartTime testEndTime college') 
 
         if (!users || users.length === 0) {
             console.log("No users found in the database.");
-            // Send empty array for frontend to handle gracefully
+            
             return res.status(200).json([]);
         }
 
@@ -369,16 +360,13 @@ app.get('/admin/users', async (req, res) => {
                     violationDetailsList: { // Collect details for the expandable panel
                         $push: {
                             type: '$triggerEvent',
-                            //timestamp: '$createdAt',
+                            
                             duration: { $ifNull: ['$durationMs', 0] },// Use durationMs, default to 0 if null/missing
                             startTime: '$startTime' 
-                            //details: '$details' // Include the details field from the log schema
-                            // Add other log details you want to show
+                            
                         }
                     },
-                    // Example: Calculate duration from logs if not stored on User
-                    // firstLogTime: { $min: '$createdAt' },
-                    // lastLogTime: { $max: '$createdAt' }
+                    
                 }
             },
             {
@@ -413,9 +401,7 @@ app.get('/admin/users', async (req, res) => {
                                                 ]]
                                             }
 
-                                            // { // Dynamically create/update key for the violation type
-                                            //   [ '$$currentType' ] : { $add: [ { $ifNull: [ `$$value.$$currentType`, 0 ] }, 1 ] }
-                                            // }
+                                            
                                         ]
                                     }
                                 }
@@ -427,10 +413,10 @@ app.get('/admin/users', async (req, res) => {
              {
                 // Project final fields for clarity and remove intermediate lists
                 $project: {
-                    _id: 1, // Keep the userId (_id)
-                    violations: '$violationCounts', // Rename violationCounts to violations
-                    violationDetails: '$violationDetailsList', // Rename violationDetailsList
-                    // duration: { $divide: [ { $subtract: ['$lastLogTime', '$firstLogTime'] }, 1000 ] } // Calculate duration in seconds if needed
+                    _id: 1, 
+                    violations: '$violationCounts',
+                    violationDetails: '$violationDetailsList', 
+                    
                 }
             }
         ]);
@@ -440,10 +426,10 @@ app.get('/admin/users', async (req, res) => {
         const statsMap = new Map();
         violationStats.forEach(stat => {
             statsMap.set(stat._id.toString(), {
-                violations: stat.violations || {}, // The calculated counts object { typeA: 2, typeB: 1 }
-                violationDetails: stat.violationDetails || [], // Array of details [{ type: ..., timestamp: ...}]
+                violations: stat.violations || {}, 
+                violationDetails: stat.violationDetails || [], 
                 totalViolations: Object.values(stat.violations || {}).reduce((sum, count) => sum + count, 0),
-                // calculatedDuration: stat.duration // Use calculated duration if applicable
+                
             });
         });
 
@@ -460,29 +446,28 @@ app.get('/admin/users', async (req, res) => {
             imageUrl = user.photoBase64; 
 
             // *** Refined Test Duration Handling ***
-    let numericTestDuration = 0; // Start with a default valid number
-    if (user.testDurationMs !== null && user.testDurationMs !== undefined) {
-        // Attempt to convert the value from the DB to a number
-        const parsedDuration = Number(user.testDurationMs);
-        // Check if conversion was successful and the number is valid (non-negative)
-        if (!isNaN(parsedDuration) && parsedDuration >= 0) {
-            numericTestDuration = parsedDuration;
-        } else {
-             // Optional: Log if parsing failed for debugging
-             console.warn(`User ${userIdStr}: Invalid testDurationMs value found: ${user.testDurationMs}`);
+        let numericTestDuration = 0; 
+        if (user.testDurationMs !== null && user.testDurationMs !== undefined) {
+            // Attempt to convert the value from the DB to a number
+            const parsedDuration = Number(user.testDurationMs);
+            // Check if conversion was successful and the number is valid (non-negative)
+            if (!isNaN(parsedDuration) && parsedDuration >= 0) {
+                numericTestDuration = parsedDuration;
+            } else {
+                
+                console.warn(`User ${userIdStr}: Invalid testDurationMs value found: ${user.testDurationMs}`);
+            }
         }
-    }
-    const finalTestDuration = numericTestDuration; // Use the validated number
-
+        const finalTestDuration = numericTestDuration; 
 
             // *** Refined Violation Details Handling ***
     const finalViolationDetails = (userStats.violationDetails || []).map((detail, index) => {
         let numericViolationDuration = 0; // Start with a default valid number
-        // The 'duration' field comes from the aggregation's $ifNull check
+        
         if (detail.duration !== null && detail.duration !== undefined) {
-            // Attempt conversion (might already be a number from aggregation, but good practice)
+           
             const parsedViolationDuration = Number(detail.duration);
-             // Check if conversion was successful and the number is valid (non-negative)
+           
             if (!isNaN(parsedViolationDuration) && parsedViolationDuration >= 0) {
                 numericViolationDuration = parsedViolationDuration;
             } else {
@@ -492,12 +477,12 @@ app.get('/admin/users', async (req, res) => {
         }
         return {
             type: detail.type || 'Unknown',
-            duration: numericViolationDuration, // Use the validated number
+            duration: numericViolationDuration, 
             startTime: detail.startTime
 
         };
     });
-    //console.log(`User ${userIdStr} (${user.name}) - Sending: testDuration=${finalTestDuration}, violationDetails=${JSON.stringify(finalViolationDetails)}`);
+    
             return {
                 // Fields expected by the frontend (UserRow.jsx)
                 id: userEmail,
@@ -507,15 +492,15 @@ app.get('/admin/users', async (req, res) => {
                 testStartTime: user.testStartTime,
                 testEndTime: user.testEndTime,
                 testDuration: finalTestDuration,
-                violations: userStats.violations, // e.g., { faceMismatch: 2, phoneDetected: 1 }
-                violationDetails: finalViolationDetails, // e.g., [{ type: '...', timestamp: '...', details: '...' }]
+                violations: userStats.violations, 
+                violationDetails: finalViolationDetails, 
                 driveFolderLink: user.driveFolderLink || null,
-                totalViolations: userStats.totalViolations // Calculated total for sorting
+                totalViolations: userStats.totalViolations 
             };
         });
 
         console.log(`Sending ${usersWithData.length} user records to the frontend.`);
-        //console.log(`Sending ${users.photoBase64} user records to the frontend.`);
+       
         res.status(200).json(usersWithData);
 
     } catch (error) {
@@ -525,10 +510,10 @@ app.get('/admin/users', async (req, res) => {
 });
 
 
-// --- MODIFIED Export Route (now POST) ---
+// --- Export Route (now POST) ---
 app.post('/export', async (req, res) => {
     console.log("POST /export request received.");
-    const { email: recipientEmail, collegeId } = req.body; // Extract collegeId from body
+    const { email: recipientEmail, collegeId } = req.body; 
 
     if (!recipientEmail) {
         return res.status(400).json({ success: false, message: 'Recipient email address is required.' });
@@ -541,9 +526,8 @@ app.post('/export', async (req, res) => {
 
     try {
         // Generate CSV data using MongoDB helper functions
-        const combinedCsvData = await generateCombinedCsvData(collegeId); // Pass collegeId
-        const userCsvData = await generateUserCsvData(collegeId); // Pass collegeId
-
+        const combinedCsvData = await generateCombinedCsvData(collegeId); 
+        const userCsvData = await generateUserCsvData(collegeId); 
         if (!combinedCsvData && !userCsvData) {
             console.log('No data found to export.');
             return res.status(404).json({ success: false, message: 'No data found to export.' });
@@ -554,7 +538,7 @@ app.post('/export', async (req, res) => {
 
             timeZone: "Asia/Kolkata",
           
-            hour12: true, // optional: for AM/PM format
+            hour12: true, 
           
           });
            
@@ -575,12 +559,12 @@ app.post('/export', async (req, res) => {
 
         if (attachments.length === 0) {
             console.log('No CSV data generated (potentially empty results).');
-            // Decide if this is an error or just an empty export
+            
              return res.status(404).json({ success: false, message: 'No data available to generate export files.' });
-           // return res.status(500).json({ success: false, message: 'Failed to generate CSV data.' });
+           
         }
 
-        // Send Email (logic remains the same)
+        // Send Email
         const mailOptions = {
             from: `"Admin Panel Export" <${process.env.EMAIL_USER}>`,
             to: recipientEmail,
@@ -597,7 +581,7 @@ app.post('/export', async (req, res) => {
 
     } catch (error) {
         console.error('Error during export process:', error);
-        // Check for Mongoose specific errors if needed (e.g., CastError for bad ObjectIds)
+        
         if (error instanceof mongoose.Error.CastError) {
              return res.status(400).json({ success: false, message: 'Invalid data format encountered.' });
         }
@@ -609,14 +593,13 @@ app.post('/export', async (req, res) => {
     }
 });
 
-// --- NEW Download Route ---
+// --- Download Route ---
 app.get('/download', async (req, res) => {
-    const { collegeId } = req.query; // Extract collegeId from query
+    const { collegeId } = req.query; 
     console.log(`GET /download request received. CollegeId: ${collegeId}`);
 
     try {
-        // Generate CSV data using MongoDB helper functions
-        // Pass collegeId to helper functions
+       
         const combinedCsvData = await generateCombinedCsvData(collegeId);
         const userCsvData = await generateUserCsvData(collegeId);
 
@@ -631,25 +614,25 @@ app.get('/download', async (req, res) => {
         res.setHeader('Content-Type', 'application/zip');
         res.setHeader('Content-Disposition', `attachment; filename="${zipFilename}"`);
 
-        // Create a zip archive
+        
         const archive = archiver('zip', { zlib: { level: 9 } });
 
-        // Handle archiving errors robustly
+       
         archive.on('warning', function(err) {
           if (err.code === 'ENOENT') {
-            console.warn('Archiver warning:', err); // Log file not found warnings
+            console.warn('Archiver warning:', err); 
           } else {
-            console.error('Archiver warning:', err); // Log other warnings as errors
-            // Decide if you need to abort response generation
+            console.error('Archiver warning:', err);
+            
           }
         });
         archive.on('error', function(err) {
             console.error("Archiving error:", err);
-            // Try to inform the client if headers not sent, otherwise just end.
+            
             if (!res.headersSent) {
                 res.status(500).send({ error: 'Failed to create the zip archive.' });
             } else {
-                res.end(); // End the stream abruptly if possible
+                res.end(); 
             }
         });
 
@@ -684,28 +667,28 @@ app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
 });
 
-// --- Global Error Handlers (Good Practice) ---
+// --- Global Error Handlers  ---
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  // Consider more robust logging/alerting here
+  
 });
 
 process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
-  // Perform cleanup if necessary
-  process.exit(1); // Exit after uncaught exception is generally recommended
+  
+  process.exit(1); 
 });
 
 // Graceful shutdown on signals like SIGTERM/SIGINT
 const gracefulShutdown = async (signal) => {
     console.log(`\n${signal} received. Closing server and database connection...`);
-    // Close server to stop accepting new connections
-    server.close(async () => { // Assuming you store app.listen result in 'server'
+    
+    server.close(async () => { 
         console.log('HTTP server closed.');
         // Close MongoDB connection
-        await mongoose.connection.close(false); // false = don't force close immediately
+        await mongoose.connection.close(false); 
         console.log('MongoDB connection closed.');
-        process.exit(0); // Exit cleanly
+        process.exit(0); 
     });
 
     // Force close after a timeout if graceful shutdown fails
@@ -715,11 +698,4 @@ const gracefulShutdown = async (signal) => {
     }, 10000); // 10 seconds timeout
 };
 
-// You need to store the server instance:
-// const server = app.listen(...) instead of just app.listen(...)
-// process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-// process.on('SIGINT', () => gracefulShutdown('SIGINT')); // Catches Ctrl+C
 
-// **Note:** Graceful shutdown implementation requires storing the server instance
-// returned by app.listen() and uncommenting the process.on listeners.
-// For simplicity in this refactor, it's commented out but highly recommended for production.
