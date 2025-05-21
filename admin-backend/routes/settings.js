@@ -6,6 +6,7 @@ const AppSettings = require('../models/AppSettings');
 router.get('/', async (req, res) => {
     try {
         const settings = await AppSettings.getSettings();
+        //const settings = await AppSettings.findOrCreate();
         res.json(settings);
     } catch (error) {
         console.error('Error fetching settings:', error);
@@ -23,11 +24,12 @@ router.put('/', async (req, res) => {
             userPhotoFeatureEnabled,
             periodicScreenshotsEnabled,
             screenshotIntervalSeconds,
-            testDurationInterval, 
+            testDurationInterval,
+            googleFormLink,
         } = req.body;
 
         // Validate screenshotIntervalSeconds
-        if (periodicScreenshotsEnabled && (screenshotIntervalSeconds === undefined || screenshotIntervalSeconds < 10)) {
+        if (periodicScreenshotsEnabled && (screenshotIntervalSeconds === undefined || screenshotIntervalSeconds === null ||  screenshotIntervalSeconds < 10)) {
             return res.status(400).json({ message: 'Screenshot interval must be at least 10 seconds when enabled.' });
         }
         // Optional: Validate testDurationInterval
@@ -46,6 +48,7 @@ router.put('/', async (req, res) => {
                     // Only update interval if screenshots are enabled and interval is provided
                     ...(periodicScreenshotsEnabled && screenshotIntervalSeconds !== undefined && { screenshotIntervalSeconds }),
                     ...(testDurationInterval !== undefined && { testDurationInterval }), // Update test duration if provided
+                    ...(googleFormLink !== undefined && { googleFormLink: googleFormLink.trim() }), // Add Google Form link, trim whitespace
                 }
             },
             { new: true, upsert: true, runValidators: true } // upsert:true creates if not found

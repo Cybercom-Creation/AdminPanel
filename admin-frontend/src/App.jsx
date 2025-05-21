@@ -43,7 +43,7 @@ function AuthStatus() {
   
   // AuthStatus itself uses useAuth and useNavigate internally.
   const authStatus = AuthStatus(); // Call AuthStatus to get its return value
-  const { handleLogout, isAuthenticated, user } = authStatus;t
+  const { handleLogout, isAuthenticated, user } = authStatus;
   console.log('User object in AppLayout:', user); 
 
   // State for settings navigation drawer

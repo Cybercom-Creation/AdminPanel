@@ -35,7 +35,12 @@ const AppSettingsSchema = new mongoose.Schema({
         type: Number,
         default: 10, // Default to 60 minutes
         min: 1,      // Minimum test duration (e.g., 5 minutes)
-    }
+    },
+    googleFormLink: { // New field for the Google Form link
+        type: String,
+        trim: true,
+        default: '', // Default to an empty string, admin will set this
+    },
 }, { timestamps: true });
 
 // Method to get or create settings
